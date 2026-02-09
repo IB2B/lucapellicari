@@ -148,10 +148,11 @@ function HeroSection() {
             src={heroSlides[currentSlide].image}
             alt={heroSlides[currentSlide].title}
             fill
-            className="object-cover object-top"
+            className="object-cover object-center"
             priority
             quality={95}
             unoptimized
+            sizes="100vw"
           />
           {/* Gradient Overlays */}
           <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/60 to-dark/30" />
