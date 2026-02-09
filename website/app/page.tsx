@@ -148,7 +148,7 @@ function HeroSection() {
             src={heroSlides[currentSlide].image}
             alt={heroSlides[currentSlide].title}
             fill
-            className="object-cover"
+            className="object-cover object-top"
             priority
             quality={95}
             unoptimized
@@ -325,7 +325,7 @@ function ChiSonoSection() {
                 src="/images/luca-portrait.jpg"
                 alt="Luca Pellicari"
                 fill
-                className="object-cover"
+                className="object-cover object-top"
                 unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
