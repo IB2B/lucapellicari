@@ -1,10 +1,10 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, useScroll, useTransform, useInView } from 'framer-motion'
-import { ArrowRight, ArrowDown, Play, Sparkles, Target, Eye, Shield, Users, Brain, Star, Compass, BookOpen, Pen, Mail, ChevronRight } from 'lucide-react'
+import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion'
+import { ArrowRight, ArrowDown, Play, Sparkles, Target, Eye, Shield, Users, Brain, Star, Compass, BookOpen, Pen, Mail, ChevronRight, ChevronLeft } from 'lucide-react'
 
 // Animation variants
 const fadeUp = {
@@ -27,6 +27,31 @@ const fadeIn = {
 const stagger = {
   visible: { transition: { staggerChildren: 0.1 } }
 }
+
+// Hero Slider Data
+const heroSlides = [
+  {
+    image: '/images/hero-bg.jpg',
+    subtitle: 'Benvenuto',
+    title: 'Adesso siamo qui,',
+    highlight: 'tu ed io.',
+    description: 'Questa non è una pagina web. È una porta verso la tua identità profonda.',
+  },
+  {
+    image: '/images/hero-2.jpg',
+    subtitle: 'Il Metodo',
+    title: 'Entra nel tuo',
+    highlight: 'stato naturale.',
+    description: 'In-Flow: la scienza dell\'identità, la bellezza della verità.',
+  },
+  {
+    image: '/images/hero-3.jpg',
+    subtitle: 'La Missione',
+    title: 'Trasformo le persone',
+    highlight: 'aiutandole a riconoscersi.',
+    description: 'Non sei quello che ti è successo. Sei quello che scegli di diventare.',
+  },
+]
 
 // Reusable Section Title Component
 function SectionTitle({ badge, title, subtitle, center = true, light = false }: {
@@ -68,133 +93,205 @@ function SectionTitle({ badge, title, subtitle, center = true, light = false }: 
   )
 }
 
-// HERO SECTION
+// HERO SECTION WITH SLIDER
 function HeroSection() {
+  const [currentSlide, setCurrentSlide] = useState(0)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const containerRef = useRef<HTMLDivElement>(null)
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end start'],
   })
 
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '40%'])
   const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0])
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.2])
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 1.1])
+
+  // Auto-play slider
+  useEffect(() => {
+    if (!isAutoPlaying) return
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
+    }, 6000)
+    return () => clearInterval(interval)
+  }, [isAutoPlaying])
+
+  const nextSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
+    setIsAutoPlaying(false)
+  }, [])
+
+  const prevSlide = useCallback(() => {
+    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
+    setIsAutoPlaying(false)
+  }, [])
+
+  const goToSlide = useCallback((index: number) => {
+    setCurrentSlide(index)
+    setIsAutoPlaying(false)
+  }, [])
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background */}
-      <motion.div className="absolute inset-0" style={{ scale }}>
-        <Image
-          src="/images/hero-bg.jpg"
-          alt="Luca Pellicari"
-          fill
-          className="object-cover"
-          priority
-          quality={95}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-dark/70 via-dark/50 to-dark" />
-        <div className="absolute inset-0 bg-gradient-radial from-gold/5 via-transparent to-transparent" />
-      </motion.div>
+    <section ref={containerRef} className="relative h-screen overflow-hidden">
+      {/* Background Slider */}
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={currentSlide}
+          initial={{ opacity: 0, scale: 1.1 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute inset-0"
+          style={{ scale }}
+        >
+          <Image
+            src={heroSlides[currentSlide].image}
+            alt={heroSlides[currentSlide].title}
+            fill
+            className="object-cover"
+            priority
+            quality={95}
+          />
+          {/* Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/60 to-dark/30" />
+          <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-dark/50" />
+        </motion.div>
+      </AnimatePresence>
+
+      {/* Decorative Elements */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent" />
 
       {/* Content */}
-      <motion.div className="relative z-10 container-custom text-center" style={{ y, opacity }}>
-        {/* Main Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] as const }}
-        >
-          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-light mb-2 sm:mb-4">
-            Adesso siamo qui,
-          </h1>
-          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gradient-gold mb-6 sm:mb-8">
-            tu ed io.
-          </h1>
-        </motion.div>
+      <motion.div
+        className="relative z-10 h-full flex items-center"
+        style={{ opacity }}
+      >
+        <div className="container-custom">
+          <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+            {/* Left: Text Content */}
+            <div className="max-w-xl">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={currentSlide}
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: 30 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                >
+                  {/* Subtitle Badge */}
+                  <motion.span
+                    className="inline-block text-gold text-xs sm:text-sm uppercase tracking-[0.3em] mb-4 sm:mb-6"
+                  >
+                    <span className="inline-block w-8 sm:w-12 h-px bg-gold mr-3 sm:mr-4 align-middle" />
+                    {heroSlides[currentSlide].subtitle}
+                  </motion.span>
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="font-serif text-xl sm:text-2xl md:text-3xl text-light/90 italic mb-4 sm:mb-6"
-        >
-          E sono felice che tu sia arrivato.
-        </motion.p>
+                  {/* Title */}
+                  <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-light leading-[1.1] mb-2">
+                    {heroSlides[currentSlide].title}
+                  </h1>
+                  <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl text-gradient-gold leading-[1.1] mb-6 sm:mb-8">
+                    {heroSlides[currentSlide].highlight}
+                  </h1>
 
-        {/* The Door */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
-          className="max-w-2xl mx-auto mb-6 sm:mb-8"
-        >
-          <p className="text-base sm:text-lg md:text-xl text-light/80 leading-relaxed px-4">
-            Questa non è una pagina web. <span className="text-gold font-medium">È una porta.</span><br className="hidden sm:block" />
-            La porta che conduce alla tua identità profonda, alla tua visione, alla tua verità.
-          </p>
-        </motion.div>
+                  {/* Description */}
+                  <p className="text-light/70 text-base sm:text-lg md:text-xl leading-relaxed mb-8 sm:mb-10 max-w-md">
+                    {heroSlides[currentSlide].description}
+                  </p>
 
-        {/* Opening Paragraph */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.9 }}
-          className="max-w-3xl mx-auto mb-8 sm:mb-10"
-        >
-          <p className="text-sm sm:text-base md:text-lg text-light/60 leading-relaxed px-4">
-            Lascia che ti dica una cosa semplice e vera: io non sono un formatore.
-            Non sono un motivatore. Non sono un guru. Sono un uomo che ha vissuto
-            <span className="text-gold"> sette rinascite</span> e che oggi ha scelto
-            di mettere tutta la sua esperienza — le ferite, i successi, i fallimenti, le scoperte —
-            al servizio delle persone che vogliono finalmente riconoscersi.
-          </p>
-        </motion.div>
+                  {/* CTA Buttons */}
+                  <div className="flex flex-wrap gap-3 sm:gap-4">
+                    <Link href="/chi-sono" className="btn-primary group text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
+                      Scopri chi sono
+                      <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                    <Link href="/contatti" className="btn-secondary text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
+                      Contattami
+                    </Link>
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
 
-        {/* Final CTA Text */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.1 }}
-          className="max-w-2xl mx-auto mb-8 sm:mb-10"
-        >
-          <p className="text-sm sm:text-base md:text-lg text-light/50 leading-relaxed px-4">
-            Se sei qui, se sei arrivato fino a questa riga, è perché una parte di te sente
-            che è il momento di andare oltre. Oltre la maschera. Oltre il ruolo. Oltre ciò che fai.
-            <span className="text-gold font-medium"> Per incontrare ciò che sei.</span>
-          </p>
-        </motion.div>
-
-        {/* CTA Buttons */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 1.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 px-4"
-        >
-          <Link href="/chi-sono" className="btn-primary group w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
-            Scopri chi sono
-            <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </Link>
-          <Link href="/contatti" className="btn-secondary w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
-            Inizia il viaggio con me
-          </Link>
-        </motion.div>
+            {/* Right: Empty for image focus on desktop */}
+            <div className="hidden lg:block" />
+          </div>
+        </div>
       </motion.div>
+
+      {/* Slider Controls */}
+      <div className="absolute bottom-8 sm:bottom-12 left-0 right-0 z-20">
+        <div className="container-custom">
+          <div className="flex items-center justify-between">
+            {/* Slide Indicators */}
+            <div className="flex items-center gap-3">
+              {heroSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`relative h-1 transition-all duration-500 ${
+                    index === currentSlide ? 'w-12 sm:w-16' : 'w-6 sm:w-8'
+                  }`}
+                >
+                  <span className="absolute inset-0 bg-white/20 rounded-full" />
+                  {index === currentSlide && (
+                    <motion.span
+                      className="absolute inset-0 bg-gold rounded-full"
+                      layoutId="activeSlide"
+                      transition={{ duration: 0.3 }}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {/* Navigation Arrows */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={prevSlide}
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:border-gold hover:text-gold transition-all hover:scale-105"
+              >
+                <ChevronLeft className="w-5 h-5" />
+              </button>
+              <button
+                onClick={nextSlide}
+                className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border border-white/20 flex items-center justify-center text-white/60 hover:border-gold hover:text-gold transition-all hover:scale-105"
+              >
+                <ChevronRight className="w-5 h-5" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Slide Counter */}
+      <div className="absolute top-1/2 right-6 sm:right-12 -translate-y-1/2 z-20 hidden md:flex flex-col items-center gap-4">
+        <span className="text-gold font-medium text-lg">0{currentSlide + 1}</span>
+        <div className="w-px h-16 bg-white/20 relative">
+          <motion.div
+            className="absolute top-0 left-0 w-full bg-gold"
+            initial={{ height: '0%' }}
+            animate={{ height: '100%' }}
+            transition={{ duration: 6, ease: 'linear' }}
+            key={currentSlide}
+          />
+        </div>
+        <span className="text-white/40 text-sm">0{heroSlides.length}</span>
+      </div>
 
       {/* Scroll Indicator */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 2, duration: 0.8 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2"
+        transition={{ delay: 1.5, duration: 0.8 }}
+        className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 z-20 hidden sm:block"
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="flex flex-col items-center gap-2 text-light/40"
+          className="flex flex-col items-center gap-2 text-white/40"
         >
-          <span className="text-xs uppercase tracking-[0.3em]">Scroll</span>
           <ArrowDown className="w-4 h-4" />
         </motion.div>
       </motion.div>
