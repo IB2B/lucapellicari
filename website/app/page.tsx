@@ -45,21 +45,21 @@ function SectionTitle({ badge, title, subtitle, center = true, light = false }: 
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={stagger}
-      className={`${center ? 'text-center' : ''} mb-16 lg:mb-20`}
+      className={`${center ? 'text-center' : ''} mb-10 sm:mb-12 lg:mb-16 px-4 sm:px-0`}
     >
-      <motion.span variants={fadeUp} className="badge mb-6 inline-block">
+      <motion.span variants={fadeUp} className="badge mb-4 sm:mb-6 inline-block text-xs">
         {badge}
       </motion.span>
       <motion.h2
         variants={fadeUp}
-        className={`font-display text-title font-semibold ${light ? 'text-dark' : 'text-light'} mb-6`}
+        className={`font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold ${light ? 'text-dark' : 'text-light'} mb-4 sm:mb-6`}
       >
         {title}
       </motion.h2>
       {subtitle && (
         <motion.p
           variants={fadeUp}
-          className={`text-subtitle ${light ? 'text-dark/70' : 'text-light/70'} max-w-2xl ${center ? 'mx-auto' : ''}`}
+          className={`text-base sm:text-lg md:text-xl ${light ? 'text-dark/70' : 'text-light/70'} max-w-2xl ${center ? 'mx-auto' : ''}`}
         >
           {subtitle}
         </motion.p>
@@ -102,12 +102,12 @@ function HeroSection() {
         <motion.div
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 1, delay: 0.2, ease: [0.16, 1, 0.3, 1] as const }}
         >
-          <h1 className="font-display text-hero text-light mb-4">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-light mb-2 sm:mb-4">
             Adesso siamo qui,
           </h1>
-          <h1 className="font-display text-hero text-gradient-gold mb-8">
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-gradient-gold mb-6 sm:mb-8">
             tu ed io.
           </h1>
         </motion.div>
@@ -117,7 +117,7 @@ function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
-          className="font-serif text-2xl md:text-3xl text-light/90 italic mb-6"
+          className="font-serif text-xl sm:text-2xl md:text-3xl text-light/90 italic mb-4 sm:mb-6"
         >
           E sono felice che tu sia arrivato.
         </motion.p>
@@ -127,10 +127,10 @@ function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.7 }}
-          className="max-w-3xl mx-auto mb-10"
+          className="max-w-2xl mx-auto mb-6 sm:mb-8"
         >
-          <p className="text-lg md:text-xl text-light/80 leading-relaxed">
-            Questa non è una pagina web. <span className="text-gold font-medium">È una porta.</span><br />
+          <p className="text-base sm:text-lg md:text-xl text-light/80 leading-relaxed px-4">
+            Questa non è una pagina web. <span className="text-gold font-medium">È una porta.</span><br className="hidden sm:block" />
             La porta che conduce alla tua identità profonda, alla tua visione, alla tua verità.
           </p>
         </motion.div>
@@ -140,9 +140,9 @@ function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.9 }}
-          className="max-w-4xl mx-auto mb-12"
+          className="max-w-3xl mx-auto mb-8 sm:mb-10"
         >
-          <p className="text-base md:text-lg text-light/60 leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-light/60 leading-relaxed px-4">
             Lascia che ti dica una cosa semplice e vera: io non sono un formatore.
             Non sono un motivatore. Non sono un guru. Sono un uomo che ha vissuto
             <span className="text-gold"> sette rinascite</span> e che oggi ha scelto
@@ -156,9 +156,9 @@ function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.1 }}
-          className="max-w-3xl mx-auto mb-12"
+          className="max-w-2xl mx-auto mb-8 sm:mb-10"
         >
-          <p className="text-base md:text-lg text-light/50 leading-relaxed">
+          <p className="text-sm sm:text-base md:text-lg text-light/50 leading-relaxed px-4">
             Se sei qui, se sei arrivato fino a questa riga, è perché una parte di te sente
             che è il momento di andare oltre. Oltre la maschera. Oltre il ruolo. Oltre ciò che fai.
             <span className="text-gold font-medium"> Per incontrare ciò che sei.</span>
@@ -170,13 +170,13 @@ function HeroSection() {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.3 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 px-4"
         >
-          <Link href="/chi-sono" className="btn-primary group">
+          <Link href="/chi-sono" className="btn-primary group w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
             Scopri chi sono
             <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
-          <Link href="/contatti" className="btn-secondary">
+          <Link href="/contatti" className="btn-secondary w-full sm:w-auto text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
             Inizia il viaggio con me
           </Link>
         </motion.div>
@@ -208,21 +208,21 @@ function ChiSonoSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section className="section-darker relative overflow-hidden">
+    <section className="py-16 sm:py-20 lg:py-28 bg-dark-50 relative overflow-hidden">
       {/* Background Accent */}
-      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gold/5 rounded-full blur-[150px]" />
+      <div className="absolute top-0 right-0 w-[400px] sm:w-[600px] h-[400px] sm:h-[600px] bg-gold/5 rounded-full blur-[100px] sm:blur-[150px]" />
 
       <div className="container-custom relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-20 items-center">
           {/* Image */}
           <motion.div
             ref={ref}
-            initial={{ opacity: 0, x: -60 }}
+            initial={{ opacity: 0, x: -40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative"
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
+            className="relative order-2 lg:order-1"
           >
-            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
+            <div className="relative aspect-[4/5] sm:aspect-[3/4] rounded-2xl sm:rounded-3xl overflow-hidden max-w-md mx-auto lg:max-w-none">
               <Image
                 src="/images/luca-portrait.jpg"
                 alt="Luca Pellicari"
@@ -231,9 +231,8 @@ function ChiSonoSection() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
             </div>
-            {/* Decorative frame */}
-            <div className="absolute -inset-4 border border-gold/20 rounded-3xl -z-10" />
-            <div className="absolute -bottom-8 -right-8 w-32 h-32 border border-gold/30 rounded-full -z-10" />
+            {/* Decorative frame - hidden on mobile */}
+            <div className="hidden sm:block absolute -inset-3 lg:-inset-4 border border-gold/20 rounded-2xl sm:rounded-3xl -z-10" />
           </motion.div>
 
           {/* Content */}
@@ -241,16 +240,17 @@ function ChiSonoSection() {
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             variants={stagger}
+            className="order-1 lg:order-2 text-center lg:text-left"
           >
-            <motion.span variants={fadeUp} className="badge mb-6 inline-block">
+            <motion.span variants={fadeUp} className="badge mb-4 sm:mb-6 inline-block text-xs">
               Chi Sono
             </motion.span>
 
-            <motion.h2 variants={fadeUp} className="font-display text-title text-light mb-8">
+            <motion.h2 variants={fadeUp} className="font-display text-2xl sm:text-3xl md:text-4xl text-light mb-6 sm:mb-8">
               &ldquo;Io sono Luca Pellicari&rdquo;
             </motion.h2>
 
-            <motion.div variants={fadeUp} className="space-y-6 text-light/70 text-lg leading-relaxed">
+            <motion.div variants={fadeUp} className="space-y-4 sm:space-y-6 text-light/70 text-base sm:text-lg leading-relaxed">
               <p>
                 Sono un uomo che non ha mai avuto paura di guardare la vita negli occhi.
                 Ho attraversato la malattia, la rinascita, la disciplina del paracadutismo,
@@ -259,13 +259,13 @@ function ChiSonoSection() {
               <p>
                 E ho trasformato tutto in un metodo: <span className="text-gold font-medium">In-Flow</span>.
               </p>
-              <p className="text-xl font-serif italic text-light/90 border-l-2 border-gold/50 pl-6">
+              <p className="text-lg sm:text-xl font-serif italic text-light/90 border-l-2 border-gold/50 pl-4 sm:pl-6 text-left">
                 Il mio talento non è motivarti.<br />
                 Il mio talento è <span className="text-gold">aiutarti a ricordare chi sei</span>.
               </p>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="mt-10">
+            <motion.div variants={fadeUp} className="mt-8 sm:mt-10">
               <Link href="/chi-sono" className="btn-link group">
                 Scopri la mia storia
                 <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -295,7 +295,7 @@ function MissioneSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section className="section-dark relative overflow-hidden">
+    <section className="py-16 sm:py-20 lg:py-28 bg-dark relative overflow-hidden">
       <div className="container-custom">
         <SectionTitle
           badge="La Mia Missione"
@@ -318,19 +318,19 @@ function MissioneSection() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={stagger}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 lg:gap-6 mb-16"
+          className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 lg:gap-6 mb-12 sm:mb-16"
         >
           {missionItems.map((item, index) => (
             <motion.div
               key={item.label}
               variants={fadeUp}
               whileHover={{ y: -8, transition: { duration: 0.3 } }}
-              className="card-hover text-center group cursor-pointer"
+              className="bg-dark-50 rounded-2xl p-4 sm:p-6 border border-dark-200/50 hover:border-gold/30 transition-all text-center group cursor-pointer h-full min-h-[140px] sm:min-h-[160px] flex flex-col items-center justify-center"
             >
-              <div className="w-16 h-16 rounded-2xl bg-gold/10 flex items-center justify-center mx-auto mb-4 group-hover:bg-gold/20 transition-colors">
-                <item.icon className="w-7 h-7 text-gold" />
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-gold/10 flex items-center justify-center mb-3 sm:mb-4 group-hover:bg-gold/20 transition-colors">
+                <item.icon className="w-5 h-5 sm:w-6 sm:h-6 text-gold" />
               </div>
-              <p className="text-light font-medium">{item.label}</p>
+              <p className="text-light font-medium text-sm sm:text-base">{item.label}</p>
             </motion.div>
           ))}
         </motion.div>
@@ -352,30 +352,31 @@ function QuantumAcademySection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section className="section-darker relative overflow-hidden">
+    <section className="py-16 sm:py-20 lg:py-28 bg-dark-50 relative overflow-hidden">
       {/* Background */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-gold/5 rounded-full blur-[200px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[600px] lg:w-[800px] h-[400px] sm:h-[600px] lg:h-[800px] bg-gold/5 rounded-full blur-[150px] sm:blur-[200px]" />
       </div>
 
       <div className="container-custom relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-center">
           <motion.div
             ref={ref}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
             variants={stagger}
+            className="text-center lg:text-left"
           >
-            <motion.span variants={fadeUp} className="badge mb-6 inline-block">
+            <motion.span variants={fadeUp} className="badge mb-4 sm:mb-6 inline-block text-xs">
               Quantum Academy
             </motion.span>
 
-            <motion.h2 variants={fadeUp} className="font-display text-title text-light mb-8">
+            <motion.h2 variants={fadeUp} className="font-display text-2xl sm:text-3xl md:text-4xl text-light mb-6 sm:mb-8">
               Il sogno che non sapevo di sognare, diventato realtà.
             </motion.h2>
 
-            <motion.div variants={fadeUp} className="space-y-4 text-light/70 text-lg leading-relaxed mb-10">
-              <p className="text-gold font-medium text-xl">
+            <motion.div variants={fadeUp} className="space-y-3 sm:space-y-4 text-light/70 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10">
+              <p className="text-gold font-medium text-lg sm:text-xl">
                 Quantum Academy non è una scuola.
               </p>
               <p>È un luogo di trasformazione. È un portale. È un laboratorio di identità.</p>
@@ -389,7 +390,7 @@ function QuantumAcademySection() {
             </motion.div>
 
             <motion.div variants={fadeUp}>
-              <Link href="/quantum-academy" className="btn-primary">
+              <Link href="/quantum-academy" className="btn-primary text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
                 Entra in Quantum Academy
                 <ArrowRight className="ml-2 w-4 h-4" />
               </Link>
@@ -397,12 +398,12 @@ function QuantumAcademySection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, x: 60 }}
+            initial={{ opacity: 0, x: 40 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
-            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-            className="relative"
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
+            className="relative max-w-md mx-auto lg:max-w-none"
           >
-            <div className="relative aspect-square rounded-3xl overflow-hidden">
+            <div className="relative aspect-square rounded-2xl sm:rounded-3xl overflow-hidden">
               <Image
                 src="/images/quantum-academy.jpg"
                 alt="Quantum Academy"
@@ -410,8 +411,6 @@ function QuantumAcademySection() {
                 className="object-cover"
               />
             </div>
-            {/* Glow effect */}
-            <div className="absolute -inset-1 bg-gradient-gold opacity-20 blur-2xl rounded-3xl -z-10" />
           </motion.div>
         </div>
       </div>
@@ -433,8 +432,8 @@ function AlphakomSection() {
   ]
 
   return (
-    <section className="section-dark relative">
-      <div className="container-narrow text-center">
+    <section className="py-16 sm:py-20 lg:py-28 bg-dark relative">
+      <div className="container-narrow text-center px-4">
         <SectionTitle
           badge="Alphakom"
           title="La Scuola degli Alpha Leaders."
@@ -445,25 +444,19 @@ function AlphakomSection() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={stagger}
-          className="space-y-4 mb-12"
+          className="space-y-3 sm:space-y-4 mb-10 sm:mb-12"
         >
           {alphaPoints.map((point, index) => (
             <motion.p
               key={index}
               variants={fadeUp}
-              className="text-xl text-light/80"
+              className="text-base sm:text-lg md:text-xl text-light/80"
             >
               {point.includes('In-Flow') ? (
                 <>
                   {point.split('In-Flow')[0]}
                   <span className="text-gold font-medium">In-Flow</span>
                   {point.split('In-Flow')[1]}
-                </>
-              ) : point.includes('guidare') || point.includes('vedere') || point.includes('influenzare') || point.includes('ricchezza') ? (
-                <>
-                  {point.split(',')[0].split(' ').slice(0, -1).join(' ')}{' '}
-                  <span className="text-gold font-medium">{point.split(' ').find(w => ['guidare', 'vedere', 'influenzare', 'creare'].some(k => w.includes(k)))}</span>
-                  {point.includes(',') ? ', ' + point.split(',').slice(1).join(',') : point.split(point.split(' ').find(w => ['guidare', 'vedere', 'influenzare', 'creare'].some(k => w.includes(k))) || '')[1]}
                 </>
               ) : (
                 point
@@ -477,7 +470,7 @@ function AlphakomSection() {
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 0.5 }}
         >
-          <Link href="/alphakom" className="btn-primary">
+          <Link href="/alphakom" className="btn-primary text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
             Scopri Alphakom
             <ArrowRight className="ml-2 w-4 h-4" />
           </Link>
@@ -493,7 +486,7 @@ function QuoteSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section className="py-20 lg:py-28 bg-dark-50 relative overflow-hidden">
+    <section className="py-14 sm:py-20 lg:py-24 bg-dark-50 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-radial from-gold/5 via-transparent to-transparent" />
 
       <motion.div
@@ -501,14 +494,14 @@ function QuoteSection() {
         initial={{ opacity: 0, scale: 0.95 }}
         animate={isInView ? { opacity: 1, scale: 1 } : {}}
         transition={{ duration: 0.8 }}
-        className="container-narrow text-center relative z-10"
+        className="container-narrow text-center relative z-10 px-4"
       >
-        <div className="text-gold text-6xl font-serif mb-6">&ldquo;</div>
-        <p className="font-serif text-2xl md:text-3xl lg:text-4xl text-light leading-relaxed mb-8">
+        <div className="text-gold text-4xl sm:text-5xl lg:text-6xl font-serif mb-4 sm:mb-6">&ldquo;</div>
+        <p className="font-serif text-xl sm:text-2xl md:text-3xl lg:text-4xl text-light leading-relaxed mb-6 sm:mb-8">
           Non sei quello che ti è successo.<br />
           Sei quello che scegli di diventare.
         </p>
-        <p className="text-gold font-medium">— Luca Pellicari</p>
+        <p className="text-gold font-medium text-sm sm:text-base">— Luca Pellicari</p>
       </motion.div>
     </section>
   )
@@ -530,7 +523,7 @@ function PercorsiSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section className="section-light">
+    <section className="py-16 sm:py-20 lg:py-28 bg-light">
       <div className="container-custom">
         <SectionTitle
           badge="Cosa Possiamo Fare Insieme"
@@ -543,19 +536,19 @@ function PercorsiSection() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={stagger}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-12"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-10 sm:mb-12"
         >
           {percorsiItems.map((item) => (
             <motion.div
               key={item}
               variants={fadeUp}
               whileHover={{ x: 8 }}
-              className="flex items-center gap-4 bg-white rounded-2xl p-5 border border-light-100 hover:border-gold/30 hover:shadow-card-hover transition-all cursor-pointer"
+              className="flex items-center gap-3 sm:gap-4 bg-white rounded-xl sm:rounded-2xl p-4 sm:p-5 border border-light-100 hover:border-gold/30 hover:shadow-card-hover transition-all cursor-pointer h-full min-h-[70px]"
             >
-              <div className="w-10 h-10 rounded-xl bg-gold/10 flex items-center justify-center flex-shrink-0">
+              <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-gold/10 flex items-center justify-center flex-shrink-0">
                 <ArrowRight className="w-4 h-4 text-gold" />
               </div>
-              <span className="text-dark font-medium">{item}</span>
+              <span className="text-dark font-medium text-sm sm:text-base">{item}</span>
             </motion.div>
           ))}
         </motion.div>
@@ -577,31 +570,31 @@ function MetodoSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section className="section-dark relative overflow-hidden">
+    <section className="py-16 sm:py-20 lg:py-28 bg-dark relative overflow-hidden">
       <div className="absolute inset-0">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-gold/5 rounded-full blur-[150px]" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] sm:w-[800px] lg:w-[1000px] h-[300px] sm:h-[400px] lg:h-[500px] bg-gold/5 rounded-full blur-[100px] sm:blur-[150px]" />
       </div>
 
-      <div className="container-narrow text-center relative z-10">
+      <div className="container-narrow text-center relative z-10 px-4">
         <motion.div
           ref={ref}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={stagger}
         >
-          <motion.span variants={fadeUp} className="badge mb-6 inline-block">
+          <motion.span variants={fadeUp} className="badge mb-4 sm:mb-6 inline-block text-xs">
             Il Mio Metodo
           </motion.span>
 
-          <motion.h2 variants={fadeUp} className="font-display text-display text-gradient-gold mb-4">
+          <motion.h2 variants={fadeUp} className="font-display text-4xl sm:text-5xl md:text-6xl text-gradient-gold mb-3 sm:mb-4">
             In-Flow
           </motion.h2>
 
-          <motion.p variants={fadeUp} className="font-serif text-2xl text-gold/80 italic mb-10">
+          <motion.p variants={fadeUp} className="font-serif text-lg sm:text-xl md:text-2xl text-gold/80 italic mb-8 sm:mb-10">
             La scienza dell'identità, la bellezza della verità.
           </motion.p>
 
-          <motion.div variants={fadeUp} className="space-y-4 text-lg text-light/70 leading-relaxed mb-12">
+          <motion.div variants={fadeUp} className="space-y-3 sm:space-y-4 text-base sm:text-lg text-light/70 leading-relaxed mb-10 sm:mb-12">
             <p>
               Ogni persona può entrare nel suo <span className="text-gold">stato naturale</span>:
             </p>
@@ -617,7 +610,7 @@ function MetodoSection() {
           </motion.div>
 
           <motion.div variants={fadeUp}>
-            <Link href="/metodo-in-flow" className="btn-primary">
+            <Link href="/metodo-in-flow" className="btn-primary text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
               Scopri In-Flow
               <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
@@ -640,7 +633,7 @@ function LibriSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section className="section-darker">
+    <section className="py-16 sm:py-20 lg:py-28 bg-dark-50">
       <div className="container-custom">
         <SectionTitle
           badge="I Miei Libri"
@@ -652,27 +645,27 @@ function LibriSection() {
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={stagger}
-          className="grid md:grid-cols-3 gap-6 lg:gap-8 mb-12"
+          className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-10 sm:mb-12"
         >
           {libri.map((libro) => (
             <motion.div
               key={libro.title}
               variants={fadeUp}
-              whileHover={{ y: -12 }}
-              className="group relative bg-dark rounded-3xl overflow-hidden cursor-pointer"
+              whileHover={{ y: -8 }}
+              className="group relative bg-dark rounded-2xl sm:rounded-3xl overflow-hidden cursor-pointer h-full"
             >
-              <div className="aspect-[3/4] relative bg-gradient-to-br from-dark-100 to-dark-200 flex items-center justify-center">
-                <BookOpen className="w-20 h-20 text-gold/20 group-hover:text-gold/40 transition-colors" />
+              <div className="aspect-[4/3] sm:aspect-[3/4] relative bg-gradient-to-br from-dark-100 to-dark-200 flex items-center justify-center">
+                <BookOpen className="w-14 h-14 sm:w-16 sm:h-16 text-gold/20 group-hover:text-gold/40 transition-colors" />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent" />
               </div>
-              <div className="absolute bottom-0 left-0 right-0 p-6">
-                <p className="text-gold/60 text-sm mb-1">{libro.subtitle}</p>
-                <h3 className="font-display text-xl text-light font-medium">
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+                <p className="text-gold/60 text-xs sm:text-sm mb-1">{libro.subtitle}</p>
+                <h3 className="font-display text-base sm:text-lg lg:text-xl text-light font-medium">
                   {libro.title}
                 </h3>
               </div>
               {/* Hover glow */}
-              <div className="absolute inset-0 border border-gold/0 group-hover:border-gold/30 rounded-3xl transition-colors" />
+              <div className="absolute inset-0 border border-gold/0 group-hover:border-gold/30 rounded-2xl sm:rounded-3xl transition-colors" />
             </motion.div>
           ))}
         </motion.div>
@@ -695,32 +688,32 @@ function BlogSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section className="section-dark">
-      <div className="container-narrow text-center">
+    <section className="py-16 sm:py-20 lg:py-28 bg-dark">
+      <div className="container-narrow text-center px-4">
         <motion.div
           ref={ref}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={stagger}
         >
-          <motion.div variants={fadeUp} className="w-20 h-20 rounded-2xl bg-gold/10 flex items-center justify-center mx-auto mb-8">
-            <Pen className="w-8 h-8 text-gold" />
+          <motion.div variants={fadeUp} className="w-14 h-14 sm:w-16 sm:h-16 lg:w-20 lg:h-20 rounded-xl sm:rounded-2xl bg-gold/10 flex items-center justify-center mx-auto mb-6 sm:mb-8">
+            <Pen className="w-6 h-6 sm:w-7 sm:h-7 lg:w-8 lg:h-8 text-gold" />
           </motion.div>
 
-          <motion.span variants={fadeUp} className="badge mb-6 inline-block">
+          <motion.span variants={fadeUp} className="badge mb-4 sm:mb-6 inline-block text-xs">
             Blog
           </motion.span>
 
-          <motion.h2 variants={fadeUp} className="font-display text-title text-light mb-6">
-            Pensieri liberi. Verità condivise.<br />Identità che si aprono.
+          <motion.h2 variants={fadeUp} className="font-display text-2xl sm:text-3xl md:text-4xl text-light mb-4 sm:mb-6">
+            Pensieri liberi. Verità condivise.<br className="hidden sm:block" />Identità che si aprono.
           </motion.h2>
 
-          <motion.p variants={fadeUp} className="text-lg text-light/70 leading-relaxed mb-10">
+          <motion.p variants={fadeUp} className="text-base sm:text-lg text-light/70 leading-relaxed mb-8 sm:mb-10">
             Scrivo per raccontare, per comprendere e per far vibrare qualcosa dentro chi legge.
           </motion.p>
 
           <motion.div variants={fadeUp}>
-            <Link href="/blog" className="btn-primary">
+            <Link href="/blog" className="btn-primary text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
               Leggi gli articoli
               <ArrowRight className="ml-2 w-4 h-4" />
             </Link>
@@ -737,43 +730,43 @@ function ContattiSection() {
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
   return (
-    <section className="py-32 lg:py-40 bg-gradient-to-b from-dark-50 to-dark relative overflow-hidden">
+    <section className="py-20 sm:py-28 lg:py-36 bg-gradient-to-b from-dark-50 to-dark relative overflow-hidden">
       <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gold/10 rounded-full blur-[200px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[500px] lg:w-[600px] h-[400px] sm:h-[500px] lg:h-[600px] bg-gold/10 rounded-full blur-[150px] sm:blur-[200px]" />
       </div>
 
-      <div className="container-narrow text-center relative z-10">
+      <div className="container-narrow text-center relative z-10 px-4">
         <motion.div
           ref={ref}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
           variants={stagger}
         >
-          <motion.div variants={fadeUp} className="w-24 h-24 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-8 border border-gold/20">
-            <Mail className="w-10 h-10 text-gold" />
+          <motion.div variants={fadeUp} className="w-16 h-16 sm:w-20 sm:h-20 lg:w-24 lg:h-24 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-6 sm:mb-8 border border-gold/20">
+            <Mail className="w-7 h-7 sm:w-8 sm:h-8 lg:w-10 lg:h-10 text-gold" />
           </motion.div>
 
-          <motion.span variants={fadeUp} className="badge mb-6 inline-block">
+          <motion.span variants={fadeUp} className="badge mb-4 sm:mb-6 inline-block text-xs">
             Contatti
           </motion.span>
 
-          <motion.h2 variants={fadeUp} className="font-display text-title text-light mb-8">
+          <motion.h2 variants={fadeUp} className="font-display text-2xl sm:text-3xl md:text-4xl text-light mb-6 sm:mb-8">
             Vuoi lavorare con me?
           </motion.h2>
 
-          <motion.div variants={fadeUp} className="space-y-2 text-xl text-light/70 mb-8">
+          <motion.div variants={fadeUp} className="space-y-2 text-base sm:text-lg md:text-xl text-light/70 mb-6 sm:mb-8">
             <p>Vuoi portarmi nella tua azienda?</p>
             <p>Vuoi iniziare il tuo percorso identitario?</p>
           </motion.div>
 
-          <motion.p variants={fadeUp} className="font-serif text-2xl text-light mb-12">
+          <motion.p variants={fadeUp} className="font-serif text-xl sm:text-2xl text-light mb-8 sm:mb-10">
             Scrivimi. <span className="text-gold">Sono qui.</span>
           </motion.p>
 
           <motion.div variants={fadeUp}>
-            <Link href="/contatti" className="btn-primary text-lg px-10 py-5">
+            <Link href="/contatti" className="btn-primary text-sm sm:text-base md:text-lg px-8 sm:px-10 py-3 sm:py-4 md:py-5">
               Contattami
-              <ArrowRight className="ml-2 w-5 h-5" />
+              <ArrowRight className="ml-2 w-4 h-4 sm:w-5 sm:h-5" />
             </Link>
           </motion.div>
         </motion.div>
