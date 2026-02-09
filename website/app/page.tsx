@@ -31,7 +31,7 @@ const stagger = {
 // Hero Slider Data
 const heroSlides = [
   {
-    image: '/images/hero-bg.jpg',
+    image: '/images/hero-1.jpg',
     subtitle: 'Benvenuto',
     title: 'Adesso siamo qui,',
     highlight: 'tu ed io.',
@@ -39,17 +39,17 @@ const heroSlides = [
   },
   {
     image: '/images/hero-2.jpg',
-    subtitle: 'Il Metodo',
-    title: 'Entra nel tuo',
-    highlight: 'stato naturale.',
-    description: 'In-Flow: la scienza dell\'identità, la bellezza della verità.',
-  },
-  {
-    image: '/images/hero-3.jpg',
     subtitle: 'La Missione',
     title: 'Trasformo le persone',
     highlight: 'aiutandole a riconoscersi.',
     description: 'Non sei quello che ti è successo. Sei quello che scegli di diventare.',
+  },
+  {
+    image: '/images/hero-3.jpg',
+    subtitle: 'Il Metodo',
+    title: 'Entra nel tuo',
+    highlight: 'stato naturale.',
+    description: 'In-Flow: la scienza dell\'identità, la bellezza della verità.',
   },
 ]
 
@@ -500,14 +500,39 @@ function QuantumAcademySection() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
             className="relative max-w-md mx-auto lg:max-w-none"
           >
-            <div className="relative aspect-square rounded-2xl sm:rounded-3xl overflow-hidden">
-              <Image
-                src="/images/quantum-academy.jpg"
-                alt="Quantum Academy"
-                fill
-                className="object-cover"
-              />
+            {/* Image Grid */}
+            <div className="grid grid-cols-2 gap-3 sm:gap-4">
+              {/* Main Image - Presenting */}
+              <div className="col-span-2 relative aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden">
+                <Image
+                  src="/images/quantum-academy.jpg"
+                  alt="Luca Pellicari at Quantum Academy"
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
+              </div>
+              {/* Team Photo */}
+              <div className="relative aspect-square rounded-xl sm:rounded-2xl overflow-hidden">
+                <Image
+                  src="/images/quantum-team.jpg"
+                  alt="Luca e Lucia - Quantum Academy"
+                  fill
+                  className="object-cover"
+                />
+              </div>
+              {/* Event Photo */}
+              <div className="relative aspect-square rounded-xl sm:rounded-2xl overflow-hidden">
+                <Image
+                  src="/images/quantum-event.jpg"
+                  alt="Quantum Academy Event"
+                  fill
+                  className="object-cover"
+                />
+              </div>
             </div>
+            {/* Decorative Frame */}
+            <div className="hidden lg:block absolute -inset-4 border border-gold/10 rounded-3xl -z-10" />
           </motion.div>
         </div>
       </div>
@@ -529,49 +554,87 @@ function AlphakomSection() {
   ]
 
   return (
-    <section className="py-16 sm:py-20 lg:py-28 bg-dark relative">
-      <div className="container-narrow text-center px-4">
-        <SectionTitle
-          badge="Alphakom"
-          title="La Scuola degli Alpha Leaders."
+    <section className="py-16 sm:py-20 lg:py-28 bg-dark relative overflow-hidden">
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/alphakom-event.jpg"
+          alt="Alphakom Event"
+          fill
+          className="object-cover opacity-20"
         />
+        <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark/95 to-dark" />
+      </div>
 
-        <motion.div
-          ref={ref}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          variants={stagger}
-          className="space-y-3 sm:space-y-4 mb-10 sm:mb-12"
-        >
-          {alphaPoints.map((point, index) => (
-            <motion.p
-              key={index}
-              variants={fadeUp}
-              className="text-base sm:text-lg md:text-xl text-light/80"
+      <div className="container-custom relative z-10">
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          {/* Content */}
+          <div className="text-center lg:text-left">
+            <SectionTitle
+              badge="Alphakom"
+              title="La Scuola degli Alpha Leaders."
+              center={false}
+            />
+
+            <motion.div
+              ref={ref}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              variants={stagger}
+              className="space-y-3 sm:space-y-4 mb-10 sm:mb-12"
             >
-              {point.includes('In-Flow') ? (
-                <>
-                  {point.split('In-Flow')[0]}
-                  <span className="text-gold font-medium">In-Flow</span>
-                  {point.split('In-Flow')[1]}
-                </>
-              ) : (
-                point
-              )}
-            </motion.p>
-          ))}
-        </motion.div>
+              {alphaPoints.map((point, index) => (
+                <motion.p
+                  key={index}
+                  variants={fadeUp}
+                  className="text-base sm:text-lg md:text-xl text-light/80 flex items-start gap-3"
+                >
+                  <span className="w-2 h-2 rounded-full bg-gold mt-2 flex-shrink-0" />
+                  {point.includes('In-Flow') ? (
+                    <>
+                      {point.split('In-Flow')[0]}
+                      <span className="text-gold font-medium">In-Flow</span>
+                      {point.split('In-Flow')[1]}
+                    </>
+                  ) : (
+                    point
+                  )}
+                </motion.p>
+              ))}
+            </motion.div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ delay: 0.5 }}
-        >
-          <Link href="/alphakom" className="btn-primary text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
-            Scopri Alphakom
-            <ArrowRight className="ml-2 w-4 h-4" />
-          </Link>
-        </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.5 }}
+            >
+              <Link href="/alphakom" className="btn-primary text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
+                Scopri Alphakom
+                <ArrowRight className="ml-2 w-4 h-4" />
+              </Link>
+            </motion.div>
+          </div>
+
+          {/* Image */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
+            className="relative hidden lg:block"
+          >
+            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
+              <Image
+                src="/images/luca-speaking.jpg"
+                alt="Luca Pellicari Speaking"
+                fill
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
+            </div>
+            {/* Decorative */}
+            <div className="absolute -inset-4 border border-gold/10 rounded-3xl -z-10" />
+          </motion.div>
+        </div>
       </div>
     </section>
   )
