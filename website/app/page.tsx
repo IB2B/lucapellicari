@@ -151,6 +151,7 @@ function HeroSection() {
             className="object-cover"
             priority
             quality={95}
+            unoptimized
           />
           {/* Gradient Overlays */}
           <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/60 to-dark/30" />
@@ -325,6 +326,7 @@ function ChiSonoSection() {
                 alt="Luca Pellicari"
                 fill
                 className="object-cover"
+                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
             </div>
@@ -509,6 +511,7 @@ function QuantumAcademySection() {
                   alt="Luca Pellicari at Quantum Academy"
                   fill
                   className="object-cover"
+                  unoptimized
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
               </div>
@@ -519,6 +522,7 @@ function QuantumAcademySection() {
                   alt="Luca e Lucia - Quantum Academy"
                   fill
                   className="object-cover"
+                  unoptimized
                 />
               </div>
               {/* Event Photo */}
@@ -528,6 +532,7 @@ function QuantumAcademySection() {
                   alt="Quantum Academy Event"
                   fill
                   className="object-cover"
+                  unoptimized
                 />
               </div>
             </div>
@@ -562,6 +567,7 @@ function AlphakomSection() {
           alt="Alphakom Event"
           fill
           className="object-cover opacity-20"
+          unoptimized
         />
         <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark/95 to-dark" />
       </div>
@@ -628,6 +634,7 @@ function AlphakomSection() {
                 alt="Luca Pellicari Speaking"
                 fill
                 className="object-cover"
+                unoptimized
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
             </div>
