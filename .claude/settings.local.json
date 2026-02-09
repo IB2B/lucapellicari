@@ -1,0 +1,35 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(chcp 6500)",
+      "Bash(powershell -Command \"[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; python -c \"\"import zipfile; import xml.etree.ElementTree as ET; import sys; sys.stdout.reconfigure(encoding=''utf-8''); z = zipfile.ZipFile(r''C:\\Users\\AnasAkil\\Desktop\\lucapellicari\\2 - LUCA PELLICARI\\1 - SITO LUCA - schema principale 21.11.25.docx''); xml_content = z.read(''word/document.xml''); tree = ET.fromstring(xml_content); print('' ''.join(t.text for t in tree.iter() if t.text))\"\"\")",
+      "Bash(powershell -Command \"[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; python -c \"\"import zipfile; import xml.etree.ElementTree as ET; import sys; sys.stdout.reconfigure(encoding=''utf-8''); z = zipfile.ZipFile(r''C:\\Users\\AnasAkil\\Desktop\\lucapellicari\\2 - LUCA PELLICARI\\CHI SONO.docx''); xml_content = z.read(''word/document.xml''); tree = ET.fromstring(xml_content); print('' ''.join(t.text for t in tree.iter() if t.text))\"\"\")",
+      "Bash(powershell -Command \"[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; python -c \"\"import zipfile; import xml.etree.ElementTree as ET; import sys; sys.stdout.reconfigure(encoding=''utf-8''); z = zipfile.ZipFile(r''C:\\Users\\AnasAkil\\Desktop\\lucapellicari\\2 - LUCA PELLICARI\\METODO ALPHA.docx''); xml_content = z.read(''word/document.xml''); tree = ET.fromstring(xml_content); print('' ''.join(t.text for t in tree.iter() if t.text))\"\"\")",
+      "Bash(powershell -Command \"[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; python -c \"\"import zipfile; import xml.etree.ElementTree as ET; import sys; sys.stdout.reconfigure(encoding=''utf-8''); z = zipfile.ZipFile(r''C:\\Users\\AnasAkil\\Desktop\\lucapellicari\\2 - LUCA PELLICARI\\I MIEI VALORI.docx''); xml_content = z.read(''word/document.xml''); tree = ET.fromstring(xml_content); print('' ''.join(t.text for t in tree.iter() if t.text))\"\"\")",
+      "Bash(powershell -Command \"[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; python -c \"\"import zipfile; import xml.etree.ElementTree as ET; import sys; sys.stdout.reconfigure(encoding=''utf-8''); z = zipfile.ZipFile(r''C:\\Users\\AnasAkil\\Desktop\\lucapellicari\\2 - LUCA PELLICARI\\IDEE PER POST.docx''); xml_content = z.read(''word/document.xml''); tree = ET.fromstring(xml_content); print('' ''.join(t.text for t in tree.iter() if t.text))\"\"\")",
+      "Bash(powershell -Command \"[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; python -c \"\"import zipfile; import xml.etree.ElementTree as ET; import sys; sys.stdout.reconfigure(encoding=''utf-8''); z = zipfile.ZipFile(r''C:\\Users\\AnasAkil\\Desktop\\lucapellicari\\2 - LUCA PELLICARI\\MISSION.docx''); xml_content = z.read(''word/document.xml''); tree = ET.fromstring(xml_content); print('' ''.join(t.text for t in tree.iter() if t.text))\"\"\")",
+      "Bash(powershell -Command \"[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; python -c \"\"import zipfile; import xml.etree.ElementTree as ET; import sys; sys.stdout.reconfigure(encoding=''utf-8''); z = zipfile.ZipFile(r''C:\\Users\\AnasAkil\\Desktop\\lucapellicari\\2 - LUCA PELLICARI\\🎯 MISSIONE.docx''); xml_content = z.read(''word/document.xml''); tree = ET.fromstring(xml_content); print('' ''.join(t.text for t in tree.iter() if t.text))\"\"\")",
+      "Bash(powershell -Command \"[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; python -c \"\"import zipfile; import xml.etree.ElementTree as ET; import sys; sys.stdout.reconfigure(encoding=''utf-8''); z = zipfile.ZipFile(r''C:\\Users\\AnasAkil\\Desktop\\lucapellicari\\2 - LUCA PELLICARI\\🌟 VISIONE.docx''); xml_content = z.read(''word/document.xml''); tree = ET.fromstring(xml_content); print('' ''.join(t.text for t in tree.iter() if t.text))\"\"\")",
+      "Bash(powershell -Command \"[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; python -c \"\"import zipfile; import xml.etree.ElementTree as ET; import sys; sys.stdout.reconfigure(encoding=''utf-8''); z = zipfile.ZipFile(r''C:\\Users\\AnasAkil\\Desktop\\lucapellicari\\2 - LUCA PELLICARI\\🌟 HOME PAGE.docx''); xml_content = z.read(''word/document.xml''); tree = ET.fromstring(xml_content); print('' ''.join(t.text for t in tree.iter() if t.text))\"\"\")",
+      "Bash(powershell -Command \"[Console]::OutputEncoding = [System.Text.Encoding]::UTF8; python -c \"\"import zipfile; import xml.etree.ElementTree as ET; import sys; sys.stdout.reconfigure(encoding=''utf-8''); z = zipfile.ZipFile(r''C:\\Users\\AnasAkil\\Desktop\\lucapellicari\\2 - LUCA PELLICARI\\📌 ABSTRACT OPERATIVO PER LA COSTRUZIONE DEL SITO DI LUCA PELLICARI.docx''); xml_content = z.read(''word/document.xml''); tree = ET.fromstring(xml_content); print('' ''.join(t.text for t in tree.iter() if t.text))\"\"\")",
+      "Bash(npx create-next-app@latest website --typescript --tailwind --eslint --app --src-dir=false --import-alias=\"@/*\" --use-npm)",
+      "Bash(npx create-next-app@latest website --typescript --tailwind --eslint --app --src-dir=false --import-alias=\"@/*\" --use-npm --no-turbopack)",
+      "Bash(npm install:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(powershell -Command:*)",
+      "Bash(dir \"C:\\Users\\AnasAkil\\Desktop\\lucapellicari\\website\\public\\images\")",
+      "Bash(npm run build:*)",
+      "Bash(npm run dev:*)",
+      "Bash(taskkill:*)",
+      "Bash(dir \"C:\\Users\\AnasAkil\\Desktop\\lucapellicari\\2 - LUCA PELLICARI\")",
+      "Bash(powershell -Command \"$word = New-Object -ComObject Word.Application; $word.Visible = $false; $doc = $word.Documents.Open((Get-Location).Path + ''\\CHI SONO.docx''); $doc.Content.Text; $doc.Close(); $word.Quit()\")",
+      "Bash(chcp:*)",
+      "Bash(git init:*)",
+      "Bash(git remote add:*)",
+      "Bash(git add:*)",
+      "Bash(dir:*)",
+      "Bash(git reset:*)"
+    ]
+  }
+}

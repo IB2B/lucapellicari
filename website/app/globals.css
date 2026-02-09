@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-gold: #C9A962;
+    --color-copper: #B87333;
+    --color-dark: #0A0A0A;
+    --color-light: #FAFAF9;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-dark text-light-surface antialiased;
+    font-feature-settings: 'rlig' 1, 'calt' 1;
+  }
+
+  ::selection {
+    @apply bg-gold/30 text-light-surface;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-dark;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-gold/50 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-gold;
+  }
+}
+
+@layer components {
+  /* Text gradient */
+  .text-gradient {
+    @apply bg-gradient-gold bg-clip-text text-transparent;
+  }
+
+  /* Section styles */
+  .section-dark {
+    @apply bg-dark text-light-surface;
+  }
+
+  .section-light {
+    @apply bg-light text-dark;
+  }
+
+  /* Container */
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Heading styles */
+  .heading-display {
+    @apply font-serif font-bold tracking-tight;
+  }
+
+  .heading-section {
+    @apply font-serif text-4xl md:text-5xl lg:text-6xl font-bold;
+  }
+
+  .heading-subsection {
+    @apply font-serif text-2xl md:text-3xl lg:text-4xl font-semibold;
+  }
+
+  /* Body text */
+  .text-body {
+    @apply font-sans text-lg leading-relaxed;
+  }
+
+  .text-body-lg {
+    @apply font-sans text-xl leading-relaxed;
+  }
+
+  /* Button base styles */
+  .btn {
+    @apply inline-flex items-center justify-center px-8 py-4 font-sans font-medium text-base
+           transition-all duration-300 rounded-sm;
+    transition-timing-function: cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
+  .btn-primary {
+    @apply btn bg-gold text-dark hover:bg-gold-light hover:shadow-glow;
+  }
+
+  .btn-secondary {
+    @apply btn bg-transparent text-gold border border-gold hover:bg-gold hover:text-dark;
+  }
+
+  .btn-ghost {
+    @apply btn bg-transparent text-light-surface hover:text-gold;
+  }
+
+  /* Card styles */
+  .card {
+    @apply bg-dark-surface rounded-lg p-6 transition-all duration-300;
+  }
+
+  .card-hover {
+    @apply card hover:bg-dark-lighter hover:shadow-inner-glow hover:translate-y-[-4px];
+  }
+
+  /* Divider */
+  .divider {
+    @apply w-20 h-0.5 bg-gradient-gold;
+  }
+
+  /* Overlay */
+  .overlay-dark {
+    @apply absolute inset-0 bg-gradient-to-b from-dark/80 via-dark/50 to-dark;
+  }
+
+  .overlay-gradient {
+    @apply absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent;
+  }
+}
+
+@layer utilities {
+  /* Animation delays */
+  .animation-delay-100 { animation-delay: 100ms; }
+  .animation-delay-200 { animation-delay: 200ms; }
+  .animation-delay-300 { animation-delay: 300ms; }
+  .animation-delay-400 { animation-delay: 400ms; }
+  .animation-delay-500 { animation-delay: 500ms; }
+
+  /* Text balance */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Perspective for 3D */
+  .perspective {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
+
+  /* Hide scrollbar but allow scroll */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Smooth image */
+  .image-smooth {
+    image-rendering: -webkit-optimize-contrast;
+  }
+
+  /* Line clamp */
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+
+/* Lenis smooth scroll */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
