@@ -150,9 +150,9 @@ function HeroSection() {
             fill
             className="object-cover object-center"
             priority
-            quality={95}
-            unoptimized
+            quality={85}
             sizes="100vw"
+            loading="eager"
           />
           {/* Gradient Overlays */}
           <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/60 to-dark/30" />
@@ -327,7 +327,7 @@ function ChiSonoSection() {
                 alt="Luca Pellicari"
                 fill
                 className="object-cover object-top"
-                unoptimized
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
             </div>
@@ -512,7 +512,7 @@ function QuantumAcademySection() {
                   alt="Luca Pellicari at Quantum Academy"
                   fill
                   className="object-cover"
-                  unoptimized
+                  sizes="(max-width: 768px) 100vw, 50vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
               </div>
@@ -523,7 +523,7 @@ function QuantumAcademySection() {
                   alt="Luca e Lucia - Quantum Academy"
                   fill
                   className="object-cover"
-                  unoptimized
+                  sizes="(max-width: 768px) 50vw, 25vw"
                 />
               </div>
               {/* Event Photo */}
@@ -533,7 +533,7 @@ function QuantumAcademySection() {
                   alt="Quantum Academy Event"
                   fill
                   className="object-cover"
-                  unoptimized
+                  sizes="(max-width: 768px) 50vw, 25vw"
                 />
               </div>
             </div>
@@ -568,7 +568,7 @@ function AlphakomSection() {
           alt="Alphakom Event"
           fill
           className="object-cover opacity-20"
-          unoptimized
+          sizes="100vw"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-dark via-dark/95 to-dark" />
       </div>
@@ -635,7 +635,7 @@ function AlphakomSection() {
                 alt="Luca Pellicari Speaking"
                 fill
                 className="object-cover"
-                unoptimized
+                sizes="(max-width: 1024px) 100vw, 50vw"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
             </div>
