@@ -14,18 +14,18 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-dark-surface border-t border-dark-lighter">
+    <footer className="bg-navy-dark border-t border-teal/20">
       {/* Main Footer */}
       <div className="container-custom py-16 md:py-24">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-2">
-            <Link href="/" className="inline-block mb-6">
-              <span className="font-serif text-3xl font-bold text-light-surface">
-                Luca <span className="text-gold">Pellicari</span>
+            <Link href="/" className="inline-block mb-6 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm">
+              <span className="font-display text-3xl font-bold text-white">
+                Luca <span className="text-teal-light">Pellicari</span>
               </span>
             </Link>
-            <p className="text-light-surface/70 text-lg leading-relaxed max-w-md mb-8">
+            <p className="text-teal-50 text-lg leading-relaxed max-w-md mb-8">
               Trasformo le persone aiutandole a riconoscersi.
               Identity Coach, Speaker, Autore e Fondatore di Quantum Academy.
             </p>
@@ -38,7 +38,7 @@ export function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-12 h-12 rounded-full bg-dark flex items-center justify-center text-light-surface/70 hover:text-gold hover:bg-dark-lighter transition-all duration-300"
+                  className="w-12 h-12 rounded-full bg-navy flex items-center justify-center text-teal-50 hover:text-teal-light hover:bg-navy-light transition-all duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal"
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                   aria-label={social.label}
@@ -51,7 +51,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h4 className="font-serif text-lg font-semibold text-light-surface mb-6">
+            <h4 className="font-display text-lg font-semibold text-white mb-6">
               Navigazione
             </h4>
             <ul className="space-y-3">
@@ -59,7 +59,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-light-surface/70 hover:text-gold transition-colors duration-300 inline-flex items-center gap-1 group"
+                    className="text-teal-50 hover:text-teal-light transition-colors duration-300 inline-flex items-center gap-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
                   >
                     {link.label}
                     <ArrowUpRight
@@ -74,14 +74,14 @@ export function Footer() {
 
           {/* Projects & Contact */}
           <div>
-            <h4 className="font-serif text-lg font-semibold text-light-surface mb-6">
+            <h4 className="font-display text-lg font-semibold text-white mb-6">
               Progetti
             </h4>
             <ul className="space-y-3 mb-8">
               <li>
                 <Link
                   href="/quantum-academy"
-                  className="text-light-surface/70 hover:text-gold transition-colors duration-300"
+                  className="text-teal-50 hover:text-teal-light transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
                 >
                   Quantum Academy
                 </Link>
@@ -89,7 +89,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/alphakom"
-                  className="text-light-surface/70 hover:text-gold transition-colors duration-300"
+                  className="text-teal-50 hover:text-teal-light transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
                 >
                   Alphakom
                 </Link>
@@ -97,7 +97,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/metodo-in-flow"
-                  className="text-light-surface/70 hover:text-gold transition-colors duration-300"
+                  className="text-teal-50 hover:text-teal-light transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
                 >
                   Metodo In-Flow
                 </Link>
@@ -105,19 +105,27 @@ export function Footer() {
               <li>
                 <Link
                   href="/libri"
-                  className="text-light-surface/70 hover:text-gold transition-colors duration-300"
+                  className="text-teal-50 hover:text-teal-light transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
                 >
                   I Miei Libri
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/blog"
+                  className="text-teal-50 hover:text-teal-light transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
+                >
+                  Blog
+                </Link>
+              </li>
             </ul>
 
-            <h4 className="font-serif text-lg font-semibold text-light-surface mb-4">
+            <h4 className="font-display text-lg font-semibold text-white mb-4">
               Contatti
             </h4>
             <a
               href="mailto:info@lucapellicari.com"
-              className="text-gold hover:text-gold-light transition-colors duration-300 inline-flex items-center gap-2"
+              className="text-coral hover:text-coral-light transition-colors duration-300 inline-flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
             >
               <Mail size={18} />
               info@lucapellicari.com
@@ -127,21 +135,21 @@ export function Footer() {
       </div>
 
       {/* Bottom Bar */}
-      <div className="border-t border-dark-lighter">
+      <div className="border-t border-teal/20">
         <div className="container-custom py-6 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-light-surface/50 text-sm">
+          <p className="text-teal-50/60 text-sm">
             &copy; {new Date().getFullYear()} Luca Pellicari. Tutti i diritti riservati.
           </p>
           <div className="flex gap-6 text-sm">
             <Link
               href="/privacy"
-              className="text-light-surface/50 hover:text-gold transition-colors"
+              className="text-teal-50/60 hover:text-teal-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
             >
               Privacy Policy
             </Link>
             <Link
               href="/cookie"
-              className="text-light-surface/50 hover:text-gold transition-colors"
+              className="text-teal-50/60 hover:text-teal-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
             >
               Cookie Policy
             </Link>

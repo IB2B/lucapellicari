@@ -1,20 +1,27 @@
 import type { Metadata } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { DM_Sans, Playfair_Display, Cormorant_Garamond } from 'next/font/google'
 import './globals.css'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { SmoothScroll } from '@/components/animations/SmoothScroll'
 import { SITE_CONFIG } from '@/lib/constants'
 
-const inter = Inter({
+const dmSans = DM_Sans({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-sans',
   display: 'swap',
 })
 
 const playfair = Playfair_Display({
   subsets: ['latin'],
-  variable: '--font-playfair',
+  variable: '--font-display',
+  display: 'swap',
+})
+
+const cormorant = Cormorant_Garamond({
+  subsets: ['latin'],
+  variable: '--font-serif',
+  weight: ['300', '400', '500', '600', '700'],
   display: 'swap',
 })
 
@@ -61,11 +68,17 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="it" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="it" className={`${dmSans.variable} ${playfair.variable} ${cormorant.variable}`}>
+      <head>
+        {/* Preload critical hero images for faster LCP */}
+        <link rel="preload" as="image" href="/images/hero-1.jpg" type="image/jpeg" />
+        <link rel="preload" as="image" href="/images/hero-2.jpg" type="image/jpeg" />
+        <link rel="preload" as="image" href="/images/hero-3.jpg" type="image/jpeg" />
+      </head>
       <body className="font-sans">
         <SmoothScroll>
           <Header />
-          <main>{children}</main>
+          <main id="main-content">{children}</main>
           <Footer />
         </SmoothScroll>
       </body>
