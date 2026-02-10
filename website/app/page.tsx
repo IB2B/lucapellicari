@@ -133,6 +133,21 @@ function HeroSection() {
 
   return (
     <section ref={containerRef} className="relative h-screen overflow-hidden">
+      {/* Preload all hero images */}
+      <div className="hidden">
+        {heroSlides.map((slide, index) => (
+          <Image
+            key={index}
+            src={slide.image}
+            alt=""
+            width={1920}
+            height={1080}
+            priority
+            quality={75}
+          />
+        ))}
+      </div>
+
       {/* Background Slider */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -140,7 +155,7 @@ function HeroSection() {
           initial={{ opacity: 0, scale: 1.1 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
           className="absolute inset-0"
           style={{ scale }}
         >
@@ -150,9 +165,8 @@ function HeroSection() {
             fill
             className="object-cover object-center"
             priority
-            quality={85}
+            quality={75}
             sizes="100vw"
-            loading="eager"
           />
           {/* Gradient Overlays */}
           <div className="absolute inset-0 bg-gradient-to-r from-dark/90 via-dark/60 to-dark/30" />
