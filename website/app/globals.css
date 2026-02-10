@@ -113,8 +113,8 @@
   }
 
   .card-glass {
-    @apply bg-dark-50/50 backdrop-blur-xl rounded-3xl p-8 border border-white/5
-           transition-all duration-500;
+    @apply bg-dark-50/80 rounded-3xl p-8 border border-white/5
+           transition-all duration-300;
   }
 
   /* Section Styles */
@@ -195,6 +195,8 @@
   .animation-delay-600 { animation-delay: 600ms; }
   .animation-delay-700 { animation-delay: 700ms; }
   .animation-delay-800 { animation-delay: 800ms; }
+  .animation-delay-1000 { animation-delay: 1000ms; }
+  .animation-delay-2000 { animation-delay: 2000ms; }
 
   /* Text utilities */
   .text-balance {
@@ -223,7 +225,54 @@
   .mask-fade-t {
     mask-image: linear-gradient(to top, black 60%, transparent 100%);
   }
+
+  /* GPU Acceleration for smooth animations */
+  .will-change-opacity {
+    will-change: opacity;
+  }
+
+  .will-change-transform {
+    will-change: transform;
+  }
+
+  /* Glassmorphism utilities - light blur for performance */
+  .glass {
+    @apply bg-white/10 backdrop-blur-sm border border-white/10;
+  }
+
+  .glass-dark {
+    @apply bg-dark-50/80 border border-white/5;
+  }
+
+  .glass-gold {
+    @apply bg-gold/5 backdrop-blur-md border border-gold/20;
+  }
+
+
+  /* Simple gradient orb - no blur for performance */
+  .orb-gold {
+    @apply absolute rounded-full bg-gradient-radial from-gold/10 to-transparent pointer-events-none;
+  }
+
+  .orb-accent {
+    @apply absolute rounded-full bg-gradient-radial from-accent/10 to-transparent pointer-events-none;
+  }
+
+  /* Slide transition for fast slider */
+  .slide-transition {
+    @apply transition-opacity duration-500 ease-out will-change-opacity;
+  }
+
+  /* 3D perspective for card tilt */
+  .perspective-1000 {
+    perspective: 1000px;
+  }
+
+  .preserve-3d {
+    transform-style: preserve-3d;
+  }
 }
+
 
 /* Lenis smooth scroll */
 html.lenis {

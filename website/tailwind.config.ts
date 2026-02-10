@@ -67,9 +67,13 @@ const config: Config = {
         'slide-up': 'slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         'text-reveal': 'textReveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards',
         'float': 'float 6s ease-in-out infinite',
+        'float-slow': 'floatSlow 8s ease-in-out infinite',
         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'shimmer': 'shimmer 2s linear infinite',
         'glow': 'glow 2s ease-in-out infinite alternate',
+        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+        'progress': 'progress 3s linear forwards',
+        'spin-slow': 'spin 8s linear infinite',
       },
       keyframes: {
         fadeIn: {
@@ -107,6 +111,20 @@ const config: Config = {
         glow: {
           '0%': { boxShadow: '0 0 20px rgba(212, 175, 55, 0.3)' },
           '100%': { boxShadow: '0 0 40px rgba(212, 175, 55, 0.6)' },
+        },
+        glowPulse: {
+          '0%, 100%': { boxShadow: '0 0 20px rgba(212, 175, 55, 0.3)' },
+          '50%': { boxShadow: '0 0 40px rgba(212, 175, 55, 0.5)' },
+        },
+        floatSlow: {
+          '0%, 100%': { transform: 'translateY(0) translateX(0)' },
+          '25%': { transform: 'translateY(-15px) translateX(10px)' },
+          '50%': { transform: 'translateY(-25px) translateX(0)' },
+          '75%': { transform: 'translateY(-15px) translateX(-10px)' },
+        },
+        progress: {
+          '0%': { width: '0%' },
+          '100%': { width: '100%' },
         },
       },
       transitionTimingFunction: {
