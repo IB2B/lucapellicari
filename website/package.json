@@ -27,6 +27,7 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.15.8",
     "mammoth": "^1.11.0"
   }
 }
