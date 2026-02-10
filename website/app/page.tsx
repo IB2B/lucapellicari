@@ -453,92 +453,78 @@ function QuantumAcademySection() {
 
   return (
     <section className="py-16 sm:py-20 lg:py-28 bg-dark-50 relative overflow-hidden">
-      {/* Background */}
+      {/* Background Image */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] sm:w-[600px] lg:w-[800px] h-[400px] sm:h-[600px] lg:h-[800px] bg-gold/5 rounded-full blur-[150px] sm:blur-[200px]" />
+        <Image
+          src="/images/quantum-academy.jpg"
+          alt="Quantum Academy"
+          fill
+          className="object-cover opacity-20"
+          sizes="100vw"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-dark-50 via-dark-50/95 to-dark-50" />
       </div>
 
       <div className="container-custom relative z-10">
-        <div className="grid lg:grid-cols-2 gap-10 sm:gap-12 lg:gap-16 items-center">
-          <motion.div
-            ref={ref}
-            initial="hidden"
-            animate={isInView ? "visible" : "hidden"}
-            variants={stagger}
-            className="text-center lg:text-left"
-          >
-            <motion.span variants={fadeUp} className="badge mb-4 sm:mb-6 inline-block text-xs">
-              Quantum Academy
-            </motion.span>
+        <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
+          {/* Content */}
+          <div className="text-center lg:text-left">
+            <motion.div
+              ref={ref}
+              initial="hidden"
+              animate={isInView ? "visible" : "hidden"}
+              variants={stagger}
+            >
+              <motion.span variants={fadeUp} className="badge mb-4 sm:mb-6 inline-block text-xs">
+                Quantum Academy
+              </motion.span>
 
-            <motion.h2 variants={fadeUp} className="font-display text-2xl sm:text-3xl md:text-4xl text-light mb-6 sm:mb-8">
-              Il sogno che non sapevo di sognare, diventato realtà.
-            </motion.h2>
+              <motion.h2 variants={fadeUp} className="font-display text-2xl sm:text-3xl md:text-4xl text-light mb-6 sm:mb-8">
+                Il sogno che non sapevo di sognare, diventato realtà.
+              </motion.h2>
 
-            <motion.div variants={fadeUp} className="space-y-3 sm:space-y-4 text-light/70 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10">
-              <p className="text-gold font-medium text-lg sm:text-xl">
-                Quantum Academy non è una scuola.
-              </p>
-              <p>È un luogo di trasformazione. È un portale. È un laboratorio di identità.</p>
-              <p>
-                È nata da tre anime in risonanza: <span className="text-light">io, Lucia e Alberto</span>.
-              </p>
-              <p>
-                E oggi sta diventando una nuova forma di conoscenza:
-                <span className="text-gold"> pratica, profonda, scientifica, spirituale</span>.
-              </p>
+              <motion.div variants={fadeUp} className="space-y-3 sm:space-y-4 text-light/70 text-base sm:text-lg leading-relaxed mb-8 sm:mb-10">
+                <p className="text-gold font-medium text-lg sm:text-xl">
+                  Quantum Academy non è una scuola.
+                </p>
+                <p>È un luogo di trasformazione. È un portale. È un laboratorio di identità.</p>
+                <p>
+                  È nata da tre anime in risonanza: <span className="text-light">io, Lucia e Alberto</span>.
+                </p>
+                <p>
+                  E oggi sta diventando una nuova forma di conoscenza:
+                  <span className="text-gold"> pratica, profonda, scientifica, spirituale</span>.
+                </p>
+              </motion.div>
+
+              <motion.div variants={fadeUp}>
+                <Link href="/quantum-academy" className="btn-primary text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
+                  Entra in Quantum Academy
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Link>
+              </motion.div>
             </motion.div>
+          </div>
 
-            <motion.div variants={fadeUp}>
-              <Link href="/quantum-academy" className="btn-primary text-sm sm:text-base px-6 sm:px-8 py-3 sm:py-4">
-                Entra in Quantum Academy
-                <ArrowRight className="ml-2 w-4 h-4" />
-              </Link>
-            </motion.div>
-          </motion.div>
-
+          {/* Image */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            animate={isInView ? { opacity: 1, x: 0 } : {}}
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={isInView ? { opacity: 1, scale: 1 } : {}}
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] as const }}
-            className="relative max-w-md mx-auto lg:max-w-none"
+            className="relative hidden lg:block"
           >
-            {/* Image Grid */}
-            <div className="grid grid-cols-2 gap-3 sm:gap-4">
-              {/* Main Image - Presenting */}
-              <div className="col-span-2 relative aspect-[16/9] rounded-2xl sm:rounded-3xl overflow-hidden">
-                <Image
-                  src="/images/quantum-academy.jpg"
-                  alt="Luca Pellicari at Quantum Academy"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
-              </div>
-              {/* Team Photo */}
-              <div className="relative aspect-square rounded-xl sm:rounded-2xl overflow-hidden">
-                <Image
-                  src="/images/quantum-team.jpg"
-                  alt="Luca e Lucia - Quantum Academy"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                />
-              </div>
-              {/* Event Photo */}
-              <div className="relative aspect-square rounded-xl sm:rounded-2xl overflow-hidden">
-                <Image
-                  src="/images/quantum-event.jpg"
-                  alt="Quantum Academy Event"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 50vw, 25vw"
-                />
-              </div>
+            <div className="relative aspect-[4/5] rounded-3xl overflow-hidden">
+              <Image
+                src="/images/quantum-academy.jpg"
+                alt="Luca Pellicari at Quantum Academy"
+                fill
+                className="object-cover"
+                sizes="50vw"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-dark/60 via-transparent to-transparent" />
             </div>
-            {/* Decorative Frame */}
-            <div className="hidden lg:block absolute -inset-4 border border-gold/10 rounded-3xl -z-10" />
+            {/* Decorative */}
+            <div className="absolute -inset-4 border border-gold/10 rounded-3xl -z-10" />
           </motion.div>
         </div>
       </div>
