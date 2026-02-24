@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, ReactNode } from 'react'
+import { usePathname } from 'next/navigation'
 import Lenis from 'lenis'
 
 interface SmoothScrollProps {
@@ -9,6 +10,7 @@ interface SmoothScrollProps {
 
 export function SmoothScroll({ children }: SmoothScrollProps) {
   const lenisRef = useRef<Lenis | null>(null)
+  const pathname = usePathname()
 
   useEffect(() => {
     const lenis = new Lenis({
@@ -34,6 +36,14 @@ export function SmoothScroll({ children }: SmoothScrollProps) {
       lenis.destroy()
     }
   }, [])
+
+  // Scroll to top on route change
+  useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true })
+    }
+    window.scrollTo(0, 0)
+  }, [pathname])
 
   return <>{children}</>
 }

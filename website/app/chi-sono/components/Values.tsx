@@ -81,7 +81,7 @@ const values = [
 
 export function Values() {
   return (
-    <section className="py-24 lg:py-32 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
+    <section className="py-24 lg:py-32 bg-white relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 right-20 w-72 h-72 bg-teal/5 rounded-full blur-3xl" />
@@ -101,7 +101,7 @@ export function Values() {
             I Miei Valori
           </motion.span>
           <motion.h2
-            className="font-serif text-4xl md:text-5xl font-bold text-gray-900 mb-6"
+            className="font-serif text-4xl md:text-5xl font-bold text-navy mb-6"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -113,7 +113,7 @@ export function Values() {
             </span>
           </motion.h2>
           <motion.p
-            className="text-gray-600 text-lg max-w-2xl mx-auto"
+            className="text-navy/70 text-lg max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -153,12 +153,12 @@ export function Values() {
                   </div>
 
                   {/* Title */}
-                  <h3 className="font-serif text-xl text-gray-900 font-semibold mb-3 group-hover:text-teal transition-colors duration-300">
+                  <h3 className="font-serif text-xl text-navy font-semibold mb-3 group-hover:text-teal transition-colors duration-300">
                     {value.title}
                   </h3>
 
                   {/* Description */}
-                  <p className="text-gray-600 text-sm leading-relaxed">
+                  <p className="text-navy/70 text-sm leading-relaxed">
                     {value.description}
                   </p>
                 </div>

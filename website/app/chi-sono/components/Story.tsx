@@ -52,7 +52,7 @@ export function Story() {
   const lineHeight = useTransform(scrollYProgress, [0.1, 0.9], ['0%', '100%'])
 
   return (
-    <section ref={containerRef} className="py-24 lg:py-32 bg-gradient-to-b from-[#0a1628] via-[#0d1f35] to-[#0a1628] relative overflow-hidden">
+    <section ref={containerRef} className="py-24 lg:py-32 bg-gradient-to-b from-navy-dark via-navy to-navy-dark relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-teal/5 rounded-full blur-3xl" />
@@ -85,7 +85,7 @@ export function Story() {
             </span>
           </motion.h2>
           <motion.p
-            className="text-white/60 text-lg max-w-2xl mx-auto"
+            className="text-white/70 text-lg max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -130,7 +130,7 @@ export function Story() {
                     <div className="absolute inset-0 w-14 h-14 rounded-full bg-gradient-to-br from-teal to-coral opacity-50 blur-md group-hover:opacity-80 transition-opacity duration-500" />
 
                     {/* Main circle */}
-                    <div className="relative w-14 h-14 rounded-full bg-gradient-to-br from-teal to-teal-dark flex items-center justify-center border-4 border-[#0a1628] shadow-2xl">
+                    <div className="relative w-14 h-14 rounded-full bg-gradient-to-br from-teal to-teal-dark flex items-center justify-center border-4 border-navy-dark shadow-2xl">
                       <span className="font-serif text-xl font-bold text-white">
                         {index + 1}
                       </span>
@@ -191,7 +191,7 @@ export function Story() {
             transition={{ duration: 0.5, delay: 0.3 }}
           >
             <div className="relative">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-coral to-coral-dark flex items-center justify-center border-4 border-[#0a1628]">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-br from-teal to-teal-dark flex items-center justify-center border-4 border-navy-dark">
                 <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>

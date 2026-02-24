@@ -5,7 +5,7 @@ import { motion } from 'framer-motion'
 
 export function ChiSonoHero() {
   return (
-    <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 bg-gradient-to-b from-[#0a1628] via-[#0d1f35] to-[#0a1628] relative overflow-hidden">
+    <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 bg-white relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 right-0 w-[600px] h-[600px] bg-teal/10 rounded-full blur-3xl" />
@@ -27,20 +27,20 @@ export function ChiSonoHero() {
             </motion.span>
 
             <motion.h1
-              className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-8 leading-tight"
+              className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-navy mb-8 leading-tight"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.1 }}
             >
               Siediti un attimo.{' '}
-              <span className="bg-gradient-to-r from-teal via-teal-light to-coral bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-teal via-teal-light to-teal-dark bg-clip-text text-transparent">
                 Questa è la parte che non racconto mai in pubblico.
               </span>
             </motion.h1>
 
             <motion.p
-              className="text-xl text-white/80 leading-relaxed mb-6"
+              className="text-xl text-navy/80 leading-relaxed mb-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -51,18 +51,18 @@ export function ChiSonoHero() {
             </motion.p>
 
             <motion.p
-              className="text-xl text-white/80 leading-relaxed mb-6"
+              className="text-xl text-navy/80 leading-relaxed mb-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: 0.3 }}
             >
-              È un percorso fatto di <strong className="text-coral">sette rinascite</strong>, di scelte coraggiose,
+              È un percorso fatto di <strong className="text-teal">sette rinascite</strong>, di scelte coraggiose,
               di cadute violentissime e di risalite verticali.
             </motion.p>
 
             <motion.p
-              className="text-lg text-white/60 leading-relaxed"
+              className="text-lg text-navy/70 leading-relaxed"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -84,12 +84,12 @@ export function ChiSonoHero() {
             <div className="relative aspect-[3/4] rounded-2xl overflow-hidden">
               <Image
                 src="/images/luca-portrait-2.jpg"
-                alt="Luca Pellicari"
+                alt="Luca Pellicari - Identity Coach e Fondatore di Quantum Academy"
                 fill
                 className="object-cover"
                 priority
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628]/80 via-transparent to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-navy/60 via-transparent to-transparent" />
             </div>
 
             {/* Quote card */}
@@ -108,7 +108,7 @@ export function ChiSonoHero() {
             </motion.div>
 
             {/* Decorative corner */}
-            <div className="absolute -top-4 -right-4 w-24 h-24 border-t-2 border-r-2 border-coral/30 rounded-tr-3xl" />
+            <div className="absolute -top-4 -right-4 w-24 h-24 border-t-2 border-r-2 border-teal/30 rounded-tr-3xl" />
           </motion.div>
         </div>
       </div>

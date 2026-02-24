@@ -20,10 +20,10 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const variants: Record<ButtonVariant, string> = {
-  primary: 'bg-gold text-dark hover:bg-gold-light hover:shadow-glow',
-  secondary: 'bg-transparent text-gold border border-gold hover:bg-gold hover:text-dark',
-  ghost: 'bg-transparent text-light-surface hover:text-gold hover:bg-dark-lighter',
-  outline: 'bg-transparent text-light-surface border border-light-surface/20 hover:border-gold hover:text-gold',
+  primary: 'bg-teal text-white hover:bg-teal-dark shadow-lg shadow-teal/20 hover:shadow-xl hover:shadow-teal/30',
+  secondary: 'bg-transparent text-white border border-white/30 hover:bg-white hover:text-navy',
+  ghost: 'bg-transparent text-white hover:text-teal hover:bg-white/10',
+  outline: 'bg-transparent text-white border border-white/20 hover:border-teal hover:text-teal',
 }
 
 const sizes: Record<ButtonSize, string> = {
@@ -52,7 +52,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const baseStyles = cn(
       'inline-flex items-center justify-center gap-2 font-sans font-medium',
       'rounded-sm transition-all duration-300 ease-out-expo',
-      'focus:outline-none focus:ring-2 focus:ring-gold/50 focus:ring-offset-2 focus:ring-offset-dark',
+      'focus:outline-none focus:ring-2 focus:ring-teal/50 focus:ring-offset-2 focus:ring-offset-navy-dark',
       'disabled:opacity-50 disabled:cursor-not-allowed',
       variants[variant],
       sizes[size],

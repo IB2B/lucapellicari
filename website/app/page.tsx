@@ -4,32 +4,51 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
-import { ArrowRight, ArrowDown, ChevronRight, ChevronLeft, Target, Eye, Shield, Users, Brain, Star, Compass, Sparkles, Mail, Quote, ArrowUpRight, BookOpen, GraduationCap, Route } from 'lucide-react'
+import { ArrowRight, ChevronRight, ChevronLeft, Target, Eye, Shield, Users, Brain, Star, Compass, Sparkles, Quote, ArrowUpRight } from 'lucide-react'
+import { InFlowSection } from '@/components/sections/InFlowSection'
 
-// Animation variants
+// Animation variants - refined for premium feel
 const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const } }
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as const }
+  }
 }
 
 const fadeIn = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 1 } }
+  visible: { opacity: 1, transition: { duration: 0.8, ease: "easeOut" } }
 }
 
 const stagger = {
-  visible: { transition: { staggerChildren: 0.15 } }
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } }
 }
 
 const slideIn = {
-  hidden: { opacity: 0, x: -60 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] as const } }
+  hidden: { opacity: 0, x: -40 },
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as const }
+  }
+}
+
+const scaleIn = {
+  hidden: { opacity: 0, scale: 0.95 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const }
+  }
 }
 
 // Hero Slider Data
 const heroSlides = [
   {
     image: '/images/hero-1.jpg',
+    alt: 'Luca Pellicari - Identity Coach e fondatore di Quantum Academy',
     subtitle: 'Benvenuto',
     title: 'Adesso siamo qui,',
     highlight: 'tu ed io.',
@@ -37,6 +56,7 @@ const heroSlides = [
   },
   {
     image: '/images/hero-2.jpg',
+    alt: 'Percorso di trasformazione identitaria',
     subtitle: 'La Porta',
     title: 'Questa non è',
     highlight: 'una pagina web.',
@@ -44,6 +64,7 @@ const heroSlides = [
   },
   {
     image: '/images/hero-3.jpg',
+    alt: 'Viaggio di crescita personale e consapevolezza',
     subtitle: 'Il Viaggio',
     title: 'Sei pronto ad andare',
     highlight: 'oltre?',
@@ -132,95 +153,156 @@ function HeroSection() {
               index === currentSlide ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            <Image src={slide.image} alt="" fill className="object-cover" priority loading="eager" quality={75} sizes="100vw" />
-            <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/80 via-navy-dark/50 to-transparent" />
+            <Image src={slide.image} alt={slide.alt} fill className="object-cover" priority loading="eager" quality={75} sizes="100vw" />
+            {/* Premium gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/90 via-navy-dark/60 to-navy-dark/30" />
+            <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/50 via-transparent to-transparent" />
           </div>
         ))}
       </motion.div>
 
+      {/* Decorative elements */}
+      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-teal/30 to-transparent" />
+      <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-teal/20 to-transparent" />
+
+      {/* Subtle corner accents */}
+      <div className="absolute top-32 left-8 w-24 h-24 border-l border-t border-cream/10 rounded-tl-3xl" />
+      <div className="absolute bottom-32 right-8 w-24 h-24 border-r border-b border-teal/10 rounded-br-3xl" />
+
       {/* Content */}
-      <motion.div className="relative z-10 h-full flex items-start pt-32 md:pt-40 lg:pt-44" style={{ opacity }}>
-        <div className="w-full px-6 md:px-12 lg:px-16">
-          <div className="max-w-2xl">
-            <div className="mb-6">
-              <span className="text-coral text-sm uppercase tracking-widest font-medium">
+      <motion.div className="relative z-10 h-full flex items-center" style={{ opacity }}>
+        <div className="w-full px-8 md:px-16 lg:px-24">
+          <div className="max-w-3xl">
+            {/* Subtitle with line */}
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="flex items-center gap-4 mb-8"
+            >
+              <span className="w-12 h-px bg-teal-light" />
+              <span className="text-teal-light text-sm uppercase tracking-[0.2em] font-medium">
                 {heroSlides[currentSlide].subtitle}
               </span>
-            </div>
+            </motion.div>
 
-            <div className="relative h-[140px] md:h-[160px] lg:h-[180px] mb-6">
+            <div className="relative min-h-[160px] md:min-h-[180px] lg:min-h-[200px] mb-8">
               {heroSlides.map((slide, index) => (
-                <div
+                <motion.div
                   key={index}
-                  className={`absolute inset-0 transition-opacity duration-700 ${
-                    index === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'
-                  }`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{
+                    opacity: index === currentSlide ? 1 : 0,
+                    y: index === currentSlide ? 0 : 20
+                  }}
+                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  className={`absolute inset-0 ${index === currentSlide ? '' : 'pointer-events-none'}`}
                 >
-                  <h1 className="font-display text-4xl md:text-5xl lg:text-6xl text-white leading-[1.1]">
+                  <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-cream leading-[1.05] tracking-tight">
                     {slide.title}{' '}
-                    <span className="text-teal-light">{slide.highlight}</span>
+                    <span className="text-teal-light italic">{slide.highlight}</span>
                   </h1>
-                </div>
+                </motion.div>
               ))}
             </div>
 
-            <div className="relative h-16 md:h-14 mb-10">
+            <div className="relative min-h-[4.5rem] md:min-h-[4rem] mb-12">
               {heroSlides.map((slide, index) => (
-                <p
+                <motion.p
                   key={index}
-                  className={`absolute inset-0 text-white/80 text-base md:text-lg leading-relaxed transition-opacity duration-700 ${
-                    index === currentSlide ? 'opacity-100' : 'opacity-0'
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: index === currentSlide ? 1 : 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className={`absolute inset-0 text-cream/80 text-lg md:text-xl leading-relaxed max-w-xl ${
+                    index === currentSlide ? '' : 'pointer-events-none'
                   }`}
                 >
                   {slide.description}
-                </p>
+                </motion.p>
               ))}
             </div>
 
-            <div className="flex flex-wrap gap-4">
-              <Link href="/chi-sono" className="group relative inline-flex items-center gap-2 bg-coral text-white px-8 py-4 rounded-full font-medium overflow-hidden shadow-lg shadow-coral/25 hover:shadow-xl hover:shadow-coral/30 transition-all duration-500">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="flex flex-wrap gap-5"
+            >
+              <Link href="/chi-sono" className="group relative inline-flex items-center gap-3 bg-teal text-white px-9 py-4 rounded-full font-semibold overflow-hidden shadow-xl shadow-teal/25 hover:shadow-2xl hover:shadow-teal/35 transition-all duration-500 hover:-translate-y-0.5">
                 <span className="relative z-10">Scopri chi sono</span>
                 <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
-                <div className="absolute inset-0 bg-gradient-to-r from-coral-dark to-coral opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-teal-dark opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </Link>
-              <Link href="/contatti" className="group relative inline-flex items-center gap-2 px-8 py-4 border-2 border-white/30 text-white rounded-full font-medium backdrop-blur-sm hover:border-white/60 hover:bg-white/10 transition-all duration-300">
+              <Link href="/contatti" className="group relative inline-flex items-center gap-3 px-9 py-4 border border-cream/30 text-cream rounded-full font-medium backdrop-blur-sm hover:border-cream/60 hover:bg-white/5 transition-all duration-300">
                 <span>Contattami</span>
                 <ArrowUpRight className="w-4 h-4 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
               </Link>
-            </div>
+            </motion.div>
           </div>
         </div>
       </motion.div>
 
       {/* Controls */}
-      <div className="absolute bottom-10 left-0 right-0 z-20 px-6 md:px-12 lg:px-16">
-        <div className="flex items-center gap-6">
-          <div className="flex items-center gap-2 text-white/50 text-sm">
-            <span className="text-white font-medium">0{currentSlide + 1}</span>
-            <span>/</span>
-            <span>0{heroSlides.length}</span>
-          </div>
-          <div className="w-24 md:w-32">
-            <div className="h-0.5 bg-white/20 rounded-full overflow-hidden">
-              <motion.div
-                className="h-full bg-coral"
-                initial={{ width: '0%' }}
-                animate={{ width: '100%' }}
-                transition={{ duration: 6.5, ease: "linear" }}
-                key={currentSlide}
-              />
+      <div className="absolute bottom-12 left-0 right-0 z-20 px-8 md:px-16 lg:px-24">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-8">
+            {/* Slide counter */}
+            <div className="flex items-center gap-3 text-sm font-medium">
+              <span className="text-cream text-2xl font-display">0{currentSlide + 1}</span>
+              <span className="text-cream/60">/</span>
+              <span className="text-cream/60">0{heroSlides.length}</span>
+            </div>
+
+            {/* Progress bar */}
+            <div className="w-32 md:w-48">
+              <div className="h-[2px] bg-white/10 rounded-full overflow-hidden">
+                <motion.div
+                  className="h-full bg-gradient-to-r from-teal to-teal-light"
+                  initial={{ width: '0%' }}
+                  animate={{ width: '100%' }}
+                  transition={{ duration: 6.5, ease: "linear" }}
+                  key={currentSlide}
+                />
+              </div>
             </div>
           </div>
-          <div className="flex gap-2">
-            <button onClick={prevSlide} className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all">
-              <ChevronLeft className="w-4 h-4" />
+
+          {/* Navigation buttons */}
+          <div className="flex gap-3">
+            <button
+              onClick={prevSlide}
+              aria-label="Slide precedente"
+              className="w-12 h-12 rounded-full border border-cream/20 flex items-center justify-center text-cream/60 hover:text-cream hover:border-cream/40 hover:bg-white/5 transition-all duration-300"
+            >
+              <ChevronLeft className="w-5 h-5" />
             </button>
-            <button onClick={nextSlide} className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white/70 hover:text-white hover:bg-white/10 transition-all">
-              <ChevronRight className="w-4 h-4" />
+            <button
+              onClick={nextSlide}
+              aria-label="Slide successiva"
+              className="w-12 h-12 rounded-full border border-cream/20 flex items-center justify-center text-cream/60 hover:text-cream hover:border-cream/40 hover:bg-white/5 transition-all duration-300"
+            >
+              <ChevronRight className="w-5 h-5" />
             </button>
           </div>
         </div>
       </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 1.5 }}
+        className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 hidden lg:flex flex-col items-center gap-2"
+      >
+        <span className="text-cream/60 text-xs uppercase tracking-widest">Scroll</span>
+        <motion.div
+          animate={{ y: [0, 8, 0] }}
+          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+          className="w-5 h-8 rounded-full border border-cream/20 flex items-start justify-center p-1.5"
+        >
+          <motion.div className="w-1 h-2 rounded-full bg-teal-light" />
+        </motion.div>
+      </motion.div>
     </section>
   )
 }
@@ -231,80 +313,82 @@ function HeroSection() {
 function OpeningSection() {
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 1], [50, -50])
+  const y = useTransform(scrollYProgress, [0, 1], [30, -30])
 
   return (
     <section ref={ref} className="relative overflow-hidden">
-      <div className="grid lg:grid-cols-2 min-h-[80vh]">
+      <div className="grid lg:grid-cols-2 min-h-[85vh]">
         {/* Left - Dark Side */}
-        <div className="relative bg-navy-dark py-20 lg:py-32 px-6 md:px-12 lg:px-16 flex items-center">
+        <div className="relative bg-navy-dark py-24 lg:py-36 px-8 md:px-16 lg:px-20 flex items-center">
           {/* Floating Number */}
           <motion.div
             style={{ y }}
-            className="absolute top-10 right-10 text-[12rem] md:text-[16rem] font-display text-white/[0.03] leading-none select-none"
+            className="absolute top-10 right-10 text-[10rem] md:text-[14rem] font-display text-cream/[0.03] leading-none select-none"
           >
             7
           </motion.div>
+
+          {/* Subtle gradient accent */}
+          <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-teal/50 via-teal/20 to-transparent" />
 
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={stagger}
-            className="relative z-10"
+            className="relative z-10 max-w-lg"
           >
-            <motion.p
-              variants={fadeUp}
-              className="text-white/50 text-sm uppercase tracking-[0.2em] mb-8"
-            >
-              Una verità semplice
-            </motion.p>
+            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-10">
+              <span className="w-8 h-px bg-white/30" />
+              <span className="text-cream/50 text-xs uppercase tracking-[0.25em] font-medium">
+                Una verità semplice
+              </span>
+            </motion.div>
 
-            <motion.div variants={fadeUp} className="space-y-4 mb-12">
+            <motion.div variants={fadeUp} className="space-y-3 mb-14">
               {['Io non sono un formatore.', 'Non sono un motivatore.', 'Non sono un guru.'].map((text, i) => (
-                <p key={i} className="font-display text-2xl md:text-3xl text-white/40">
+                <p key={i} className="font-display text-2xl md:text-3xl text-cream/30 tracking-tight">
                   {text}
                 </p>
               ))}
             </motion.div>
 
-            <motion.div variants={fadeUp} className="h-px w-20 bg-gradient-to-r from-teal to-transparent mb-12" />
+            <motion.div variants={fadeUp} className="h-px w-16 bg-gradient-to-r from-teal-light to-transparent mb-10" />
 
             <motion.p
               variants={fadeUp}
-              className="font-display text-2xl md:text-3xl lg:text-4xl text-white leading-relaxed"
+              className="font-display text-2xl md:text-3xl lg:text-4xl text-cream leading-snug tracking-tight"
             >
               Sono un uomo che ha vissuto{' '}
-              <span className="text-teal-light font-semibold">sette rinascite</span>.
+              <span className="text-teal-light">sette rinascite</span>.
             </motion.p>
           </motion.div>
         </div>
 
         {/* Right - Light Side */}
-        <div className="relative bg-white py-20 lg:py-32 px-6 md:px-12 lg:px-16 flex items-center">
-          {/* Decorative Circle */}
-          <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-64 h-64 rounded-full border border-teal/10" />
-          <div className="absolute bottom-20 right-20 w-32 h-32 rounded-full bg-coral/5" />
+        <div className="relative bg-white py-24 lg:py-36 px-8 md:px-16 lg:px-20 flex items-center">
+          {/* Decorative elements */}
+          <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-48 h-48 rounded-full border border-teal/10" />
+          <div className="absolute bottom-16 right-16 w-24 h-24 rounded-full bg-teal/5" />
 
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={stagger}
-            className="relative z-10"
+            className="relative z-10 max-w-lg"
           >
             <motion.p
               variants={fadeUp}
-              className="font-serif text-xl md:text-2xl text-navy/70 italic leading-relaxed mb-8"
+              className="font-serif text-xl md:text-2xl text-navy/70 italic leading-relaxed mb-10"
             >
               E oggi ho scelto di mettere tutta la mia esperienza al servizio delle persone che vogliono finalmente{' '}
-              <span className="text-coral font-semibold not-italic">riconoscersi</span>.
+              <span className="text-teal font-semibold not-italic">riconoscersi</span>.
             </motion.p>
 
-            {/* Missing content added */}
             <motion.div
               variants={fadeUp}
-              className="bg-gradient-to-r from-teal/5 to-transparent p-6 rounded-2xl border-l-2 border-teal mb-12"
+              className="bg-teal/5 p-6 rounded-2xl border-l-2 border-teal/40 mb-12"
             >
               <p className="text-navy/80 leading-relaxed">
                 Se sei qui, se sei arrivato fino a questa riga, è perché una parte di te sente che{' '}
@@ -312,21 +396,21 @@ function OpeningSection() {
               </p>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="space-y-6">
+            <motion.div variants={fadeUp} className="space-y-5">
               {[
                 { text: 'Oltre la maschera', color: 'bg-teal' },
-                { text: 'Oltre il ruolo', color: 'bg-coral' },
+                { text: 'Oltre il ruolo', color: 'bg-teal-dark' },
                 { text: 'Per incontrare chi sei', color: 'bg-navy' },
               ].map((item, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: 20 }}
+                  initial={{ opacity: 0, x: 15 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.3 + i * 0.1 }}
+                  transition={{ duration: 0.5, delay: 0.2 + i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
                   className="flex items-center gap-4 group cursor-default"
                 >
-                  <span className={`w-2 h-2 rounded-full ${item.color} group-hover:scale-150 transition-transform duration-300`} />
+                  <span className={`w-1.5 h-1.5 rounded-full ${item.color} group-hover:scale-[2] transition-transform duration-300`} />
                   <span className="text-navy text-lg font-medium group-hover:translate-x-1 transition-transform duration-300">
                     {item.text}
                   </span>
@@ -336,9 +420,9 @@ function OpeningSection() {
 
             <motion.div
               variants={fadeUp}
-              className="mt-16 pt-8 border-t border-navy/10"
+              className="mt-14 pt-6 border-t border-navy/10"
             >
-              <p className="text-navy/50 text-sm">
+              <p className="text-navy/60 text-sm tracking-wide">
                 Lascia che ti dica una cosa semplice e vera.
               </p>
             </motion.div>
@@ -354,7 +438,7 @@ function OpeningSection() {
 // ============================================
 function ChiSonoSection() {
   return (
-    <section className="py-24 lg:py-32 bg-[#f8fafa]">
+    <section className="py-24 lg:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center">
           {/* Image Column */}
@@ -369,7 +453,7 @@ function ChiSonoSection() {
               <div className="aspect-[4/5] rounded-3xl overflow-hidden">
                 <Image
                   src="/images/luca-portrait.jpg"
-                  alt="Luca Pellicari"
+                  alt="Luca Pellicari - Identity Coach"
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 40vw"
@@ -377,16 +461,28 @@ function ChiSonoSection() {
                   quality={80}
                 />
               </div>
-              {/* Floating Card */}
+              {/* Floating Stats Card */}
               <motion.div
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: 0.5, duration: 0.6 }}
-                className="absolute -bottom-8 -right-8 bg-white rounded-2xl p-8 shadow-2xl"
+                className="absolute -bottom-8 -right-8 bg-white rounded-2xl p-6 shadow-2xl"
               >
-                <p className="text-5xl font-display text-coral mb-1"><AnimatedNumber value={7} /></p>
-                <p className="text-sm text-navy/60 uppercase tracking-wider">Rinascite</p>
+                <div className="grid grid-cols-3 gap-4 text-center">
+                  <div>
+                    <p className="text-3xl font-display text-teal mb-0.5"><AnimatedNumber value={7} /></p>
+                    <p className="text-xs text-navy/60 uppercase tracking-wider">Rinascite</p>
+                  </div>
+                  <div>
+                    <p className="text-3xl font-display text-teal mb-0.5"><AnimatedNumber value={20} suffix="+" /></p>
+                    <p className="text-xs text-navy/60 uppercase tracking-wider">Anni</p>
+                  </div>
+                  <div>
+                    <p className="text-3xl font-display text-navy mb-0.5"><AnimatedNumber value={1000} suffix="+" /></p>
+                    <p className="text-xs text-navy/60 uppercase tracking-wider">Vite</p>
+                  </div>
+                </div>
               </motion.div>
             </div>
           </motion.div>
@@ -399,14 +495,18 @@ function ChiSonoSection() {
             variants={stagger}
             className="lg:col-span-7 order-1 lg:order-2"
           >
-            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-8">
+            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-6">
               <span className="w-12 h-px bg-teal" />
               <span className="text-teal text-sm uppercase tracking-widest font-medium">Chi Sono</span>
             </motion.div>
 
-            <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl lg:text-6xl text-navy mb-8">
+            <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl lg:text-6xl text-navy mb-4">
               Io sono Luca Pellicari
             </motion.h2>
+
+            <motion.p variants={fadeUp} className="font-serif text-lg text-navy/60 italic mb-8">
+              Identity Coach • Autore • Fondatore di Quantum Academy
+            </motion.p>
 
             <motion.div variants={fadeUp} className="space-y-6 text-navy/70 text-lg mb-10">
               <p>
@@ -419,7 +519,7 @@ function ChiSonoSection() {
               </p>
             </motion.div>
 
-            <motion.blockquote variants={fadeUp} className="relative pl-8 py-6 mb-10 border-l-2 border-coral">
+            <motion.blockquote variants={fadeUp} className="relative pl-8 py-6 mb-10 border-l-2 border-teal">
               <p className="text-xl md:text-2xl font-serif italic text-navy">
                 Il mio talento non è motivarti.<br />
                 <span className="text-teal">Il mio talento è aiutarti a ricordare chi sei.</span>
@@ -430,9 +530,9 @@ function ChiSonoSection() {
               <Link href="/chi-sono" className="group relative inline-flex items-center gap-3 text-navy font-medium">
                 <span className="relative">
                   Scopri la mia storia
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-coral group-hover:w-full transition-all duration-300" />
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal group-hover:w-full transition-all duration-300" />
                 </span>
-                <span className="w-10 h-10 rounded-full border-2 border-navy/20 flex items-center justify-center group-hover:border-coral group-hover:bg-coral transition-all duration-300">
+                <span className="w-10 h-10 rounded-full border-2 border-navy/20 flex items-center justify-center group-hover:border-teal group-hover:bg-teal transition-all duration-300">
                   <ArrowUpRight className="w-4 h-4 group-hover:text-white transition-colors duration-300" />
                 </span>
               </Link>
@@ -444,88 +544,6 @@ function ChiSonoSection() {
   )
 }
 
-// ============================================
-// IO SONO SECTION - Bold Statement
-// ============================================
-function IoSonoSection() {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  const x = useTransform(scrollYProgress, [0, 1], [-100, 100])
-
-  return (
-    <section ref={ref} className="relative py-32 lg:py-40 bg-navy-dark overflow-hidden">
-      {/* Moving Background Text */}
-      <motion.div
-        style={{ x }}
-        className="absolute top-1/2 left-0 -translate-y-1/2 whitespace-nowrap"
-      >
-        <span className="text-[8rem] md:text-[12rem] lg:text-[16rem] font-display text-white/[0.02] select-none">
-          Luca Pellicari • Luca Pellicari • Luca Pellicari •
-        </span>
-      </motion.div>
-
-      {/* Gradient Orbs */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-teal/10 rounded-full blur-[120px]" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-coral/10 rounded-full blur-[120px]" />
-
-      <div className="relative z-10 max-w-5xl mx-auto px-6 md:px-12 text-center">
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={stagger}
-        >
-          {/* Label */}
-          <motion.div variants={fadeUp} className="mb-8">
-            <span className="inline-flex items-center gap-3 text-teal-light/60 text-sm uppercase tracking-[0.2em]">
-              <span className="w-8 h-px bg-teal-light/40" />
-              Identità
-              <span className="w-8 h-px bg-teal-light/40" />
-            </span>
-          </motion.div>
-
-          {/* Main Title */}
-          <motion.h2
-            variants={fadeUp}
-            className="font-display text-5xl md:text-7xl lg:text-8xl text-white mb-8"
-          >
-            Io sono{' '}
-            <span className="relative">
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-teal-light via-teal to-teal-light">
-                Luca Pellicari
-              </span>
-            </span>
-          </motion.h2>
-
-          {/* Subtitle */}
-          <motion.p
-            variants={fadeUp}
-            className="font-serif text-xl md:text-2xl text-white/60 italic max-w-2xl mx-auto mb-12"
-          >
-            Identity Coach • Autore • Fondatore di Quantum Academy
-          </motion.p>
-
-          {/* Stats Row */}
-          <motion.div
-            variants={fadeUp}
-            className="grid grid-cols-3 gap-8 max-w-2xl mx-auto"
-          >
-            {[
-              { number: '7', label: 'Rinascite' },
-              { number: '20+', label: 'Anni di esperienza' },
-              { number: '1000+', label: 'Vite trasformate' },
-            ].map((stat, i) => (
-              <div key={i} className="text-center">
-                <p className="text-4xl md:text-5xl font-display text-coral mb-2">{stat.number}</p>
-                <p className="text-sm text-white/40 uppercase tracking-wider">{stat.label}</p>
-              </div>
-            ))}
-          </motion.div>
-        </motion.div>
-      </div>
-    </section>
-  )
-}
 
 // ============================================
 // MISSIONE SECTION - Bento Grid
@@ -543,55 +561,66 @@ const missionItems = [
 
 function MissioneSection() {
   return (
-    <section className="py-24 lg:py-32 bg-white">
-      <div className="max-w-7xl mx-auto px-6 md:px-12">
+    <section className="py-28 lg:py-36 bg-gray-50">
+      <div className="max-w-6xl mx-auto px-8 md:px-16">
         {/* Header */}
-        <div className="text-center mb-16">
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="w-12 h-px bg-coral" />
-            <span className="text-coral text-sm uppercase tracking-widest font-medium">La Mia Missione</span>
-            <span className="w-12 h-px bg-coral" />
-          </div>
-          <h2 className="font-display text-4xl md:text-5xl text-navy mb-6">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={stagger}
+          className="text-center mb-20"
+        >
+          <motion.div variants={fadeUp} className="flex items-center justify-center gap-4 mb-8">
+            <span className="w-10 h-px bg-teal/50" />
+            <span className="text-teal text-xs uppercase tracking-[0.2em] font-medium">La Mia Missione</span>
+            <span className="w-10 h-px bg-teal/50" />
+          </motion.div>
+          <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl text-navy mb-6 tracking-tight">
             Trasformo le persone aiutandole a riconoscersi.
-          </h2>
-          <p className="text-xl text-navy/60 max-w-2xl mx-auto mb-4">
+          </motion.h2>
+          <motion.p variants={fadeUp} className="text-lg text-navy/60 max-w-xl mx-auto leading-relaxed">
             Il mio lavoro è semplice: ti porto dentro te stesso.
-          </p>
-          <p className="text-lg text-navy/50 max-w-xl mx-auto">
             Lo faccio con delicatezza, con forza, con consapevolezza e con verità.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        {/* Cards Grid - Simple CSS */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {/* Cards Grid */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          variants={stagger}
+          className="grid grid-cols-2 md:grid-cols-4 gap-4"
+        >
           {missionItems.map((item) => (
-            <div
+            <motion.div
               key={item.label}
-              className="group relative bg-white border border-gray-100 rounded-2xl p-6 hover:border-teal/30 hover:shadow-xl transition-all duration-500 cursor-pointer overflow-hidden"
+              variants={fadeUp}
+              className="group relative bg-gray-50 border border-navy/5 rounded-2xl p-6 hover:bg-white hover:border-teal/20 hover:shadow-lg hover:shadow-teal/5 transition-all duration-400 cursor-pointer"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-teal/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="relative">
-                <div className="w-12 h-12 rounded-xl bg-navy/5 flex items-center justify-center mb-4 group-hover:bg-teal group-hover:scale-110 transition-all duration-300">
-                  <item.icon className="w-6 h-6 text-navy/60 group-hover:text-white transition-colors" />
-                </div>
-                <h3 className="font-medium text-navy mb-1">{item.label}</h3>
-                <p className="text-sm text-navy/50">{item.desc}</p>
+              <div className="w-11 h-11 rounded-xl bg-teal/10 flex items-center justify-center mb-4 group-hover:bg-teal group-hover:scale-105 transition-all duration-300">
+                <item.icon className="w-5 h-5 text-teal group-hover:text-white transition-colors duration-300" />
               </div>
-            </div>
+              <h3 className="font-semibold text-navy mb-1 text-sm">{item.label}</h3>
+              <p className="text-xs text-navy/60">{item.desc}</p>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* CTA Button */}
-        <div className="text-center mt-12">
-          <Link href="/missione" className="group relative inline-flex items-center gap-3 bg-navy text-white px-8 py-4 rounded-full font-medium overflow-hidden shadow-lg shadow-navy/25 hover:shadow-xl transition-all duration-500">
-            <span className="relative z-10">Scopri la mia missione</span>
-            <span className="relative z-10 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-colors duration-300">
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-navy-dark to-navy opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="text-center mt-14"
+        >
+          <Link href="/missione" className="group inline-flex items-center gap-3 bg-navy text-white px-8 py-4 rounded-full font-medium shadow-lg shadow-navy/10 hover:shadow-xl hover:shadow-navy/15 hover:-translate-y-0.5 transition-all duration-300">
+            <span>Scopri la mia missione</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
-        </div>
+        </motion.div>
       </div>
     </section>
   )
@@ -610,7 +639,7 @@ function QuantumAcademySection() {
       {/* Animated Background */}
       <motion.div style={{ y }} className="absolute inset-0 opacity-20">
         <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-teal rounded-full blur-[150px]" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-coral rounded-full blur-[150px]" />
+        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-teal-dark rounded-full blur-[150px]" />
       </motion.div>
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12">
@@ -621,7 +650,7 @@ function QuantumAcademySection() {
             viewport={{ once: true, margin: "-100px" }}
             variants={stagger}
           >
-            <motion.span variants={fadeUp} className="inline-block px-4 py-2 bg-coral text-white text-sm font-medium rounded-full mb-8">
+            <motion.span variants={fadeUp} className="inline-block px-4 py-2 bg-teal text-white text-sm font-medium rounded-full mb-8">
               Quantum Academy
             </motion.span>
 
@@ -639,7 +668,7 @@ function QuantumAcademySection() {
               <div className="flex items-center gap-4 mb-4">
                 <div className="flex -space-x-2">
                   <div className="w-10 h-10 rounded-full bg-teal/30 border-2 border-navy-dark flex items-center justify-center text-xs text-white font-medium">LP</div>
-                  <div className="w-10 h-10 rounded-full bg-coral/30 border-2 border-navy-dark flex items-center justify-center text-xs text-white font-medium">L</div>
+                  <div className="w-10 h-10 rounded-full bg-teal-light/30 border-2 border-navy-dark flex items-center justify-center text-xs text-white font-medium">L</div>
                   <div className="w-10 h-10 rounded-full bg-white/20 border-2 border-navy-dark flex items-center justify-center text-xs text-white font-medium">A</div>
                 </div>
                 <p className="text-white/60 text-sm">È nata da tre anime in risonanza: <span className="text-white">io, Lucia e Alberto</span>.</p>
@@ -679,7 +708,7 @@ function QuantumAcademySection() {
             </div>
             {/* Decorative Elements */}
             <div className="absolute -bottom-4 -right-4 w-24 h-24 border-2 border-teal/30 rounded-2xl" />
-            <div className="absolute -top-4 -left-4 w-16 h-16 bg-coral/20 rounded-xl blur-xl" />
+            <div className="absolute -top-4 -left-4 w-16 h-16 bg-teal/20 rounded-xl blur-xl" />
           </motion.div>
         </div>
       </div>
@@ -700,7 +729,7 @@ function AlphakomSection() {
   ]
 
   return (
-    <section className="py-24 lg:py-32 bg-[#f8fafa]">
+    <section className="py-24 lg:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
@@ -784,23 +813,28 @@ function AlphakomSection() {
 // ============================================
 function QuoteSection() {
   return (
-    <section className="py-32 lg:py-40 bg-white">
-      <div className="max-w-5xl mx-auto px-6 md:px-12 text-center">
+    <section className="py-28 lg:py-36 bg-gray-50 relative overflow-hidden">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal/[0.02] rounded-full blur-3xl" />
+      </div>
+
+      <div className="max-w-4xl mx-auto px-8 md:px-16 text-center relative">
         <motion.div
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 1 }}
+          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
-          <Quote className="w-12 h-12 text-teal/20 mx-auto mb-8" />
-          <p className="font-display text-3xl md:text-4xl lg:text-5xl text-navy leading-relaxed mb-8">
+          <Quote className="w-10 h-10 text-teal/30 mx-auto mb-10" />
+          <p className="font-display text-3xl md:text-4xl lg:text-5xl text-navy leading-[1.3] tracking-tight mb-10">
             Non sei quello che ti è successo.<br />
-            <span className="text-teal">Sei quello che scegli di diventare.</span>
+            <span className="text-teal italic">Sei quello che scegli di diventare.</span>
           </p>
-          <div className="flex items-center justify-center gap-4">
-            <span className="w-12 h-px bg-coral" />
-            <span className="text-coral font-medium">Luca Pellicari</span>
-            <span className="w-12 h-px bg-coral" />
+          <div className="flex items-center justify-center gap-5">
+            <span className="w-10 h-px bg-teal/40" />
+            <span className="text-teal font-medium text-sm uppercase tracking-widest">Luca Pellicari</span>
+            <span className="w-10 h-px bg-teal/40" />
           </div>
         </motion.div>
       </div>
@@ -834,7 +868,7 @@ function PercorsiSection() {
           <h2 className="font-display text-4xl md:text-5xl text-white mb-4">
             Percorsi, seminari, corsi, eventi.
           </h2>
-          <p className="text-lg text-white/50">
+          <p className="text-lg text-white/70">
             Metodi pratici per crescere, evolvere, trasformare.
           </p>
         </div>
@@ -854,12 +888,9 @@ function PercorsiSection() {
 
         {/* CTA Button */}
         <div className="text-center mt-12">
-          <Link href="/contatti" className="group relative inline-flex items-center gap-3 bg-coral text-white px-8 py-4 rounded-full font-medium overflow-hidden shadow-lg shadow-coral/30 hover:shadow-xl hover:shadow-coral/40 transition-all duration-500">
-            <span className="relative z-10">Scopri i percorsi</span>
-            <span className="relative z-10 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
-              <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
-            </span>
-            <div className="absolute inset-0 bg-gradient-to-r from-coral-dark to-coral opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          <Link href="/contatti" className="group inline-flex items-center gap-3 bg-teal text-white px-8 py-4 rounded-full font-medium shadow-lg shadow-teal/25 hover:shadow-xl hover:shadow-teal/35 hover:-translate-y-0.5 transition-all duration-300">
+            <span>Scopri i percorsi</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
         </div>
       </div>
@@ -867,124 +898,6 @@ function PercorsiSection() {
   )
 }
 
-// ============================================
-// METODO SECTION - Premium In-Flow Design
-// ============================================
-function MetodoSection() {
-  const offerings = [
-    { icon: BookOpen, label: 'Un libro', color: 'from-navy to-navy-dark', bg: 'bg-navy/5', text: 'text-navy' },
-    { icon: GraduationCap, label: 'Un corso', color: 'from-coral to-coral-dark', bg: 'bg-coral/10', text: 'text-coral' },
-    { icon: Route, label: 'Un percorso', color: 'from-teal to-teal-dark', bg: 'bg-teal/10', text: 'text-teal' },
-  ]
-
-  return (
-    <section className="relative py-32 lg:py-40 bg-gradient-to-b from-white via-teal-50/30 to-white overflow-hidden">
-      {/* Floating Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-teal/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-coral/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-to-br from-teal/3 to-coral/3 rounded-full blur-3xl" />
-      </div>
-
-      <div className="relative max-w-6xl mx-auto px-6 md:px-12">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center gap-3 mb-8">
-            <span className="w-12 h-px bg-gradient-to-r from-transparent to-teal" />
-            <span className="px-4 py-2 bg-teal/10 rounded-full text-teal text-sm uppercase tracking-widest font-medium">
-              Il Mio Metodo
-            </span>
-            <span className="w-12 h-px bg-gradient-to-l from-transparent to-teal" />
-          </div>
-
-          <div className="relative inline-block mb-6">
-            <h2 className="font-display text-7xl md:text-8xl lg:text-[10rem] text-transparent bg-clip-text bg-gradient-to-r from-navy via-teal to-navy leading-none">
-              In-Flow
-            </h2>
-            <div className="absolute -inset-4 bg-gradient-to-r from-teal/20 via-coral/10 to-teal/20 blur-2xl -z-10 opacity-60" />
-          </div>
-
-          <p className="font-serif text-xl md:text-2xl lg:text-3xl text-navy/60 italic max-w-2xl mx-auto">
-            La scienza dell&apos;identità, la bellezza della verità.
-          </p>
-        </div>
-
-        {/* Main Content Card */}
-        <div className="relative bg-white rounded-[2rem] p-8 md:p-12 lg:p-16 shadow-2xl shadow-navy/5 border border-gray-100/80 backdrop-blur-sm">
-          {/* Decorative corner accents */}
-          <div className="absolute top-0 left-0 w-20 h-20 border-l-2 border-t-2 border-teal/20 rounded-tl-[2rem]" />
-          <div className="absolute bottom-0 right-0 w-20 h-20 border-r-2 border-b-2 border-coral/20 rounded-br-[2rem]" />
-
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Left: Text Content */}
-            <div>
-              <p className="text-navy/60 text-lg md:text-xl mb-8 leading-relaxed">
-                Ogni persona può entrare nel suo{' '}
-                <span className="text-teal font-semibold relative">
-                  stato naturale
-                  <span className="absolute bottom-0 left-0 w-full h-0.5 bg-teal/30" />
-                </span>:
-              </p>
-
-              <div className="space-y-5 mb-10">
-                {[
-                  'un equilibrio tra chi sei e ciò che fai',
-                  'tra la tua storia e il tuo futuro',
-                  'tra il tuo cuore e la tua visione',
-                ].map((text, i) => (
-                  <div key={i} className="flex items-center gap-4 group">
-                    <span className="w-2 h-2 rounded-full bg-gradient-to-r from-teal to-coral flex-shrink-0 group-hover:scale-150 transition-transform duration-300" />
-                    <p className="text-navy text-lg md:text-xl font-display">{text}</p>
-                  </div>
-                ))}
-              </div>
-
-              <div className="relative pl-6 border-l-2 border-teal/30">
-                <p className="text-navy font-medium text-lg">
-                  Il metodo In-Flow è il risultato di{' '}
-                  <span className="text-teal">una vita intera</span>.
-                </p>
-              </div>
-            </div>
-
-            {/* Right: Offerings - Simple CSS */}
-            <div className="space-y-4">
-              {offerings.map((item) => (
-                <div
-                  key={item.label}
-                  className="group relative bg-gradient-to-r from-gray-50 to-white rounded-2xl p-6 border border-gray-100 hover:border-teal/30 hover:shadow-xl transition-all duration-500 cursor-pointer overflow-hidden"
-                >
-                  <div className={`absolute inset-0 bg-gradient-to-r ${item.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-                  <div className="relative flex items-center gap-5">
-                    <div className={`w-14 h-14 rounded-xl ${item.bg} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                      <item.icon className={`w-7 h-7 ${item.text}`} />
-                    </div>
-                    <div className="flex-1">
-                      <h4 className={`text-xl font-display ${item.text} mb-1`}>{item.label}</h4>
-                      <p className="text-sm text-navy/50">Scopri di più →</p>
-                    </div>
-                    <ArrowUpRight className={`w-5 h-5 ${item.text} opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-1 group-hover:-translate-y-1`} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* CTA Button */}
-          <div className="mt-12 pt-10 border-t border-gray-100 text-center">
-            <Link href="/metodo-in-flow" className="group relative inline-flex items-center gap-4 bg-gradient-to-r from-teal to-teal-dark text-white px-10 py-5 rounded-full text-lg font-medium overflow-hidden shadow-xl shadow-teal/25 hover:shadow-2xl hover:shadow-teal/35 transition-all duration-500 hover:scale-[1.02]">
-              <span className="relative z-10">Scopri In-Flow</span>
-              <span className="relative z-10 w-10 h-10 rounded-full bg-white/20 flex items-center justify-center group-hover:bg-white/30 transition-colors duration-300">
-                <ArrowRight className="w-5 h-5 group-hover:translate-x-0.5 transition-transform duration-300" />
-              </span>
-              <div className="absolute inset-0 bg-gradient-to-r from-teal-dark via-teal to-teal-dark bg-[length:200%_100%] opacity-0 group-hover:opacity-100 group-hover:animate-shimmer transition-opacity duration-500" />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
 
 // ============================================
 // LIBRI SECTION - Editorial Style
@@ -997,7 +910,7 @@ const libri = [
 
 function LibriSection() {
   return (
-    <section className="py-24 lg:py-32 bg-[#f8fafa]">
+    <section className="py-24 lg:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <motion.div
           initial="hidden"
@@ -1008,8 +921,8 @@ function LibriSection() {
         >
           <div>
             <motion.div variants={fadeUp} className="flex items-center gap-4 mb-4">
-              <span className="w-12 h-px bg-coral" />
-              <span className="text-coral text-sm uppercase tracking-widest font-medium">I Miei Libri</span>
+              <span className="w-12 h-px bg-teal" />
+              <span className="text-teal text-sm uppercase tracking-widest font-medium">I Miei Libri</span>
             </motion.div>
             <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl text-navy">
               Storie vere, identità vere.
@@ -1019,9 +932,9 @@ function LibriSection() {
             <Link href="/libri" className="group relative inline-flex items-center gap-3 text-navy font-medium">
               <span className="relative">
                 Vedi tutti
-                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-coral group-hover:w-full transition-all duration-300" />
+                <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal group-hover:w-full transition-all duration-300" />
               </span>
-              <span className="w-10 h-10 rounded-full border-2 border-navy/20 flex items-center justify-center group-hover:border-coral group-hover:bg-coral transition-all duration-300">
+              <span className="w-10 h-10 rounded-full border-2 border-navy/20 flex items-center justify-center group-hover:border-teal group-hover:bg-teal transition-all duration-300">
                 <ArrowUpRight className="w-4 h-4 group-hover:text-white transition-colors duration-300" />
               </span>
             </Link>
@@ -1053,7 +966,7 @@ function LibriSection() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
-              <p className="text-coral text-sm font-medium mb-1">{libro.subtitle}</p>
+              <p className="text-teal text-sm font-medium mb-1">{libro.subtitle}</p>
               <h3 className="font-display text-2xl text-navy group-hover:text-teal transition-colors">{libro.title}</h3>
             </motion.div>
           ))}
@@ -1068,7 +981,7 @@ function LibriSection() {
           className="mt-12 text-center"
         >
           <div className="inline-flex items-center gap-3 px-6 py-3 bg-navy/5 rounded-full">
-            <span className="w-2 h-2 rounded-full bg-coral animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-teal animate-pulse" />
             <span className="text-navy/70 font-medium">Altri progetti in arrivo…</span>
           </div>
         </motion.div>
@@ -1103,7 +1016,7 @@ const blogPosts = [
 
 function BlogSection() {
   return (
-    <section className="py-24 lg:py-32 bg-white">
+    <section className="py-24 lg:py-32 bg-gray-50">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <motion.div
           initial="hidden"
@@ -1115,8 +1028,8 @@ function BlogSection() {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
             <div>
               <motion.div variants={fadeUp} className="flex items-center gap-4 mb-4">
-                <span className="w-12 h-px bg-coral" />
-                <span className="text-coral text-sm uppercase tracking-widest font-medium">Blog</span>
+                <span className="w-12 h-px bg-teal" />
+                <span className="text-teal text-sm uppercase tracking-widest font-medium">Blog</span>
               </motion.div>
               <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl text-navy mb-2">
                 Pensieri liberi.<br />Verità condivise.
@@ -1124,7 +1037,7 @@ function BlogSection() {
               <motion.p variants={fadeUp} className="text-teal text-lg font-medium mb-3">
                 Identità che si aprono.
               </motion.p>
-              <motion.p variants={fadeUp} className="text-navy/50 text-base max-w-md">
+              <motion.p variants={fadeUp} className="text-navy/70 text-base max-w-md">
                 Scrivo per raccontare, per comprendere e per far vibrare qualcosa dentro chi legge.
               </motion.p>
             </div>
@@ -1132,9 +1045,9 @@ function BlogSection() {
               <Link href="/blog" className="group relative inline-flex items-center gap-3 text-navy font-medium">
                 <span className="relative">
                   Tutti gli articoli
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-coral group-hover:w-full transition-all duration-300" />
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal group-hover:w-full transition-all duration-300" />
                 </span>
-                <span className="w-10 h-10 rounded-full border-2 border-navy/20 flex items-center justify-center group-hover:border-coral group-hover:bg-coral transition-all duration-300">
+                <span className="w-10 h-10 rounded-full border-2 border-navy/20 flex items-center justify-center group-hover:border-teal group-hover:bg-teal transition-all duration-300">
                   <ArrowUpRight className="w-4 h-4 group-hover:text-white transition-colors duration-300" />
                 </span>
               </Link>
@@ -1188,66 +1101,75 @@ function BlogSection() {
 function ContattiSection() {
   return (
     <section className="relative bg-navy-dark overflow-hidden">
-      {/* Large Typography Background */}
-      <div className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none select-none">
-        <span className="text-[20rem] md:text-[30rem] lg:text-[40rem] font-display font-bold text-white/[0.02] leading-none">
-          ?
-        </span>
-      </div>
+      {/* Subtle background gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-navy-dark via-navy-dark to-navy opacity-50" />
 
       <div className="relative max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 min-h-[600px] lg:min-h-[700px]">
+        <div className="grid lg:grid-cols-2 min-h-[550px] lg:min-h-[600px]">
           {/* Left Side - Dark with Content */}
-          <div className="relative flex items-center px-8 md:px-16 lg:px-20 py-20 lg:py-32">
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+            className="relative flex items-center px-8 md:px-16 lg:px-20 py-20 lg:py-28"
+          >
             {/* Accent Line */}
-            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-32 bg-gradient-to-b from-coral via-coral to-transparent" />
+            <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-28 bg-gradient-to-b from-teal via-teal/50 to-transparent" />
 
             <div className="relative">
-              <span className="inline-block text-coral text-sm uppercase tracking-[0.3em] mb-6 font-medium">
-                Inizia ora
-              </span>
+              <div className="flex items-center gap-3 mb-8">
+                <span className="w-8 h-px bg-teal/50" />
+                <span className="text-teal-light text-xs uppercase tracking-[0.25em] font-medium">
+                  Inizia ora
+                </span>
+              </div>
 
-              <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-white leading-[1.05] mb-8">
+              <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-cream leading-[1.1] tracking-tight mb-8">
                 Vuoi lavorare<br />
-                <span className="text-teal-light">con me?</span>
+                <span className="text-teal-light italic">con me?</span>
               </h2>
 
-              <div className="space-y-4 text-white/50 text-lg max-w-md">
+              <div className="space-y-3 text-cream/60 text-lg max-w-sm">
                 <p>Vuoi portarmi nella tua azienda?</p>
                 <p>Vuoi iniziare il tuo percorso identitario?</p>
               </div>
             </div>
-          </div>
+          </motion.div>
 
-          {/* Right Side - Coral Gradient with CTA */}
-          <div className="relative flex items-center justify-center px-8 md:px-16 lg:px-20 py-20 lg:py-32 bg-gradient-to-br from-coral via-coral to-coral-dark">
-            {/* Decorative Circles */}
-            <div className="absolute top-10 right-10 w-20 h-20 rounded-full border border-white/20" />
-            <div className="absolute bottom-20 left-10 w-32 h-32 rounded-full border border-white/10" />
-            <div className="absolute top-1/2 right-20 w-40 h-40 rounded-full bg-white/5" />
+          {/* Right Side - Teal Gradient with CTA */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.1 }}
+            className="relative flex items-center justify-center px-8 md:px-16 lg:px-20 py-20 lg:py-28 bg-gradient-to-br from-teal to-teal-dark"
+          >
+            {/* Decorative elements */}
+            <div className="absolute top-10 right-10 w-16 h-16 rounded-full border border-cream/10" />
+            <div className="absolute bottom-16 left-10 w-24 h-24 rounded-full border border-cream/5" />
 
             <div className="relative text-center lg:text-left">
-              <p className="font-serif text-4xl md:text-5xl lg:text-6xl text-white leading-tight mb-12">
+              <p className="font-display text-4xl md:text-5xl text-cream leading-tight tracking-tight mb-10">
                 Scrivimi.<br />
-                <span className="text-white/80">Sono qui.</span>
+                <span className="text-cream/80 font-serif italic">Sono qui.</span>
               </p>
 
               <Link
                 href="/contatti"
-                className="group inline-flex items-center gap-6 bg-white text-navy px-10 py-6 rounded-full text-xl font-semibold shadow-2xl shadow-black/20 hover:shadow-black/30 transition-all duration-500 hover:scale-[1.02]"
+                className="group inline-flex items-center gap-5 bg-white text-navy-dark px-9 py-5 rounded-full text-lg font-semibold shadow-xl shadow-navy-dark/20 hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300"
               >
                 <span>Contattami</span>
-                <span className="w-14 h-14 rounded-full bg-navy flex items-center justify-center group-hover:bg-teal transition-colors duration-300">
-                  <ArrowRight className="w-6 h-6 text-white group-hover:translate-x-1 transition-transform duration-300" />
+                <span className="w-12 h-12 rounded-full bg-navy-dark flex items-center justify-center group-hover:bg-teal-dark transition-colors duration-300">
+                  <ArrowRight className="w-5 h-5 text-cream group-hover:translate-x-0.5 transition-transform duration-300" />
                 </span>
               </Link>
 
-              {/* Bottom Tagline */}
-              <p className="mt-12 text-white/60 text-sm tracking-wide">
+              <p className="mt-10 text-cream/60 text-sm tracking-wide">
                 Il primo passo verso la tua trasformazione
               </p>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -1263,13 +1185,12 @@ export default function HomePage() {
       <HeroSection />
       <OpeningSection />
       <ChiSonoSection />
-      <IoSonoSection />
       <MissioneSection />
       <QuantumAcademySection />
       <AlphakomSection />
       <QuoteSection />
       <PercorsiSection />
-      <MetodoSection />
+      <InFlowSection />
       <LibriSection />
       <BlogSection />
       <ContattiSection />

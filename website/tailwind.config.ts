@@ -8,22 +8,27 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Calm Therapy Palette - Psychology/Therapy Website
+        // Soft Blue & Cream Palette - Psychology/Personal Branding
         navy: {
-          DEFAULT: '#1E3A5F',  // Deep Navy - headings (clear, readable)
-          dark: '#0F2439',     // Dark Navy - body text, dark sections
-          light: '#2D4A6F',    // Hover state
+          DEFAULT: '#3D5A73',  // Soft Steel Blue - headings (calm, trustworthy)
+          dark: '#2C4356',     // Deep Blue-Gray - dark sections
+          light: '#5A7A94',    // Hover state
         },
         teal: {
-          DEFAULT: '#4A9B9B',  // Calm Teal - accents, healing
-          dark: '#3A8585',     // Hover
-          light: '#6AB5B5',    // Light accent
-          50: '#E8F4F4',       // Soft Aqua - calm backgrounds
+          DEFAULT: '#6B9BAE',  // Muted Sky Blue - accents, trust
+          dark: '#5A8899',     // Hover
+          light: '#8FB8C7',    // Light accent
+          50: '#F0F6F8',       // Soft blue-gray background
         },
         coral: {
-          DEFAULT: '#E07A5F',  // Warm Coral - CTAs, human warmth
-          dark: '#C96A50',     // Hover
-          light: '#F0A090',    // Light
+          DEFAULT: '#C4956A',  // Warm Gold/Caramel - CTAs, warmth
+          dark: '#A87D55',     // Hover
+          light: '#D9B896',    // Light gold
+        },
+        cream: {
+          DEFAULT: '#FAF7F2',  // Warm Cream - backgrounds
+          dark: '#EDE8DF',     // Slightly darker cream
+          light: '#FFFDF9',    // Almost white
         },
         // Keep gray scale for utilities
         gray: {
@@ -45,10 +50,15 @@ const config: Config = {
         display: ['var(--font-display)', 'Playfair Display', 'Georgia', 'serif'],
       },
       fontSize: {
-        'hero': ['clamp(3rem, 8vw, 7rem)', { lineHeight: '1', letterSpacing: '-0.02em', fontWeight: '500' }],
-        'display': ['clamp(2.5rem, 5vw, 4.5rem)', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
-        'title': ['clamp(2rem, 4vw, 3.5rem)', { lineHeight: '1.2', letterSpacing: '-0.01em' }],
-        'subtitle': ['clamp(1.25rem, 2vw, 1.5rem)', { lineHeight: '1.5' }],
+        'hero': ['clamp(3.5rem, 10vw, 8rem)', { lineHeight: '1', letterSpacing: '-0.03em', fontWeight: '500' }],
+        'display': ['clamp(2.75rem, 6vw, 5rem)', { lineHeight: '1.08', letterSpacing: '-0.025em' }],
+        'title': ['clamp(2rem, 4vw, 3.5rem)', { lineHeight: '1.15', letterSpacing: '-0.02em' }],
+        'subtitle': ['clamp(1.125rem, 2vw, 1.375rem)', { lineHeight: '1.6' }],
+        'body-lg': ['1.125rem', { lineHeight: '1.75' }],
+      },
+      letterSpacing: {
+        'tight': '-0.025em',
+        'tighter': '-0.04em',
       },
       spacing: {
         '18': '4.5rem',

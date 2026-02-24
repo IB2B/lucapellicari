@@ -47,7 +47,7 @@ const threeR = [
 
 export function ThreeV() {
   return (
-    <section className="py-24 lg:py-32 bg-gradient-to-b from-[#0a1628] via-[#0d1f35] to-[#0a1628] relative overflow-hidden">
+    <section className="py-24 lg:py-32 bg-gradient-to-b from-navy-dark via-navy to-navy-dark relative overflow-hidden">
       {/* Background decorative elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-40 left-10 w-80 h-80 bg-teal/5 rounded-full blur-3xl" />
@@ -80,7 +80,7 @@ export function ThreeV() {
             </span>
           </motion.h2>
           <motion.p
-            className="text-white/60 text-lg max-w-2xl mx-auto"
+            className="text-white/70 text-lg max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -195,7 +195,7 @@ export function ThreeV() {
                 </h3>
 
                 {/* Description */}
-                <p className="text-white/60 leading-relaxed">
+                <p className="text-white/70 leading-relaxed">
                   {item.description}
                 </p>
               </motion.div>
