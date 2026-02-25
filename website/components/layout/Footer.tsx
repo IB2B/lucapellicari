@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Linkedin, Instagram, Facebook, Youtube, Mail, ArrowUpRight } from 'lucide-react'
+import { Linkedin, Instagram, Facebook, Youtube, ArrowUpRight } from 'lucide-react'
 import { NAV_LINKS, SITE_CONFIG } from '@/lib/constants'
 
 const socialLinks = [
@@ -120,16 +120,6 @@ export function Footer() {
               </li>
             </ul>
 
-            <h4 className="font-display text-lg font-semibold text-white mb-4">
-              Contatti
-            </h4>
-            <a
-              href="mailto:info@lucapellicari.com"
-              className="text-coral hover:text-coral-light transition-colors duration-300 inline-flex items-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
-            >
-              <Mail size={18} />
-              info@lucapellicari.com
-            </a>
           </div>
         </div>
       </div>
