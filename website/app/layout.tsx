@@ -57,8 +57,8 @@ export const metadata: Metadata = {
     description: SITE_CONFIG.description,
   },
   robots: {
-    index: true,
-    follow: true,
+    index: false,
+    follow: false,
   },
 }
 
