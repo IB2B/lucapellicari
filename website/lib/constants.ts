@@ -5,10 +5,10 @@ export const SITE_CONFIG = {
   url: 'https://lucapellicari.com',
   ogImage: '/images/og-image.jpg',
   links: {
-    linkedin: 'https://linkedin.com/in/lucapellicari',
-    instagram: 'https://instagram.com/lucapellicari',
-    facebook: 'https://facebook.com/lucapellicari',
-    youtube: 'https://youtube.com/@lucapellicari',
+    linkedin: '#',
+    instagram: '#',
+    facebook: '#',
+    youtube: '#',
   },
 }
 

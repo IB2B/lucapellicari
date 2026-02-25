@@ -140,20 +140,6 @@ export function Footer() {
           <p className="text-teal-50/60 text-sm">
             &copy; {new Date().getFullYear()} Luca Pellicari. Tutti i diritti riservati.
           </p>
-          <div className="flex gap-6 text-sm">
-            <Link
-              href="/privacy"
-              className="text-teal-50/60 hover:text-teal-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/cookie"
-              className="text-teal-50/60 hover:text-teal-light transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
-            >
-              Cookie Policy
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
