@@ -50,25 +50,25 @@ export default function MissionePage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 bg-dark relative overflow-hidden">
+      <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 bg-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-gold/20 rounded-full blur-3xl" />
+          <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-teal/20 rounded-full blur-3xl" />
         </div>
 
         <div className="container-custom relative z-10">
           <div className="max-w-4xl">
             <FadeIn>
-              <span className="inline-block text-gold text-sm font-medium uppercase tracking-[0.3em] mb-6">
+              <span className="inline-block text-teal text-sm font-medium uppercase tracking-[0.3em] mb-6">
                 La Mia Missione
               </span>
             </FadeIn>
 
-            <TextReveal className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-light-surface mb-8 leading-tight">
+            <TextReveal className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-navy mb-8 leading-tight">
               Trasformo le persone aiutandole a riconoscersi
             </TextReveal>
 
             <FadeIn delay={0.4}>
-              <p className="text-xl md:text-2xl text-light-surface/80 leading-relaxed">
+              <p className="text-xl md:text-2xl text-navy/80 leading-relaxed">
                 Ogni giorno lavoro per risvegliare identità, liberare visioni, generare verità,
                 creare ricchezza condivisa. Non sono qui per motivarti. Sono qui per aiutarti
                 a ricordare chi sei.

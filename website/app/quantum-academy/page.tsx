@@ -72,29 +72,29 @@ export default function QuantumAcademyPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 bg-dark relative overflow-hidden">
+      <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 bg-white relative overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(201,169,98,0.1),transparent_50%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(184,115,51,0.1),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(107,155,174,0.08),transparent_50%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(196,149,106,0.08),transparent_50%)]" />
         </div>
 
         <div className="container-custom relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <FadeIn>
-              <div className="inline-flex items-center gap-2 bg-gold/10 border border-gold/30 rounded-full px-6 py-2 mb-8">
-                <Sparkles size={18} className="text-gold" />
-                <span className="text-gold text-sm font-medium">
+              <div className="inline-flex items-center gap-2 bg-teal/10 border border-teal/30 rounded-full px-6 py-2 mb-8">
+                <Sparkles size={18} className="text-teal" />
+                <span className="text-teal text-sm font-medium">
                   Il sogno che non sapevo di sognare
                 </span>
               </div>
             </FadeIn>
 
-            <TextReveal className="font-serif text-4xl md:text-5xl lg:text-7xl font-bold text-light-surface mb-8">
+            <TextReveal className="font-serif text-4xl md:text-5xl lg:text-7xl font-bold text-navy mb-8">
               Quantum Academy
             </TextReveal>
 
             <FadeIn delay={0.4}>
-              <p className="text-xl md:text-2xl text-light-surface/80 leading-relaxed mb-12">
+              <p className="text-xl md:text-2xl text-navy/80 leading-relaxed mb-12">
                 Non è una scuola. È un luogo di trasformazione. È un portale.
                 È un laboratorio di identità dove la formazione diventa risveglio.
               </p>
@@ -105,7 +105,7 @@ export default function QuantumAcademyPage() {
                 <Button href="/contatti" size="lg" arrow>
                   Scopri i percorsi
                 </Button>
-                <Button href="#team" variant="secondary" size="lg">
+                <Button href="#team" variant="outline" size="lg" className="text-navy border-navy/30 hover:border-teal hover:text-teal">
                   Conosci il team
                 </Button>
               </div>

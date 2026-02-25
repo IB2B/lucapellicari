@@ -65,35 +65,35 @@ export default function AlphakomPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 bg-dark relative overflow-hidden">
+      <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 bg-white relative overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,rgba(201,169,98,0.03)_1px,transparent_1px),linear-gradient(to_bottom,rgba(201,169,98,0.03)_1px,transparent_1px)] bg-[size:60px_60px]" />
+          <div className="absolute top-0 left-0 w-full h-full bg-[linear-gradient(to_right,rgba(107,155,174,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(107,155,174,0.05)_1px,transparent_1px)] bg-[size:60px_60px]" />
         </div>
 
         <div className="container-custom relative z-10">
           <div className="max-w-4xl">
             <FadeIn>
-              <span className="inline-block text-gold text-sm font-medium uppercase tracking-[0.3em] mb-6">
+              <span className="inline-block text-teal text-sm font-medium uppercase tracking-[0.3em] mb-6">
                 La Scuola degli Alpha Leaders
               </span>
             </FadeIn>
 
-            <TextReveal className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-light-surface mb-8">
+            <TextReveal className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-navy mb-8">
               ALPHAKOM
             </TextReveal>
 
             <FadeIn delay={0.4}>
-              <p className="text-2xl md:text-3xl text-gold font-serif italic mb-8">
+              <p className="text-2xl md:text-3xl text-teal font-serif italic mb-8">
                 &ldquo;Essere Alpha significa avere il coraggio di restare coerente
                 alla propria visione.&rdquo;
               </p>
             </FadeIn>
 
             <FadeIn delay={0.5}>
-              <p className="text-xl text-light-surface/80 leading-relaxed mb-12">
+              <p className="text-xl text-navy/80 leading-relaxed mb-12">
                 Qui impari a guidare, non a seguire. A vedere, non a reagire.
                 A influenzare in modo consapevole. A creare ricchezza — economica,
-                relazionale, spirituale. A entrare nel tuo stato naturale: <strong className="text-gold">In-Flow</strong>.
+                relazionale, spirituale. A entrare nel tuo stato naturale: <strong className="text-teal">In-Flow</strong>.
               </p>
             </FadeIn>
 

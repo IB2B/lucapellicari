@@ -33,26 +33,26 @@ export default function VisionePage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 bg-dark relative overflow-hidden">
+      <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 bg-white relative overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute inset-0 bg-gradient-to-br from-gold/5 to-copper/5" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full bg-gold/5 blur-3xl" />
+          <div className="absolute inset-0 bg-gradient-to-br from-teal/5 to-coral/5" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1000px] h-[1000px] rounded-full bg-teal/5 blur-3xl" />
         </div>
 
         <div className="container-custom relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <FadeIn>
-              <span className="inline-block text-gold text-sm font-medium uppercase tracking-[0.3em] mb-6">
+              <span className="inline-block text-teal text-sm font-medium uppercase tracking-[0.3em] mb-6">
                 La Mia Visione
               </span>
             </FadeIn>
 
-            <TextReveal className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-light-surface mb-8 leading-tight">
+            <TextReveal className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-navy mb-8 leading-tight">
               Perché esisto. Perché sono qui. Perché faccio tutto questo.
             </TextReveal>
 
             <FadeIn delay={0.4}>
-              <p className="text-xl md:text-2xl text-light-surface/80 leading-relaxed">
+              <p className="text-xl md:text-2xl text-navy/80 leading-relaxed">
                 Ho una sola visione, ed è limpida come l'aria sottile che respiri
                 quando ti lanci da un aereo e capisci che l'unica direzione possibile
                 è quella della tua verità.

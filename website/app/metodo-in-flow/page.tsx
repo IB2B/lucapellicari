@@ -24,33 +24,33 @@ export default function MetodoInFlowPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 bg-dark relative overflow-hidden">
+      <section className="pt-32 pb-20 lg:pt-40 lg:pb-32 bg-white relative overflow-hidden">
         <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gold/5 blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-teal/5 blur-3xl" />
         </div>
 
         <div className="container-custom relative z-10">
           <div className="max-w-4xl mx-auto text-center">
             <FadeIn>
-              <span className="inline-block text-gold text-sm font-medium uppercase tracking-[0.3em] mb-6">
+              <span className="inline-block text-teal text-sm font-medium uppercase tracking-[0.3em] mb-6">
                 Il Mio Metodo
               </span>
             </FadeIn>
 
-            <TextReveal className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-light-surface mb-8">
+            <TextReveal className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-navy mb-8">
               In-Flow
             </TextReveal>
 
             <FadeIn delay={0.4}>
-              <p className="text-2xl md:text-3xl text-gold font-serif italic mb-8">
+              <p className="text-2xl md:text-3xl text-teal font-serif italic mb-8">
                 La scienza dell'identità, la bellezza della verità
               </p>
             </FadeIn>
 
             <FadeIn delay={0.5}>
-              <p className="text-xl text-light-surface/80 leading-relaxed mb-12">
+              <p className="text-xl text-navy/80 leading-relaxed mb-12">
                 Tutta la mia vita converge in un'unica formula:<br />
-                <strong className="text-gold text-2xl">Identità + Visione + Verità = Flow</strong>
+                <strong className="text-teal text-2xl">Identità + Visione + Verità = Flow</strong>
               </p>
             </FadeIn>
 

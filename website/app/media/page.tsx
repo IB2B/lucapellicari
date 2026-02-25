@@ -52,21 +52,21 @@ export default function MediaPage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="pt-32 pb-20 lg:pt-40 lg:pb-24 bg-dark">
+      <section className="pt-32 pb-20 lg:pt-40 lg:pb-24 bg-white">
         <div className="container-custom">
           <div className="max-w-3xl">
             <FadeIn>
-              <span className="inline-block text-gold text-sm font-medium uppercase tracking-[0.3em] mb-6">
+              <span className="inline-block text-teal text-sm font-medium uppercase tracking-[0.3em] mb-6">
                 Media
               </span>
             </FadeIn>
 
-            <TextReveal className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-light-surface mb-8">
+            <TextReveal className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold text-navy mb-8">
               Video, Interviste, Conferenze
             </TextReveal>
 
             <FadeIn delay={0.3}>
-              <p className="text-xl text-light-surface/80 leading-relaxed">
+              <p className="text-xl text-navy/80 leading-relaxed">
                 La mia voce, la mia presenza, i miei momenti più intensi.
                 Questa pagina è un acceleratore di fiducia.
               </p>
