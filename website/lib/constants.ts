@@ -1,6 +1,6 @@
 export const SITE_CONFIG = {
   name: 'Luca Pellicari',
-  title: 'Luca Pellicari - Identity Coach, Speaker, Author',
+  title: 'Luca Pellicari - Identity Coach, Speaker, Autore',
   description: 'Trasformo le persone aiutandole a riconoscersi. Fondatore di Quantum Academy e creatore del Metodo In-Flow.',
   url: 'https://lucapellicari.com',
   ogImage: '/images/og-image.jpg',
