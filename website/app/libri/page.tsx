@@ -89,6 +89,9 @@ export default function LibriPage() {
                             alt={book.title}
                             fill
                             className="object-cover"
+                            quality={70}
+                            sizes="(max-width: 768px) 100vw, 50vw"
+                            loading="lazy"
                           />
                         </div>
                       </div>

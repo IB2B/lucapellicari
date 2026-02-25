@@ -93,6 +93,9 @@ export default function MediaPage() {
                       alt={video.title}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      quality={70}
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-dark/50 group-hover:bg-dark/30 transition-colors" />
 
@@ -151,6 +154,9 @@ export default function MediaPage() {
                     alt={`Gallery image ${index + 1}`}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    quality={70}
+                    sizes="(max-width: 768px) 50vw, 33vw"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gold/0 group-hover:bg-gold/20 transition-colors" />
                 </div>

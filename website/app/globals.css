@@ -110,6 +110,21 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  /* Text gradient */
+  .text-gradient {
+    @apply text-transparent bg-clip-text bg-gradient-to-r from-teal via-teal-light to-teal;
+  }
+
+  /* Section heading */
+  .heading-section {
+    @apply font-display text-display tracking-tight;
+  }
+
+  /* Divider */
+  .divider {
+    @apply w-full h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent;
+  }
 }
 
 @layer utilities {
@@ -129,19 +144,3 @@
   }
 }
 
-/* Lenis smooth scroll */
-html.lenis {
-  height: auto;
-}
-
-.lenis.lenis-smooth {
-  scroll-behavior: auto;
-}
-
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}

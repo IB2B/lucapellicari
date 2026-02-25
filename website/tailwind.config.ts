@@ -10,26 +10,45 @@ const config: Config = {
       colors: {
         // Soft Blue & Cream Palette - Psychology/Personal Branding
         navy: {
-          DEFAULT: '#3D5A73',  // Soft Steel Blue - headings (calm, trustworthy)
-          dark: '#2C4356',     // Deep Blue-Gray - dark sections
-          light: '#5A7A94',    // Hover state
+          DEFAULT: '#3D5A73',
+          dark: '#2C4356',
+          light: '#5A7A94',
         },
         teal: {
-          DEFAULT: '#6B9BAE',  // Muted Sky Blue - accents, trust
-          dark: '#5A8899',     // Hover
-          light: '#8FB8C7',    // Light accent
-          50: '#F0F6F8',       // Soft blue-gray background
+          DEFAULT: '#6B9BAE',
+          dark: '#5A8899',
+          light: '#8FB8C7',
+          50: '#F0F6F8',
         },
         coral: {
-          DEFAULT: '#C4956A',  // Warm Gold/Caramel - CTAs, warmth
-          dark: '#A87D55',     // Hover
-          light: '#D9B896',    // Light gold
+          DEFAULT: '#C4956A',
+          dark: '#A87D55',
+          light: '#D9B896',
         },
         cream: {
-          DEFAULT: '#FAF7F2',  // Warm Cream - backgrounds
-          dark: '#EDE8DF',     // Slightly darker cream
-          light: '#FFFDF9',    // Almost white
+          DEFAULT: '#FAF7F2',
+          dark: '#EDE8DF',
+          light: '#FFFDF9',
         },
+        // Warm accent - used across inner pages
+        gold: {
+          DEFAULT: '#C4956A',
+          light: '#D9B896',
+          dark: '#A87D55',
+        },
+        // Copper accent
+        copper: {
+          DEFAULT: '#B8805A',
+        },
+        // Dark surface system - for dark sections
+        dark: {
+          DEFAULT: '#2C4356',
+          surface: '#243A4D',
+          lighter: '#3D5A73',
+        },
+        // Light surface system
+        'light-surface': '#FAF7F2',
+        'light-darker': '#EDE8DF',
         // Keep gray scale for utilities
         gray: {
           50: '#FAFAFA',
@@ -94,9 +113,18 @@ const config: Config = {
         'subtle': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
         'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1)',
         'card-hover': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1)',
+        'glow': '0 0 20px rgba(196, 149, 106, 0.3)',
+        'inner-glow': 'inset 0 1px 0 rgba(196, 149, 106, 0.1)',
       },
       borderRadius: {
         '4xl': '2rem',
+      },
+      transitionTimingFunction: {
+        'out-expo': 'cubic-bezier(0.19, 1, 0.22, 1)',
+      },
+      backgroundImage: {
+        'gradient-gold': 'linear-gradient(135deg, #C4956A, #D9B896)',
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
       },
     },
   },

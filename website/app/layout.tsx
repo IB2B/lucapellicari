@@ -21,7 +21,7 @@ const playfair = Playfair_Display({
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
   variable: '--font-serif',
-  weight: ['300', '400', '500', '600', '700'],
+  weight: ['400', '600'],
   display: 'swap',
 })
 
@@ -70,10 +70,8 @@ export default function RootLayout({
   return (
     <html lang="it" className={`${dmSans.variable} ${playfair.variable} ${cormorant.variable}`}>
       <head>
-        {/* Preload critical hero images for faster LCP */}
+        {/* Preload only the first hero image for faster LCP */}
         <link rel="preload" as="image" href="/images/hero-1.jpg" type="image/jpeg" />
-        <link rel="preload" as="image" href="/images/hero-2.jpg" type="image/jpeg" />
-        <link rel="preload" as="image" href="/images/hero-3.jpg" type="image/jpeg" />
       </head>
       <body className="font-sans">
         <SmoothScroll>

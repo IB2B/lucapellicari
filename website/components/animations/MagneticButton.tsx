@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, ReactNode } from 'react'
+import { useRef, useState, useCallback, ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
@@ -17,24 +17,28 @@ export function MagneticButton({
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null)
   const [position, setPosition] = useState({ x: 0, y: 0 })
+  const rafRef = useRef<number | null>(null)
 
-  const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!ref.current) return
+  const handleMouse = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (rafRef.current) return
+    rafRef.current = requestAnimationFrame(() => {
+      if (!ref.current) { rafRef.current = null; return }
+      const { clientX, clientY } = e
+      const { left, top, width, height } = ref.current.getBoundingClientRect()
+      const x = (clientX - (left + width / 2)) * strength
+      const y = (clientY - (top + height / 2)) * strength
+      setPosition({ x, y })
+      rafRef.current = null
+    })
+  }, [strength])
 
-    const { clientX, clientY } = e
-    const { left, top, width, height } = ref.current.getBoundingClientRect()
-    const centerX = left + width / 2
-    const centerY = top + height / 2
-
-    const x = (clientX - centerX) * strength
-    const y = (clientY - centerY) * strength
-
-    setPosition({ x, y })
-  }
-
-  const reset = () => {
+  const reset = useCallback(() => {
+    if (rafRef.current) {
+      cancelAnimationFrame(rafRef.current)
+      rafRef.current = null
+    }
     setPosition({ x: 0, y: 0 })
-  }
+  }, [])
 
   return (
     <motion.div

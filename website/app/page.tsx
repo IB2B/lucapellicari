@@ -174,60 +174,44 @@ function HeroSection() {
         <div className="w-full px-8 md:px-16 lg:px-24">
           <div className="max-w-3xl">
             {/* Subtitle with line */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex items-center gap-4 mb-8"
-            >
+            <div className="flex items-center gap-4 mb-8">
               <span className="w-12 h-px bg-teal-light" />
               <span className="text-teal-light text-sm uppercase tracking-[0.2em] font-medium">
                 {heroSlides[currentSlide].subtitle}
               </span>
-            </motion.div>
+            </div>
 
             <div className="relative min-h-[160px] md:min-h-[180px] lg:min-h-[200px] mb-8">
               {heroSlides.map((slide, index) => (
-                <motion.div
+                <div
                   key={index}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{
-                    opacity: index === currentSlide ? 1 : 0,
-                    y: index === currentSlide ? 0 : 20
-                  }}
-                  transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                  className={`absolute inset-0 ${index === currentSlide ? '' : 'pointer-events-none'}`}
+                  className={`absolute inset-0 transition-opacity duration-700 ${
+                    index === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'
+                  }`}
                 >
                   <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-cream leading-[1.05] tracking-tight">
                     {slide.title}{' '}
                     <span className="text-teal-light italic">{slide.highlight}</span>
                   </h1>
-                </motion.div>
+                </div>
               ))}
             </div>
 
             <div className="relative min-h-[4.5rem] md:min-h-[4rem] mb-12">
               {heroSlides.map((slide, index) => (
-                <motion.p
+                <p
                   key={index}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: index === currentSlide ? 1 : 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className={`absolute inset-0 text-cream/80 text-lg md:text-xl leading-relaxed max-w-xl ${
-                    index === currentSlide ? '' : 'pointer-events-none'
+                  className={`absolute inset-0 text-cream/80 text-lg md:text-xl leading-relaxed max-w-xl transition-opacity duration-500 ${
+                    index === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'
                   }`}
                 >
                   {slide.description}
-                </motion.p>
+                </p>
               ))}
             </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              className="flex flex-wrap gap-5"
-            >
+            <div className="flex flex-wrap gap-5">
+
               <Link href="/chi-sono" className="group relative inline-flex items-center gap-3 bg-teal text-white px-9 py-4 rounded-full font-semibold overflow-hidden shadow-xl shadow-teal/25 hover:shadow-2xl hover:shadow-teal/35 transition-all duration-500 hover:-translate-y-0.5">
                 <span className="relative z-10">Scopri chi sono</span>
                 <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
@@ -237,24 +221,24 @@ function HeroSection() {
                 <span>Contattami</span>
                 <ArrowUpRight className="w-4 h-4 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
               </Link>
-            </motion.div>
+            </div>
           </div>
         </div>
       </motion.div>
 
       {/* Controls */}
-      <div className="absolute bottom-12 left-0 right-0 z-20 px-8 md:px-16 lg:px-24">
+      <div className="absolute bottom-6 md:bottom-12 left-0 right-0 z-20 px-6 md:px-16 lg:px-24">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-8">
+          <div className="flex items-center gap-4 md:gap-8">
             {/* Slide counter */}
-            <div className="flex items-center gap-3 text-sm font-medium">
-              <span className="text-cream text-2xl font-display">0{currentSlide + 1}</span>
+            <div className="flex items-center gap-2 md:gap-3 text-sm font-medium">
+              <span className="text-cream text-xl md:text-2xl font-display">0{currentSlide + 1}</span>
               <span className="text-cream/60">/</span>
               <span className="text-cream/60">0{heroSlides.length}</span>
             </div>
 
             {/* Progress bar */}
-            <div className="w-32 md:w-48">
+            <div className="w-20 md:w-48">
               <div className="h-[2px] bg-white/10 rounded-full overflow-hidden">
                 <motion.div
                   className="h-full bg-gradient-to-r from-teal to-teal-light"
@@ -268,18 +252,18 @@ function HeroSection() {
           </div>
 
           {/* Navigation buttons */}
-          <div className="flex gap-3">
+          <div className="flex gap-2 md:gap-3">
             <button
               onClick={prevSlide}
               aria-label="Slide precedente"
-              className="w-12 h-12 rounded-full border border-cream/20 flex items-center justify-center text-cream/60 hover:text-cream hover:border-cream/40 hover:bg-white/5 transition-all duration-300"
+              className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-cream/20 flex items-center justify-center text-cream/60 hover:text-cream hover:border-cream/40 hover:bg-white/5 active:bg-white/10 transition-all duration-300"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={nextSlide}
               aria-label="Slide successiva"
-              className="w-12 h-12 rounded-full border border-cream/20 flex items-center justify-center text-cream/60 hover:text-cream hover:border-cream/40 hover:bg-white/5 transition-all duration-300"
+              className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-cream/20 flex items-center justify-center text-cream/60 hover:text-cream hover:border-cream/40 hover:bg-white/5 active:bg-white/10 transition-all duration-300"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -457,8 +441,8 @@ function ChiSonoSection() {
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 40vw"
+                  quality={70}
                   loading="lazy"
-                  quality={80}
                 />
               </div>
               {/* Floating Stats Card */}
@@ -700,9 +684,9 @@ function QuantumAcademySection() {
                 alt="Quantum Academy"
                 fill
                 className="object-cover"
-                sizes="50vw"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                quality={70}
                 loading="lazy"
-                quality={80}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/60 via-transparent to-transparent" />
             </div>
@@ -745,9 +729,9 @@ function AlphakomSection() {
                 alt="Alphakom"
                 fill
                 className="object-cover"
-                sizes="50vw"
+                sizes="(max-width: 768px) 100vw, 50vw"
+                quality={70}
                 loading="lazy"
-                quality={80}
               />
               <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/30 to-transparent" />
             </div>
@@ -961,8 +945,8 @@ function LibriSection() {
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
                   sizes="(max-width: 768px) 100vw, 33vw"
+                  quality={70}
                   loading="lazy"
-                  quality={80}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
@@ -1072,8 +1056,8 @@ function BlogSection() {
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
                     sizes="(max-width: 768px) 100vw, 33vw"
+                    quality={70}
                     loading="lazy"
-                    quality={80}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                   <span className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-sm rounded-full text-xs font-medium text-navy">

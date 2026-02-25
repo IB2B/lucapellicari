@@ -126,6 +126,8 @@ export default function QuantumAcademyPage() {
                     alt="Quantum Academy"
                     fill
                     className="object-cover"
+                    quality={70}
+                    sizes="(max-width: 768px) 100vw, 50vw"
                   />
                 </div>
                 <div className="absolute -bottom-6 -right-6 bg-gold text-dark p-6 rounded-lg">
@@ -222,6 +224,9 @@ export default function QuantumAcademyPage() {
                       alt={member.name}
                       fill
                       className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      quality={70}
+                      sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-dark via-dark/30 to-transparent" />
                   </div>

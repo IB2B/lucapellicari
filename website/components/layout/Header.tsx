@@ -54,9 +54,11 @@ export function Header() {
       <header
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out',
-          isScrolled || !isHomePage
-            ? 'bg-white/90 backdrop-blur-xl py-3 shadow-[0_1px_3px_rgba(0,0,0,0.05)] border-b border-gray-100/80'
-            : 'bg-transparent py-5'
+          isMobileMenuOpen
+            ? 'bg-transparent py-3 border-b border-transparent shadow-none'
+            : isScrolled || !isHomePage
+              ? 'bg-white/90 backdrop-blur-xl py-3 shadow-[0_1px_3px_rgba(0,0,0,0.05)] border-b border-gray-100/80'
+              : 'bg-transparent py-5'
         )}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-12">
@@ -71,7 +73,7 @@ export function Header() {
                 <motion.div
                   className={cn(
                     "w-10 h-10 rounded-xl flex items-center justify-center font-display text-lg font-bold transition-all duration-300",
-                    hasDarkBackground
+                    hasDarkBackground || isMobileMenuOpen
                       ? "bg-white/10 text-white border border-white/20"
                       : "bg-teal/10 text-teal border border-teal/20 group-hover:bg-teal group-hover:text-white"
                   )}
@@ -85,13 +87,13 @@ export function Header() {
                   <motion.span
                     className={cn(
                       "font-display text-xl font-semibold transition-colors duration-300 tracking-tight",
-                      hasDarkBackground ? "text-white" : "text-navy"
+                      hasDarkBackground || isMobileMenuOpen ? "text-white" : "text-navy"
                     )}
                   >
                     Luca{' '}
                     <span className={cn(
                       "transition-colors duration-300",
-                      hasDarkBackground ? "text-teal-light" : "text-teal"
+                      hasDarkBackground || isMobileMenuOpen ? "text-teal-light" : "text-teal"
                     )}>
                       Pellicari
                     </span>
@@ -166,9 +168,11 @@ export function Header() {
               className={cn(
                 "lg:hidden relative z-10 w-11 h-11 rounded-xl flex items-center justify-center transition-all duration-300",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal",
-                hasDarkBackground
+                isMobileMenuOpen
                   ? "text-white bg-white/10 hover:bg-white/20"
-                  : "text-navy bg-gray-100 hover:bg-gray-200"
+                  : hasDarkBackground
+                    ? "text-white bg-white/10 hover:bg-white/20"
+                    : "text-navy bg-gray-100 hover:bg-gray-200"
               )}
               aria-label={isMobileMenuOpen ? 'Chiudi menu' : 'Apri menu'}
               aria-expanded={isMobileMenuOpen}
@@ -212,48 +216,47 @@ export function Header() {
             transition={{ duration: 0.3 }}
             className="fixed inset-0 z-40 lg:hidden"
           >
-            {/* Backdrop */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 bg-navy-dark/98 backdrop-blur-xl"
-              onClick={() => setIsMobileMenuOpen(false)}
-            />
+            {/* Solid background */}
+            <div className="absolute inset-0 bg-navy-dark" />
 
             {/* Menu Content */}
             <motion.nav
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="absolute inset-x-0 top-0 bottom-0 flex flex-col px-6 pt-24 pb-8 overflow-y-auto"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="relative h-full flex flex-col pt-20 overflow-y-auto"
               aria-label="Menu mobile"
             >
+              {/* Top bar with line */}
+              <div className="px-6 pb-6 border-b border-white/10">
+                <p className="text-teal-light text-xs uppercase tracking-[0.2em] font-medium">Menu</p>
+              </div>
+
               {/* Navigation Links */}
-              <div className="flex-1">
-                <div className="space-y-1">
+              <div className="flex-1 px-6 py-4">
+                <div className="space-y-0.5">
                   {NAV_LINKS.map((link, index) => (
                     <motion.div
                       key={link.href}
-                      initial={{ opacity: 0, x: -20 }}
+                      initial={{ opacity: 0, x: -16 }}
                       animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: index * 0.05, duration: 0.3 }}
+                      transition={{ delay: index * 0.04, duration: 0.25 }}
                     >
                       <Link
                         href={link.href}
                         className={cn(
-                          'flex items-center justify-between py-4 text-2xl font-display font-medium transition-colors rounded-lg px-4 -mx-4',
+                          'flex items-center justify-between py-3.5 px-4 -mx-4 rounded-xl transition-all duration-200',
                           'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal',
                           pathname === link.href
-                            ? 'text-teal-light bg-white/5'
-                            : 'text-white/80 hover:text-white hover:bg-white/5'
+                            ? 'text-white bg-teal/20'
+                            : 'text-white/70 active:bg-white/5'
                         )}
                         aria-current={pathname === link.href ? 'page' : undefined}
                       >
-                        <span>{link.label}</span>
+                        <span className="text-lg font-display font-medium">{link.label}</span>
                         {pathname === link.href && (
-                          <span className="w-2 h-2 rounded-full bg-teal-light" />
+                          <span className="w-1.5 h-1.5 rounded-full bg-teal-light" />
                         )}
                       </Link>
                     </motion.div>
@@ -262,18 +265,18 @@ export function Header() {
 
                 {/* CTA Button */}
                 <motion.div
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={{ opacity: 0, y: 12 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.4, duration: 0.3 }}
-                  className="mt-8"
+                  transition={{ delay: 0.35, duration: 0.25 }}
+                  className="mt-6"
                 >
                   <Link
                     href="/contatti"
-                    className="flex items-center justify-center gap-3 w-full py-4 bg-teal text-white text-lg font-semibold rounded-2xl hover:bg-teal-dark transition-colors"
+                    className="flex items-center justify-center gap-3 w-full py-4 bg-teal text-white text-base font-semibold rounded-2xl active:bg-teal-dark transition-colors"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     <span>Contattami</span>
-                    <ArrowRight className="w-5 h-5" />
+                    <ArrowRight className="w-4 h-4" />
                   </Link>
                 </motion.div>
               </div>
@@ -282,36 +285,35 @@ export function Header() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.5, duration: 0.3 }}
-                className="pt-8 border-t border-white/10"
+                transition={{ delay: 0.4, duration: 0.25 }}
+                className="px-6 py-6 border-t border-white/10"
               >
-                {/* Social Links */}
-                <p className="text-sm text-white/40 mb-4 uppercase tracking-wider">Seguimi</p>
-                <div className="flex gap-3">
-                  <a
-                    href={SITE_CONFIG.links.linkedin}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all"
-                    aria-label="LinkedIn"
-                  >
-                    <Linkedin size={20} />
-                  </a>
-                  <a
-                    href={SITE_CONFIG.links.instagram}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-white/60 hover:text-white hover:bg-white/10 transition-all"
-                    aria-label="Instagram"
-                  >
-                    <Instagram size={20} />
-                  </a>
+                <div className="flex items-center justify-between">
+                  {/* Social Links */}
+                  <div className="flex gap-2">
+                    <a
+                      href={SITE_CONFIG.links.linkedin}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-white/50 active:bg-white/10 transition-all"
+                      aria-label="LinkedIn"
+                    >
+                      <Linkedin size={18} />
+                    </a>
+                    <a
+                      href={SITE_CONFIG.links.instagram}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center text-white/50 active:bg-white/10 transition-all"
+                      aria-label="Instagram"
+                    >
+                      <Instagram size={18} />
+                    </a>
+                  </div>
+                  <p className="text-xs text-white/25">
+                    © {new Date().getFullYear()} Luca Pellicari
+                  </p>
                 </div>
-
-                {/* Copyright */}
-                <p className="mt-8 text-sm text-white/30">
-                  © {new Date().getFullYear()} Luca Pellicari
-                </p>
               </motion.div>
             </motion.nav>
           </motion.div>

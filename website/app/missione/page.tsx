@@ -89,6 +89,9 @@ export default function MissionePage() {
                   alt="Luca Pellicari speaking"
                   fill
                   className="object-cover"
+                  quality={70}
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  loading="lazy"
                 />
               </div>
             </FadeIn>
