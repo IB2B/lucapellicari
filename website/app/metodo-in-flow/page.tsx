@@ -64,7 +64,7 @@ export default function MetodoInFlowPage() {
       </section>
 
       {/* 3V Framework */}
-      <section className="py-24 lg:py-32 bg-dark-surface">
+      <section className="py-24 lg:py-32 bg-navy-dark">
         <div className="container-custom">
           <SectionHeading
             subtitle="Le Tre V"
@@ -136,7 +136,7 @@ export default function MetodoInFlowPage() {
       />
 
       {/* Benefits */}
-      <section className="py-24 lg:py-32 bg-light section-light">
+      <section className="py-24 lg:py-32 bg-white">
         <div className="container-custom">
           <SectionHeading
             subtitle="Il Flow Genera"
@@ -147,14 +147,14 @@ export default function MetodoInFlowPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {benefits.map((benefit, index) => (
               <FadeIn key={benefit.title} delay={index * 0.1}>
-                <div className="bg-white rounded-lg p-8 border border-light-darker hover:border-gold/50 hover:shadow-lg transition-all duration-300 text-center h-full">
-                  <div className="w-16 h-16 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-6 text-gold">
+                <div className="bg-cream rounded-lg p-8 border border-cream-dark hover:border-teal/30 hover:shadow-lg transition-all duration-300 text-center h-full">
+                  <div className="w-16 h-16 rounded-full bg-teal/10 flex items-center justify-center mx-auto mb-6 text-teal">
                     <benefit.icon size={32} />
                   </div>
-                  <h3 className="font-serif text-xl text-dark font-semibold mb-3">
+                  <h3 className="font-serif text-xl text-navy font-semibold mb-3">
                     {benefit.title}
                   </h3>
-                  <p className="text-dark/70">
+                  <p className="text-navy/70">
                     {benefit.description}
                   </p>
                 </div>
@@ -165,7 +165,7 @@ export default function MetodoInFlowPage() {
       </section>
 
       {/* Book Section */}
-      <section className="py-24 lg:py-32 bg-dark">
+      <section className="py-24 lg:py-32 bg-navy-dark">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
             <FadeIn>

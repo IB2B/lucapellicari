@@ -55,7 +55,7 @@ export default function ContattiPage() {
       </section>
 
       {/* Contact Form & Info */}
-      <section className="py-16 lg:py-24 bg-dark-surface">
+      <section className="py-16 lg:py-24 bg-navy-dark">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-16">
             {/* Contact Form */}

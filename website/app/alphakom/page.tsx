@@ -107,7 +107,7 @@ export default function AlphakomPage() {
       </section>
 
       {/* Definition Section */}
-      <section className="py-24 lg:py-32 bg-dark-surface">
+      <section className="py-24 lg:py-32 bg-navy-dark">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto text-center">
             <FadeIn>
@@ -152,27 +152,28 @@ export default function AlphakomPage() {
       />
 
       {/* Principles Section */}
-      <section className="py-24 lg:py-32 bg-dark">
+      <section className="py-24 lg:py-32 bg-white">
         <div className="container-custom">
           <SectionHeading
             subtitle="I Principi"
             title="Il codice Alpha"
             description="I fondamenti su cui si costruisce un vero leader. Non regole, ma principi di vita."
+            light
           />
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {principles.map((principle, index) => (
               <FadeIn key={principle.title} delay={index * 0.1}>
                 <div className="group relative">
-                  <div className="absolute -inset-0.5 bg-gradient-gold rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-500" />
-                  <div className="relative bg-dark-surface rounded-xl p-8 border border-dark-lighter h-full">
-                    <div className="w-14 h-14 rounded-xl bg-gold/10 flex items-center justify-center mb-6 text-gold group-hover:bg-gold group-hover:text-dark transition-colors">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-teal/20 to-coral/20 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-500" />
+                  <div className="relative bg-cream rounded-xl p-8 border border-cream-dark h-full">
+                    <div className="w-14 h-14 rounded-xl bg-teal/10 flex items-center justify-center mb-6 text-teal group-hover:bg-teal group-hover:text-white transition-colors">
                       <principle.icon size={28} />
                     </div>
-                    <h3 className="font-serif text-2xl text-light-surface font-bold mb-3">
+                    <h3 className="font-serif text-2xl text-navy font-bold mb-3">
                       {principle.title}
                     </h3>
-                    <p className="text-light-surface/70 leading-relaxed">
+                    <p className="text-navy/70 leading-relaxed">
                       {principle.description}
                     </p>
                   </div>
@@ -184,7 +185,7 @@ export default function AlphakomPage() {
       </section>
 
       {/* Manifesto Section */}
-      <section className="py-24 lg:py-32 bg-gradient-to-b from-dark-surface to-dark">
+      <section className="py-24 lg:py-32 bg-navy-dark">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
             <FadeIn>

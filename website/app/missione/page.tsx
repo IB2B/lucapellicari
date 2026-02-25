@@ -79,7 +79,7 @@ export default function MissionePage() {
       </section>
 
       {/* Mission Statement */}
-      <section className="py-24 lg:py-32 bg-dark-surface">
+      <section className="py-24 lg:py-32 bg-navy-dark">
         <div className="container-custom">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <FadeIn direction="left">
@@ -133,7 +133,7 @@ export default function MissionePage() {
       />
 
       {/* Mission Points */}
-      <section className="py-24 lg:py-32 bg-light section-light">
+      <section className="py-24 lg:py-32 bg-white">
         <div className="container-custom">
           <SectionHeading
             subtitle="Come Opero"
@@ -144,14 +144,14 @@ export default function MissionePage() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {missionPoints.map((point, index) => (
               <FadeIn key={point.title} delay={index * 0.1}>
-                <div className="bg-white rounded-lg p-8 border border-light-darker hover:border-gold/50 hover:shadow-lg transition-all duration-300 h-full">
-                  <div className="w-14 h-14 rounded-lg bg-gold/10 flex items-center justify-center mb-6 text-gold">
+                <div className="bg-cream rounded-lg p-8 border border-cream-dark hover:border-teal/30 hover:shadow-lg transition-all duration-300 h-full">
+                  <div className="w-14 h-14 rounded-lg bg-teal/10 flex items-center justify-center mb-6 text-teal">
                     <point.icon size={28} />
                   </div>
-                  <h3 className="font-serif text-xl text-dark font-semibold mb-3">
+                  <h3 className="font-serif text-xl text-navy font-semibold mb-3">
                     {point.title}
                   </h3>
-                  <p className="text-dark/70 leading-relaxed">
+                  <p className="text-navy/70 leading-relaxed">
                     {point.description}
                   </p>
                 </div>

@@ -76,7 +76,7 @@ export default function MediaPage() {
       </section>
 
       {/* Videos Section */}
-      <section className="py-16 lg:py-24 bg-dark-surface">
+      <section className="py-16 lg:py-24 bg-navy-dark">
         <div className="container-custom">
           <SectionHeading
             subtitle="Video"
@@ -137,12 +137,13 @@ export default function MediaPage() {
       </section>
 
       {/* Gallery Section */}
-      <section className="py-16 lg:py-24 bg-dark">
+      <section className="py-16 lg:py-24 bg-white">
         <div className="container-custom">
           <SectionHeading
             subtitle="Galleria"
             title="Momenti catturati"
             description="Conferenze, eventi, incontri. Frammenti di un viaggio condiviso."
+            light
           />
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">

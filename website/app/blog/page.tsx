@@ -99,7 +99,7 @@ export default function BlogPage() {
       </section>
 
       {/* Blog Grid */}
-      <section className="py-16 lg:py-24 bg-dark-surface">
+      <section className="py-16 lg:py-24 bg-navy-dark">
         <div className="container-custom">
           {/* Featured Post */}
           <FadeIn className="mb-16">

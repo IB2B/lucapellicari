@@ -63,7 +63,7 @@ export default function VisionePage() {
       </section>
 
       {/* Main Vision */}
-      <section className="py-24 lg:py-32 bg-dark-surface">
+      <section className="py-24 lg:py-32 bg-navy-dark">
         <div className="container-custom">
           <div className="max-w-4xl mx-auto">
             <FadeIn>
@@ -95,26 +95,27 @@ export default function VisionePage() {
       />
 
       {/* Vision Pillars */}
-      <section className="py-24 lg:py-32 bg-dark">
+      <section className="py-24 lg:py-32 bg-white">
         <div className="container-custom">
           <SectionHeading
             subtitle="I Pilastri"
             title="Questa visione ha un nome"
+            light
           />
 
           <div className="grid md:grid-cols-3 gap-8 mt-16">
             {visionPillars.map((pillar, index) => (
               <FadeIn key={pillar.title} delay={index * 0.15}>
                 <div className="relative group">
-                  <div className="absolute -inset-0.5 bg-gradient-gold rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-500" />
-                  <div className="relative bg-dark-surface rounded-xl p-8 border border-dark-lighter h-full">
-                    <span className="text-gold font-serif text-6xl font-bold opacity-20">
+                  <div className="absolute -inset-0.5 bg-gradient-to-r from-teal/20 to-coral/20 rounded-xl opacity-0 group-hover:opacity-100 blur transition duration-500" />
+                  <div className="relative bg-cream rounded-xl p-8 border border-cream-dark h-full">
+                    <span className="text-teal font-serif text-6xl font-bold opacity-20">
                       0{index + 1}
                     </span>
-                    <h3 className="font-serif text-2xl text-light-surface font-bold mt-4 mb-4">
+                    <h3 className="font-serif text-2xl text-navy font-bold mt-4 mb-4">
                       {pillar.title}
                     </h3>
-                    <p className="text-light-surface/70 leading-relaxed">
+                    <p className="text-navy/70 leading-relaxed">
                       {pillar.description}
                     </p>
                   </div>
@@ -126,7 +127,7 @@ export default function VisionePage() {
       </section>
 
       {/* Final Statement */}
-      <section className="py-24 lg:py-32 bg-gradient-to-b from-dark-surface to-dark">
+      <section className="py-24 lg:py-32 bg-navy-dark">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
             <FadeIn>

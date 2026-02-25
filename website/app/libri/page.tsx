@@ -68,7 +68,7 @@ export default function LibriPage() {
       </section>
 
       {/* Books Grid */}
-      <section className="py-16 lg:py-24 bg-dark-surface">
+      <section className="py-16 lg:py-24 bg-navy-dark">
         <div className="container-custom">
           <div className="space-y-16">
             {books.map((book, index) => (
@@ -134,15 +134,15 @@ export default function LibriPage() {
       </section>
 
       {/* Quote Section */}
-      <section className="py-24 lg:py-32 bg-dark">
+      <section className="py-24 lg:py-32 bg-white">
         <div className="container-custom">
           <div className="max-w-3xl mx-auto text-center">
             <FadeIn>
-              <p className="font-serif text-3xl md:text-4xl text-light-surface leading-relaxed italic">
+              <p className="font-serif text-3xl md:text-4xl text-navy leading-relaxed italic">
                 &ldquo;Scrivo perché le parole sono ponti. Collegano la mia esperienza
                 alla tua ricerca. E in quel collegamento nasce qualcosa di nuovo.&rdquo;
               </p>
-              <p className="mt-8 text-gold font-medium">— Luca Pellicari</p>
+              <p className="mt-8 text-teal font-medium">— Luca Pellicari</p>
             </FadeIn>
           </div>
         </div>
