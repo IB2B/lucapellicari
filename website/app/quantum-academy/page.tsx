@@ -6,7 +6,7 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Button } from '@/components/ui/Button'
 import { CTA } from '@/components/sections/CTA'
 import { Quote } from '@/components/sections/Quote'
-import { Sparkles, Users, Heart, BookOpen, Target, Lightbulb } from 'lucide-react'
+import { Sparkles, Users, Heart, BookOpen, Target, Lightbulb, Mail, Phone, MapPin, Globe } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Quantum Academy',
@@ -18,7 +18,7 @@ const features = [
   {
     icon: Sparkles,
     title: 'Trasformazione Profonda',
-    description: 'Non insegniamo tecniche, trasmettamo identità. Ogni percorso è un viaggio dentro te stesso.',
+    description: 'Non insegniamo tecniche, trasmettiamo identità. Ogni percorso è un viaggio dentro te stesso.',
   },
   {
     icon: Users,
@@ -242,6 +242,69 @@ export default function QuantumAcademyPage() {
                 </div>
               </FadeIn>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section className="py-24 lg:py-32 bg-white">
+        <div className="container-custom">
+          <SectionHeading
+            subtitle="Contatti"
+            title="Dove trovarci"
+            description="Per informazioni sui percorsi, iscrizioni o collaborazioni."
+            light
+          />
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+            <FadeIn delay={0}>
+              <div className="text-center">
+                <div className="w-14 h-14 rounded-lg bg-teal/10 flex items-center justify-center mx-auto mb-4 text-teal">
+                  <Mail size={28} />
+                </div>
+                <h4 className="font-serif text-lg text-navy font-semibold mb-2">Email</h4>
+                <a href="mailto:luca.pellicari@quantumacademy.org" className="text-navy/70 hover:text-teal transition-colors text-sm break-all">
+                  luca.pellicari@quantumacademy.org
+                </a>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.1}>
+              <div className="text-center">
+                <div className="w-14 h-14 rounded-lg bg-teal/10 flex items-center justify-center mx-auto mb-4 text-teal">
+                  <Phone size={28} />
+                </div>
+                <h4 className="font-serif text-lg text-navy font-semibold mb-2">Telefono</h4>
+                <a href="tel:+393482201309" className="text-navy/70 hover:text-teal transition-colors text-sm">
+                  +39 348 220 1309
+                </a>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.2}>
+              <div className="text-center">
+                <div className="w-14 h-14 rounded-lg bg-teal/10 flex items-center justify-center mx-auto mb-4 text-teal">
+                  <MapPin size={28} />
+                </div>
+                <h4 className="font-serif text-lg text-navy font-semibold mb-2">Sede</h4>
+                <p className="text-navy/70 text-sm">
+                  Via Cappelletta, 4<br />
+                  37121 Verona VR, Italia
+                </p>
+              </div>
+            </FadeIn>
+
+            <FadeIn delay={0.3}>
+              <div className="text-center">
+                <div className="w-14 h-14 rounded-lg bg-teal/10 flex items-center justify-center mx-auto mb-4 text-teal">
+                  <Globe size={28} />
+                </div>
+                <h4 className="font-serif text-lg text-navy font-semibold mb-2">Sito Web</h4>
+                <a href="https://quantumacademy.org/" target="_blank" rel="noopener noreferrer" className="text-navy/70 hover:text-teal transition-colors text-sm">
+                  quantumacademy.org
+                </a>
+              </div>
+            </FadeIn>
           </div>
         </div>
       </section>

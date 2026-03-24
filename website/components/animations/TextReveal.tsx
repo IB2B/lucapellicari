@@ -52,7 +52,7 @@ export function TextReveal({
       <motion.div
         ref={ref}
         initial={{ opacity: 0, y: 20 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+        animate={isInView ? { opacity: 1, y: 0 } : undefined}
         transition={{ duration: 0.6, delay, ease: [0.25, 0.4, 0.25, 1] }}
         className={className}
       >
@@ -78,7 +78,7 @@ export function TextReveal({
       className={cn('overflow-hidden', className)}
       variants={containerVariants}
       initial="hidden"
-      animate={isInView ? 'visible' : 'hidden'}
+      animate={isInView ? 'visible' : undefined}
       transition={{ delay }}
     >
       {items.map((item, index) => (

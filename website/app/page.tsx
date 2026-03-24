@@ -4,43 +4,43 @@ import { useRef, useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
-import { ArrowRight, ChevronRight, ChevronLeft, Target, Eye, Shield, Users, Brain, Star, Compass, Sparkles, Quote, ArrowUpRight } from 'lucide-react'
+import { ArrowRight, ChevronRight, ChevronLeft, Target, Eye, Shield, Users, Brain, Star, Compass, Sparkles, Quote, ArrowUpRight, GraduationCap, Building2, Globe, Handshake, CheckCircle, RefreshCw, TrendingUp } from 'lucide-react'
 import { InFlowSection } from '@/components/sections/InFlowSection'
 
-// Animation variants - refined for premium feel
+// Animation variants - optimized for performance
 const fadeUp = {
-  hidden: { opacity: 0, y: 30 },
+  hidden: { opacity: 0, y: 20 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as const }
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const }
   }
 }
 
 const fadeIn = {
   hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { duration: 0.8, ease: "easeOut" } }
+  visible: { opacity: 1, transition: { duration: 0.5, ease: "easeOut" } }
 }
 
 const stagger = {
-  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } }
+  visible: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } }
 }
 
 const slideIn = {
-  hidden: { opacity: 0, x: -40 },
+  hidden: { opacity: 0, x: -20 },
   visible: {
     opacity: 1,
     x: 0,
-    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as const }
+    transition: { duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] as const }
   }
 }
 
 const scaleIn = {
-  hidden: { opacity: 0, scale: 0.95 },
+  hidden: { opacity: 0, scale: 0.97 },
   visible: {
     opacity: 1,
     scale: 1,
-    transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] as const }
+    transition: { duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] as const }
   }
 }
 
@@ -153,7 +153,7 @@ function HeroSection() {
               index === currentSlide ? 'opacity-100' : 'opacity-0'
             }`}
           >
-            <Image src={slide.image} alt={slide.alt} fill className="object-cover" priority loading="eager" quality={75} sizes="100vw" />
+            <Image src={slide.image} alt={slide.alt} fill className="object-cover" priority={index === 0} loading={index === 0 ? "eager" : "lazy"} quality={65} sizes="100vw" />
             {/* Premium gradient overlay */}
             <div className="absolute inset-0 bg-gradient-to-r from-navy-dark/90 via-navy-dark/60 to-navy-dark/30" />
             <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/50 via-transparent to-transparent" />
@@ -165,13 +165,13 @@ function HeroSection() {
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-teal/30 to-transparent" />
       <div className="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-teal/20 to-transparent" />
 
-      {/* Subtle corner accents */}
-      <div className="absolute top-32 left-8 w-24 h-24 border-l border-t border-cream/10 rounded-tl-3xl" />
-      <div className="absolute bottom-32 right-8 w-24 h-24 border-r border-b border-teal/10 rounded-br-3xl" />
+      {/* Subtle corner accents - hidden on mobile to prevent overflow */}
+      <div className="hidden md:block absolute top-32 left-8 w-24 h-24 border-l border-t border-cream/10 rounded-tl-3xl" />
+      <div className="hidden md:block absolute bottom-32 right-8 w-24 h-24 border-r border-b border-teal/10 rounded-br-3xl" />
 
       {/* Content */}
       <motion.div className="relative z-10 h-full flex items-center" style={{ opacity }}>
-        <div className="w-full px-8 md:px-16 lg:px-24">
+        <div className="w-full px-6 md:px-16 lg:px-24">
           <div className="max-w-3xl">
             {/* Subtitle with line */}
             <div className="flex items-center gap-4 mb-8">
@@ -189,7 +189,7 @@ function HeroSection() {
                     index === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'
                   }`}
                 >
-                  <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-cream leading-[1.05] tracking-tight">
+                  <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-cream leading-[1.05] tracking-tight">
                     {slide.title}{' '}
                     <span className="text-teal-light italic">{slide.highlight}</span>
                   </h1>
@@ -201,7 +201,7 @@ function HeroSection() {
               {heroSlides.map((slide, index) => (
                 <p
                   key={index}
-                  className={`absolute inset-0 text-cream/80 text-lg md:text-xl leading-relaxed max-w-xl transition-opacity duration-500 ${
+                  className={`absolute inset-0 text-cream/80 text-base md:text-xl leading-relaxed max-w-xl transition-opacity duration-500 ${
                     index === currentSlide ? 'opacity-100' : 'opacity-0 pointer-events-none'
                   }`}
                 >
@@ -210,14 +210,13 @@ function HeroSection() {
               ))}
             </div>
 
-            <div className="flex flex-wrap gap-5">
-
-              <Link href="/chi-sono" className="group relative inline-flex items-center gap-3 bg-teal text-white px-9 py-4 rounded-full font-semibold overflow-hidden shadow-xl shadow-teal/25 hover:shadow-2xl hover:shadow-teal/35 transition-all duration-500 hover:-translate-y-0.5">
+            <div className="flex flex-wrap gap-4 md:gap-5">
+              <Link href="/chi-sono" className="group relative inline-flex items-center gap-3 bg-teal text-white px-7 md:px-9 py-3.5 md:py-4 rounded-full font-semibold overflow-hidden shadow-xl shadow-teal/25 hover:shadow-2xl hover:shadow-teal/35 transition-all duration-500 hover:-translate-y-0.5">
                 <span className="relative z-10">Scopri chi sono</span>
                 <ArrowRight className="relative z-10 w-5 h-5 group-hover:translate-x-1 transition-transform duration-300" />
                 <div className="absolute inset-0 bg-teal-dark opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </Link>
-              <Link href="/contatti" className="group relative inline-flex items-center gap-3 px-9 py-4 border border-cream/30 text-cream rounded-full font-medium backdrop-blur-sm hover:border-cream/60 hover:bg-white/5 transition-all duration-300">
+              <Link href="/contatti" className="group relative inline-flex items-center gap-3 px-7 md:px-9 py-3.5 md:py-4 border border-cream/30 text-cream rounded-full font-medium backdrop-blur-sm hover:border-cream/60 hover:bg-white/5 transition-all duration-300">
                 <span>Contattami</span>
                 <ArrowUpRight className="w-4 h-4 opacity-0 -ml-4 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300" />
               </Link>
@@ -272,21 +271,17 @@ function HeroSection() {
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
+      <div
         className="absolute bottom-12 left-1/2 -translate-x-1/2 z-20 hidden lg:flex flex-col items-center gap-2"
       >
         <span className="text-cream/60 text-xs uppercase tracking-widest">Scroll</span>
-        <motion.div
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-          className="w-5 h-8 rounded-full border border-cream/20 flex items-start justify-center p-1.5"
+        <div
+          className="w-5 h-8 rounded-full border border-cream/20 flex items-start justify-center p-1.5 animate-bounce"
+          style={{ animationDuration: '2s' }}
         >
-          <motion.div className="w-1 h-2 rounded-full bg-teal-light" />
-        </motion.div>
-      </motion.div>
+          <div className="w-1 h-2 rounded-full bg-teal-light" />
+        </div>
+      </div>
     </section>
   )
 }
@@ -295,22 +290,15 @@ function HeroSection() {
 // OPENING SECTION - Creative Split Layout
 // ============================================
 function OpeningSection() {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 1], [30, -30])
-
   return (
-    <section ref={ref} className="relative overflow-hidden">
+    <section className="relative overflow-hidden">
       <div className="grid lg:grid-cols-2 min-h-[85vh]">
         {/* Left - Dark Side */}
-        <div className="relative bg-navy-dark py-24 lg:py-36 px-8 md:px-16 lg:px-20 flex items-center">
+        <div className="relative bg-navy-dark py-24 lg:py-36 px-6 md:px-16 lg:px-20 flex items-center overflow-hidden">
           {/* Floating Number */}
-          <motion.div
-            style={{ y }}
-            className="absolute top-10 right-10 text-[10rem] md:text-[14rem] font-display text-cream/[0.03] leading-none select-none"
-          >
+          <div className="absolute top-10 right-10 text-[8rem] md:text-[14rem] font-display text-cream/[0.03] leading-none select-none">
             7
-          </motion.div>
+          </div>
 
           {/* Subtle gradient accent */}
           <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-teal/50 via-teal/20 to-transparent" />
@@ -350,9 +338,9 @@ function OpeningSection() {
         </div>
 
         {/* Right - Light Side */}
-        <div className="relative bg-white py-24 lg:py-36 px-8 md:px-16 lg:px-20 flex items-center">
+        <div className="relative bg-white py-24 lg:py-36 px-6 md:px-16 lg:px-20 flex items-center overflow-hidden">
           {/* Decorative elements */}
-          <div className="absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-48 h-48 rounded-full border border-teal/10" />
+          <div className="hidden lg:block absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-48 h-48 rounded-full border border-teal/10" />
           <div className="absolute bottom-16 right-16 w-24 h-24 rounded-full bg-teal/5" />
 
           <motion.div
@@ -386,19 +374,15 @@ function OpeningSection() {
                 { text: 'Oltre il ruolo', color: 'bg-teal-dark' },
                 { text: 'Per incontrare chi sei', color: 'bg-navy' },
               ].map((item, i) => (
-                <motion.div
+                <div
                   key={i}
-                  initial={{ opacity: 0, x: 15 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: 0.2 + i * 0.08, ease: [0.25, 0.46, 0.45, 0.94] }}
                   className="flex items-center gap-4 group cursor-default"
                 >
                   <span className={`w-1.5 h-1.5 rounded-full ${item.color} group-hover:scale-[2] transition-transform duration-300`} />
                   <span className="text-navy text-lg font-medium group-hover:translate-x-1 transition-transform duration-300">
                     {item.text}
                   </span>
-                </motion.div>
+                </div>
               ))}
             </motion.div>
 
@@ -422,15 +406,15 @@ function OpeningSection() {
 // ============================================
 function ChiSonoSection() {
   return (
-    <section className="py-24 lg:py-32 bg-white">
+    <section className="py-24 lg:py-32 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center">
           {/* Image Column */}
           <motion.div
-            initial={{ opacity: 0, y: 60 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] as const }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
             className="lg:col-span-5 order-2 lg:order-1"
           >
             <div className="relative">
@@ -441,17 +425,13 @@ function ChiSonoSection() {
                   fill
                   className="object-cover"
                   sizes="(max-width: 1024px) 100vw, 40vw"
-                  quality={70}
+                  quality={65}
                   loading="lazy"
                 />
               </div>
               {/* Floating Stats Card */}
-              <motion.div
-                initial={{ opacity: 0, x: 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.5, duration: 0.6 }}
-                className="absolute -bottom-8 -right-8 bg-white rounded-2xl p-6 shadow-2xl"
+              <div
+                className="absolute -bottom-4 -right-4 md:-bottom-8 md:-right-8 bg-white rounded-2xl p-4 md:p-6 shadow-2xl hidden md:block"
               >
                 <div className="grid grid-cols-3 gap-4 text-center">
                   <div>
@@ -467,7 +447,7 @@ function ChiSonoSection() {
                     <p className="text-xs text-navy/60 uppercase tracking-wider">Vite</p>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </div>
           </motion.div>
 
@@ -488,9 +468,23 @@ function ChiSonoSection() {
               Io sono Luca Pellicari
             </motion.h2>
 
-            <motion.p variants={fadeUp} className="font-serif text-lg text-navy/60 italic mb-8">
+            <motion.p variants={fadeUp} className="font-serif text-lg text-navy/60 italic mb-6">
               Identity Coach • Autore • Fondatore di Quantum Academy
             </motion.p>
+
+            {/* Credential badges */}
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-2 mb-8">
+              {[
+                'Laurea in Scienze Politiche — 110 e Lode',
+                'Docente Universitario',
+                'Ricercatore ResearchGate',
+                'Accreditato Regione Lombardia',
+              ].map((badge) => (
+                <span key={badge} className="inline-flex items-center px-3 py-1 bg-teal/5 border border-teal/15 rounded-full text-xs text-navy/70 font-medium">
+                  {badge}
+                </span>
+              ))}
+            </motion.div>
 
             <motion.div variants={fadeUp} className="space-y-6 text-navy/70 text-lg mb-10">
               <p>
@@ -545,65 +539,152 @@ const missionItems = [
 
 function MissioneSection() {
   return (
-    <section className="py-28 lg:py-36 bg-gray-50">
-      <div className="max-w-6xl mx-auto px-8 md:px-16">
+    <section className="py-28 lg:py-36 bg-gray-50 overflow-hidden">
+      <div className="max-w-6xl mx-auto px-6 md:px-16">
+        {/* Header */}
+        <div className="text-center mb-20">
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <span className="w-10 h-px bg-teal/50" />
+            <span className="text-teal text-xs uppercase tracking-[0.2em] font-medium">La Mia Missione</span>
+            <span className="w-10 h-px bg-teal/50" />
+          </div>
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-navy mb-6 tracking-tight">
+            Trasformo le persone aiutandole a riconoscersi.
+          </h2>
+          <p className="text-base md:text-lg text-navy/60 max-w-xl mx-auto leading-relaxed">
+            Il mio lavoro è semplice: ti porto dentro te stesso.
+            Lo faccio con delicatezza, con forza, con consapevolezza e con verità.
+          </p>
+        </div>
+
+        {/* Cards Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+          {missionItems.map((item) => (
+            <div
+              key={item.label}
+              className="group relative bg-gray-50 border border-navy/5 rounded-2xl p-4 md:p-6 hover:bg-white hover:border-teal/20 hover:shadow-lg hover:shadow-teal/5 transition-all duration-300 cursor-pointer"
+            >
+              <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-teal/10 flex items-center justify-center mb-3 md:mb-4 group-hover:bg-teal group-hover:scale-105 transition-all duration-300">
+                <item.icon className="w-4 h-4 md:w-5 md:h-5 text-teal group-hover:text-white transition-colors duration-300" />
+              </div>
+              <h3 className="font-semibold text-navy mb-1 text-xs md:text-sm">{item.label}</h3>
+              <p className="text-xs text-navy/60 hidden md:block">{item.desc}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* CTA Button */}
+        <div className="text-center mt-14">
+          <Link href="/missione" className="group inline-flex items-center gap-3 bg-navy text-white px-8 py-4 rounded-full font-medium shadow-lg shadow-navy/10 hover:shadow-xl hover:shadow-navy/15 hover:-translate-y-0.5 transition-all duration-300">
+            <span>Scopri la mia missione</span>
+            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ============================================
+// IL VERO PROBLEMA - Core Message Section
+// ============================================
+function IlVeroProblemaSection() {
+  return (
+    <section className="relative py-16 md:py-28 lg:py-36 bg-white overflow-hidden">
+      {/* Background accents - reduced blur for performance */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-teal/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-navy/5 rounded-full blur-3xl" />
+      </div>
+
+      <div className="max-w-6xl mx-auto px-6 md:px-16 relative z-10">
         {/* Header */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={stagger}
-          className="text-center mb-20"
+          className="text-center mb-12 md:mb-20"
         >
-          <motion.div variants={fadeUp} className="flex items-center justify-center gap-4 mb-8">
-            <span className="w-10 h-px bg-teal/50" />
-            <span className="text-teal text-xs uppercase tracking-[0.2em] font-medium">La Mia Missione</span>
-            <span className="w-10 h-px bg-teal/50" />
+          <motion.div variants={fadeUp} className="flex items-center justify-center gap-4 mb-6 md:mb-8">
+            <span className="w-8 md:w-10 h-px bg-teal/50" />
+            <span className="text-teal text-xs uppercase tracking-[0.2em] font-medium">Il Vero Problema</span>
+            <span className="w-8 md:w-10 h-px bg-teal/50" />
           </motion.div>
-          <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl text-navy mb-6 tracking-tight">
-            Trasformo le persone aiutandole a riconoscersi.
+
+          <motion.h2 variants={fadeUp} className="font-display text-3xl md:text-5xl lg:text-6xl text-navy mb-6 md:mb-8 tracking-tight leading-tight">
+            Il problema non è ottenere risultati.{' '}
+            <span className="text-teal italic">È mantenerli.</span>
           </motion.h2>
-          <motion.p variants={fadeUp} className="text-lg text-navy/60 max-w-xl mx-auto leading-relaxed">
-            Il mio lavoro è semplice: ti porto dentro te stesso.
-            Lo faccio con delicatezza, con forza, con consapevolezza e con verità.
+
+          <motion.p variants={fadeUp} className="text-base md:text-xl text-navy/60 max-w-2xl mx-auto leading-relaxed">
+            Quando si lavora bene, i risultati arrivano. Ma il vero problema è un altro:
+            è renderli coerenti, stabili e replicabili. E questo è il cuore di tutto quello che faccio.
           </motion.p>
         </motion.div>
 
-        {/* Cards Grid */}
+        {/* Three Result Pillars */}
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
           variants={stagger}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4"
+          className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6"
         >
-          {missionItems.map((item) => (
+          {[
+            {
+              icon: CheckCircle,
+              title: 'Coerenti',
+              description: 'Allineati con ciò che l\'impresa rappresenta realmente — la sua identità. Non risultati casuali, ma risultati che rispecchiano chi sei.',
+            },
+            {
+              icon: RefreshCw,
+              title: 'Stabili',
+              description: 'Non dipendono dall\'entusiasmo del momento, ma da una struttura solida. È la struttura che genera risultati che durano.',
+            },
+            {
+              icon: TrendingUp,
+              title: 'Replicabili',
+              description: 'Premiano tutta la filiera, dall\'addetto alle pulizie al top-manager. Risultati condivisibili che creano ricchezza per tutti.',
+            },
+          ].map((item, index) => (
             <motion.div
-              key={item.label}
+              key={item.title}
               variants={fadeUp}
-              className="group relative bg-gray-50 border border-navy/5 rounded-2xl p-6 hover:bg-white hover:border-teal/20 hover:shadow-lg hover:shadow-teal/5 transition-all duration-400 cursor-pointer"
+              className="group relative"
             >
-              <div className="w-11 h-11 rounded-xl bg-teal/10 flex items-center justify-center mb-4 group-hover:bg-teal group-hover:scale-105 transition-all duration-300">
-                <item.icon className="w-5 h-5 text-teal group-hover:text-white transition-colors duration-300" />
+              <div className="relative bg-gray-50 border border-navy/5 rounded-2xl p-6 md:p-8 hover:bg-white hover:border-teal/20 hover:shadow-xl hover:shadow-teal/5 transition-all duration-300 h-full">
+                <div className="w-12 md:w-14 h-12 md:h-14 rounded-xl bg-teal/10 flex items-center justify-center mb-4 md:mb-6 group-hover:bg-teal group-hover:scale-105 transition-all duration-300">
+                  <item.icon className="w-6 md:w-7 h-6 md:h-7 text-teal group-hover:text-white transition-colors duration-300" />
+                </div>
+                <span className="text-teal/10 font-display text-5xl md:text-6xl font-bold absolute top-4 md:top-6 right-6 md:right-8">
+                  0{index + 1}
+                </span>
+                <h3 className="font-display text-xl md:text-2xl text-navy font-semibold mb-2 md:mb-3">
+                  Risultati {item.title}
+                </h3>
+                <p className="text-navy/60 text-sm md:text-base leading-relaxed">
+                  {item.description}
+                </p>
               </div>
-              <h3 className="font-semibold text-navy mb-1 text-sm">{item.label}</h3>
-              <p className="text-xs text-navy/60">{item.desc}</p>
             </motion.div>
           ))}
         </motion.div>
 
-        {/* CTA Button */}
+        {/* Bottom Statement */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="text-center mt-14"
+          transition={{ delay: 0.4, duration: 0.6 }}
+          className="text-center mt-10 md:mt-16"
         >
-          <Link href="/missione" className="group inline-flex items-center gap-3 bg-navy text-white px-8 py-4 rounded-full font-medium shadow-lg shadow-navy/10 hover:shadow-xl hover:shadow-navy/15 hover:-translate-y-0.5 transition-all duration-300">
-            <span>Scopri la mia missione</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
-          </Link>
+          <div className="inline-flex items-center gap-3 md:gap-4 bg-navy text-white rounded-full px-5 md:px-8 py-3 md:py-4 shadow-lg shadow-navy/10">
+            <span className="w-2 h-2 rounded-full bg-teal-light animate-pulse flex-shrink-0" />
+            <p className="font-medium text-sm md:text-base">
+              Io non vendo contenuti. Non vendo motivazione. Lavoro sulla <span className="text-teal-light">struttura</span>.
+            </p>
+          </div>
         </motion.div>
       </div>
     </section>
@@ -614,20 +695,16 @@ function MissioneSection() {
 // QUANTUM ACADEMY - Immersive Dark Section
 // ============================================
 function QuantumAcademySection() {
-  const ref = useRef(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] })
-  const y = useTransform(scrollYProgress, [0, 1], [100, -100])
-
   return (
-    <section ref={ref} className="relative py-32 lg:py-40 bg-navy-dark overflow-hidden">
-      {/* Animated Background */}
-      <motion.div style={{ y }} className="absolute inset-0 opacity-20">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-teal rounded-full blur-[150px]" />
-        <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-teal-dark rounded-full blur-[150px]" />
-      </motion.div>
+    <section className="relative py-24 md:py-32 lg:py-40 bg-navy-dark overflow-hidden">
+      {/* Background - reduced blur for performance */}
+      <div className="absolute inset-0 opacity-20 pointer-events-none">
+        <div className="absolute top-0 right-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-teal rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-teal-dark rounded-full blur-3xl" />
+      </div>
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -638,12 +715,12 @@ function QuantumAcademySection() {
               Quantum Academy
             </motion.span>
 
-            <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl lg:text-6xl text-white mb-8 leading-tight">
+            <motion.h2 variants={fadeUp} className="font-display text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-white mb-8 leading-tight">
               Il sogno che non sapevo di sognare, diventato realtà.
             </motion.h2>
 
-            <motion.div variants={fadeUp} className="space-y-6 text-white/70 text-lg mb-8">
-              <p className="text-teal-light text-xl font-medium">Quantum Academy non è una scuola.</p>
+            <motion.div variants={fadeUp} className="space-y-6 text-white/70 text-base md:text-lg mb-8">
+              <p className="text-teal-light text-lg md:text-xl font-medium">Quantum Academy non è una scuola.</p>
               <p>È un luogo di trasformazione. È un portale. È un laboratorio di identità.</p>
             </motion.div>
 
@@ -661,7 +738,7 @@ function QuantumAcademySection() {
             </motion.div>
 
             <motion.div variants={fadeUp}>
-              <Link href="/quantum-academy" className="group relative inline-flex items-center gap-3 bg-white text-navy px-8 py-4 rounded-full font-medium overflow-hidden shadow-xl shadow-black/10 hover:shadow-2xl transition-all duration-500">
+              <Link href="/quantum-academy" className="group relative inline-flex items-center gap-3 bg-white text-navy px-6 md:px-8 py-3.5 md:py-4 rounded-full font-medium overflow-hidden shadow-xl shadow-black/10 hover:shadow-2xl transition-all duration-500">
                 <span className="relative z-10">Entra in Quantum Academy</span>
                 <span className="relative z-10 w-8 h-8 rounded-full bg-teal/10 flex items-center justify-center group-hover:bg-teal group-hover:text-white transition-all duration-300">
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300" />
@@ -672,10 +749,10 @@ function QuantumAcademySection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            transition={{ duration: 1, delay: 0.2 }}
+            transition={{ duration: 0.5 }}
             className="relative"
           >
             <div className="aspect-square rounded-3xl overflow-hidden border border-white/10 relative">
@@ -685,14 +762,14 @@ function QuantumAcademySection() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
-                quality={70}
+                quality={60}
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/60 via-transparent to-transparent" />
             </div>
             {/* Decorative Elements */}
-            <div className="absolute -bottom-4 -right-4 w-24 h-24 border-2 border-teal/30 rounded-2xl" />
-            <div className="absolute -top-4 -left-4 w-16 h-16 bg-teal/20 rounded-xl blur-xl" />
+            <div className="hidden md:block absolute -bottom-4 -right-4 w-24 h-24 border-2 border-teal/30 rounded-2xl" />
+            <div className="hidden md:block absolute -top-4 -left-4 w-16 h-16 bg-teal/20 rounded-xl blur-xl" />
           </motion.div>
         </div>
       </div>
@@ -713,14 +790,14 @@ function AlphakomSection() {
   ]
 
   return (
-    <section className="py-24 lg:py-32 bg-white">
+    <section className="py-24 lg:py-32 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
+        <div className="grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.6 }}
             className="relative"
           >
             <div className="aspect-[4/5] rounded-3xl overflow-hidden relative shadow-2xl">
@@ -730,13 +807,13 @@ function AlphakomSection() {
                 fill
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, 50vw"
-                quality={70}
+                quality={60}
                 loading="lazy"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/30 to-transparent" />
             </div>
             {/* Decorative */}
-            <div className="absolute -bottom-6 -left-6 w-32 h-32 border-2 border-teal/20 rounded-2xl -z-10" />
+            <div className="hidden md:block absolute -bottom-6 -left-6 w-32 h-32 border-2 border-teal/20 rounded-2xl -z-10" />
           </motion.div>
 
           <motion.div
@@ -745,20 +822,24 @@ function AlphakomSection() {
             viewport={{ once: true, margin: "-100px" }}
             variants={stagger}
           >
-            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-8">
+            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-6">
               <span className="w-12 h-px bg-teal" />
-              <span className="text-teal text-sm uppercase tracking-widest font-medium">Alphakom</span>
+              <span className="text-teal text-sm uppercase tracking-widest font-medium">AlphaKom</span>
             </motion.div>
 
-            <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl text-navy mb-10">
-              La Scuola degli Alpha Leaders.
+            <motion.h2 variants={fadeUp} className="font-display text-3xl md:text-4xl lg:text-5xl text-navy mb-3">
+              Il Metodo che Trasforma.
             </motion.h2>
 
-            <motion.div variants={fadeUp} className="space-y-4 mb-10">
+            <motion.p variants={fadeUp} className="text-xs text-navy/40 font-medium tracking-[0.12em] uppercase mb-10">
+              Advanced Leadership Program for High Achievement
+            </motion.p>
+
+            <motion.div variants={fadeUp} className="space-y-3 md:space-y-4 mb-10">
               {points.map((point, i) => (
                 <div
                   key={i}
-                  className={`flex items-start gap-4 p-4 rounded-xl border transition-all ${
+                  className={`flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-xl border transition-all ${
                     point.highlight
                       ? 'bg-gradient-to-r from-teal/10 to-teal/5 border-teal/30 shadow-md'
                       : 'bg-white border-gray-100 hover:border-teal/30 hover:shadow-md'
@@ -769,7 +850,7 @@ function AlphakomSection() {
                   }`}>
                     <span className={`text-sm font-medium ${point.highlight ? '' : 'text-teal'}`}>{i + 1}</span>
                   </div>
-                  <p className={point.highlight ? 'text-navy font-medium' : 'text-navy/80'}>{point.text}</p>
+                  <p className={`text-sm md:text-base ${point.highlight ? 'text-navy font-medium' : 'text-navy/80'}`}>{point.text}</p>
                 </div>
               ))}
             </motion.div>
@@ -797,21 +878,16 @@ function AlphakomSection() {
 // ============================================
 function QuoteSection() {
   return (
-    <section className="py-28 lg:py-36 bg-gray-50 relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-teal/[0.02] rounded-full blur-3xl" />
-      </div>
-
-      <div className="max-w-4xl mx-auto px-8 md:px-16 text-center relative">
+    <section className="py-20 md:py-28 lg:py-36 bg-gray-50 relative overflow-hidden">
+      <div className="max-w-4xl mx-auto px-6 md:px-16 text-center relative">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
+          transition={{ duration: 0.5 }}
         >
-          <Quote className="w-10 h-10 text-teal/30 mx-auto mb-10" />
-          <p className="font-display text-3xl md:text-4xl lg:text-5xl text-navy leading-[1.3] tracking-tight mb-10">
+          <Quote className="w-8 h-8 md:w-10 md:h-10 text-teal/30 mx-auto mb-8 md:mb-10" />
+          <p className="font-display text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-navy leading-[1.3] tracking-tight mb-8 md:mb-10">
             Non sei quello che ti è successo.<br />
             <span className="text-teal italic">Sei quello che scegli di diventare.</span>
           </p>
@@ -840,7 +916,7 @@ const percorsiItems = [
 
 function PercorsiSection() {
   return (
-    <section className="py-24 lg:py-32 bg-navy-dark">
+    <section className="py-24 lg:py-32 bg-navy-dark overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Header */}
         <div className="text-center mb-16">
@@ -849,30 +925,30 @@ function PercorsiSection() {
             <span className="text-teal-light text-sm uppercase tracking-widest font-medium">Cosa Possiamo Fare</span>
             <span className="w-12 h-px bg-teal-light" />
           </div>
-          <h2 className="font-display text-4xl md:text-5xl text-white mb-4">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-white mb-4">
             Percorsi, seminari, corsi, eventi.
           </h2>
-          <p className="text-lg text-white/70">
+          <p className="text-base md:text-lg text-white/70">
             Metodi pratici per crescere, evolvere, trasformare.
           </p>
         </div>
 
         {/* Cards Grid - Simple CSS */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
           {percorsiItems.map((item) => (
             <div
               key={item.title}
-              className="group p-6 md:p-8 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-teal/30 transition-all duration-300 cursor-pointer"
+              className="group p-5 md:p-6 lg:p-8 bg-white/5 border border-white/10 rounded-2xl hover:bg-white/10 hover:border-teal/30 transition-all duration-300 cursor-pointer"
             >
-              <item.icon className="w-8 h-8 text-teal-light mb-4 group-hover:scale-110 transition-transform" />
-              <h3 className="text-white font-medium">{item.title}</h3>
+              <item.icon className="w-6 h-6 md:w-8 md:h-8 text-teal-light mb-3 md:mb-4 group-hover:scale-110 transition-transform" />
+              <h3 className="text-white font-medium text-sm md:text-base">{item.title}</h3>
             </div>
           ))}
         </div>
 
         {/* CTA Button */}
         <div className="text-center mt-12">
-          <Link href="/contatti" className="group inline-flex items-center gap-3 bg-teal text-white px-8 py-4 rounded-full font-medium shadow-lg shadow-teal/25 hover:shadow-xl hover:shadow-teal/35 hover:-translate-y-0.5 transition-all duration-300">
+          <Link href="/percorsi" className="group inline-flex items-center gap-3 bg-teal text-white px-8 py-4 rounded-full font-medium shadow-lg shadow-teal/25 hover:shadow-xl hover:shadow-teal/35 hover:-translate-y-0.5 transition-all duration-300">
             <span>Scopri i percorsi</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
           </Link>
@@ -882,6 +958,95 @@ function PercorsiSection() {
   )
 }
 
+
+// ============================================
+// PARTNERSHIP SECTION
+// ============================================
+const partnerCategories = [
+  {
+    icon: GraduationCap,
+    title: 'Università',
+    description: 'Collaborazioni accademiche, docenze universitarie e ricerca scientifica.',
+    partners: ['Docenza in Negoziazione e Analisi del Comportamento', 'Pubblicazioni su ResearchGate'],
+  },
+  {
+    icon: Building2,
+    title: 'Aziende',
+    description: 'Formazione identitaria e leadership per team aziendali e manager.',
+    partners: ['Pyramis Group', 'Programmi corporate su misura'],
+  },
+  {
+    icon: GraduationCap,
+    title: 'Scuole & Formazione',
+    description: 'Percorsi accreditati e programmi formativi professionali.',
+    partners: ['Accreditamento Regione Lombardia', 'Corsi professionali AI e lavoro'],
+  },
+  {
+    icon: Globe,
+    title: 'Istituzioni',
+    description: 'Partnership istituzionali e progetti di formazione internazionale.',
+    partners: ['Progetti di formazione internazionale', 'Collaborazioni istituzionali'],
+  },
+]
+
+function PartnershipSection() {
+  return (
+    <section className="py-24 lg:py-32 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-12">
+        {/* Header */}
+        <div className="text-center mb-16 md:mb-20">
+          <div className="flex items-center justify-center gap-4 mb-8">
+            <span className="w-10 h-px bg-teal/50" />
+            <span className="text-teal text-xs uppercase tracking-[0.2em] font-medium">Partnership</span>
+            <span className="w-10 h-px bg-teal/50" />
+          </div>
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-navy mb-6 tracking-tight">
+            Chi crede in questo progetto.
+          </h2>
+          <p className="text-base md:text-lg text-navy/60 max-w-2xl mx-auto leading-relaxed">
+            Università, aziende, scuole e istituzioni che condividono la nostra visione
+            di crescita, consapevolezza e trasformazione.
+          </p>
+        </div>
+
+        {/* Partner Categories Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {partnerCategories.map((category) => (
+            <div
+              key={category.title}
+              className="group relative bg-white border border-navy/5 rounded-2xl p-6 md:p-8 hover:border-teal/20 hover:shadow-xl hover:shadow-teal/5 transition-all duration-300"
+            >
+              <div className="w-12 h-12 rounded-xl bg-teal/10 flex items-center justify-center mb-6 group-hover:bg-teal group-hover:scale-105 transition-all duration-300">
+                <category.icon className="w-6 h-6 text-teal group-hover:text-white transition-colors duration-300" />
+              </div>
+              <h3 className="font-display text-lg md:text-xl text-navy font-semibold mb-3">{category.title}</h3>
+              <p className="text-navy/60 text-sm leading-relaxed mb-5">{category.description}</p>
+              <ul className="space-y-2">
+                {category.partners.map((partner, i) => (
+                  <li key={i} className="flex items-start gap-2 text-sm text-navy/70">
+                    <span className="w-1 h-1 rounded-full bg-teal mt-2 flex-shrink-0" />
+                    <span>{partner}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Trust Indicator */}
+        <div className="mt-12 md:mt-16 text-center">
+          <div className="inline-flex flex-wrap items-center justify-center gap-3 md:gap-4 px-6 md:px-8 py-3 md:py-4 bg-navy/5 rounded-full">
+            <Handshake className="w-5 h-5 text-teal flex-shrink-0" />
+            <span className="text-navy/70 font-medium text-sm md:text-base">Vuoi diventare partner?</span>
+            <Link href="/contatti" className="text-teal font-semibold hover:text-teal-dark transition-colors">
+              Contattaci →
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
 
 // ============================================
 // LIBRI SECTION - Editorial Style
@@ -894,7 +1059,7 @@ const libri = [
 
 function LibriSection() {
   return (
-    <section className="py-24 lg:py-32 bg-white">
+    <section className="py-24 lg:py-32 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <motion.div
           initial="hidden"
@@ -908,7 +1073,7 @@ function LibriSection() {
               <span className="w-12 h-px bg-teal" />
               <span className="text-teal text-sm uppercase tracking-widest font-medium">I Miei Libri</span>
             </motion.div>
-            <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl text-navy">
+            <motion.h2 variants={fadeUp} className="font-display text-3xl md:text-4xl lg:text-5xl text-navy">
               Storie vere, identità vere.
             </motion.h2>
           </div>
@@ -930,7 +1095,7 @@ function LibriSection() {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={stagger}
-          className="grid md:grid-cols-3 gap-8"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8"
         >
           {libri.map((libro) => (
             <motion.div
@@ -944,14 +1109,14 @@ function LibriSection() {
                   alt={libro.title}
                   fill
                   className="object-cover group-hover:scale-105 transition-transform duration-700"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                  quality={70}
+                  sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                  quality={60}
                   loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
               </div>
               <p className="text-teal text-sm font-medium mb-1">{libro.subtitle}</p>
-              <h3 className="font-display text-2xl text-navy group-hover:text-teal transition-colors">{libro.title}</h3>
+              <h3 className="font-display text-xl md:text-2xl text-navy group-hover:text-teal transition-colors">{libro.title}</h3>
             </motion.div>
           ))}
         </motion.div>
@@ -966,7 +1131,7 @@ function LibriSection() {
         >
           <div className="inline-flex items-center gap-3 px-6 py-3 bg-navy/5 rounded-full">
             <span className="w-2 h-2 rounded-full bg-teal animate-pulse" />
-            <span className="text-navy/70 font-medium">Altri progetti in arrivo…</span>
+            <span className="text-navy/70 font-medium text-sm">Altri progetti in arrivo…</span>
           </div>
         </motion.div>
       </div>
@@ -1000,7 +1165,7 @@ const blogPosts = [
 
 function BlogSection() {
   return (
-    <section className="py-24 lg:py-32 bg-gray-50">
+    <section className="py-24 lg:py-32 bg-gray-50 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <motion.div
           initial="hidden"
@@ -1015,13 +1180,13 @@ function BlogSection() {
                 <span className="w-12 h-px bg-teal" />
                 <span className="text-teal text-sm uppercase tracking-widest font-medium">Blog</span>
               </motion.div>
-              <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl text-navy mb-2">
+              <motion.h2 variants={fadeUp} className="font-display text-3xl md:text-4xl lg:text-5xl text-navy mb-2">
                 Pensieri liberi.<br />Verità condivise.
               </motion.h2>
-              <motion.p variants={fadeUp} className="text-teal text-lg font-medium mb-3">
+              <motion.p variants={fadeUp} className="text-teal text-base md:text-lg font-medium mb-3">
                 Identità che si aprono.
               </motion.p>
-              <motion.p variants={fadeUp} className="text-navy/70 text-base max-w-md">
+              <motion.p variants={fadeUp} className="text-navy/70 text-sm md:text-base max-w-md">
                 Scrivo per raccontare, per comprendere e per far vibrare qualcosa dentro chi legge.
               </motion.p>
             </div>
@@ -1041,7 +1206,7 @@ function BlogSection() {
           {/* Blog Grid */}
           <motion.div
             variants={stagger}
-            className="grid md:grid-cols-3 gap-8"
+            className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8"
           >
             {blogPosts.map((post) => (
               <motion.article
@@ -1055,8 +1220,8 @@ function BlogSection() {
                     alt={post.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    quality={70}
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+                    quality={60}
                     loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-navy-dark/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -1064,7 +1229,7 @@ function BlogSection() {
                     {post.category}
                   </span>
                 </div>
-                <h3 className="font-display text-xl text-navy mb-2 group-hover:text-teal transition-colors duration-300">
+                <h3 className="font-display text-lg md:text-xl text-navy mb-2 group-hover:text-teal transition-colors duration-300">
                   {post.title}
                 </h3>
                 <p className="text-navy/60 text-sm leading-relaxed">
@@ -1089,14 +1254,14 @@ function ContattiSection() {
       <div className="absolute inset-0 bg-gradient-to-br from-navy-dark via-navy-dark to-navy opacity-50" />
 
       <div className="relative max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 min-h-[550px] lg:min-h-[600px]">
+        <div className="grid lg:grid-cols-2 min-h-[450px] md:min-h-[550px] lg:min-h-[600px]">
           {/* Left Side - Dark with Content */}
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7 }}
-            className="relative flex items-center px-8 md:px-16 lg:px-20 py-20 lg:py-28"
+            transition={{ duration: 0.5 }}
+            className="relative flex items-center px-6 md:px-16 lg:px-20 py-16 md:py-20 lg:py-28"
           >
             {/* Accent Line */}
             <div className="absolute left-0 top-1/2 -translate-y-1/2 w-0.5 h-28 bg-gradient-to-b from-teal via-teal/50 to-transparent" />
@@ -1109,12 +1274,12 @@ function ContattiSection() {
                 </span>
               </div>
 
-              <h2 className="font-display text-4xl md:text-5xl lg:text-6xl text-cream leading-[1.1] tracking-tight mb-8">
+              <h2 className="font-display text-3xl md:text-4xl lg:text-5xl xl:text-6xl text-cream leading-[1.1] tracking-tight mb-8">
                 Vuoi lavorare<br />
                 <span className="text-teal-light italic">con me?</span>
               </h2>
 
-              <div className="space-y-3 text-cream/60 text-lg max-w-sm">
+              <div className="space-y-3 text-cream/60 text-base md:text-lg max-w-sm">
                 <p>Vuoi portarmi nella tua azienda?</p>
                 <p>Vuoi iniziare il tuo percorso identitario?</p>
               </div>
@@ -1123,37 +1288,90 @@ function ContattiSection() {
 
           {/* Right Side - Teal Gradient with CTA */}
           <motion.div
-            initial={{ opacity: 0, x: 30 }}
+            initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: 0.1 }}
-            className="relative flex items-center justify-center px-8 md:px-16 lg:px-20 py-20 lg:py-28 bg-gradient-to-br from-teal to-teal-dark"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            className="relative flex items-center justify-center px-6 md:px-16 lg:px-20 py-16 md:py-20 lg:py-28 bg-gradient-to-br from-teal to-teal-dark"
           >
-            {/* Decorative elements */}
-            <div className="absolute top-10 right-10 w-16 h-16 rounded-full border border-cream/10" />
-            <div className="absolute bottom-16 left-10 w-24 h-24 rounded-full border border-cream/5" />
+            {/* Decorative elements - hidden on mobile */}
+            <div className="hidden md:block absolute top-10 right-10 w-16 h-16 rounded-full border border-cream/10" />
+            <div className="hidden md:block absolute bottom-16 left-10 w-24 h-24 rounded-full border border-cream/5" />
 
             <div className="relative text-center lg:text-left">
-              <p className="font-display text-4xl md:text-5xl text-cream leading-tight tracking-tight mb-10">
+              <p className="font-display text-3xl md:text-4xl lg:text-5xl text-cream leading-tight tracking-tight mb-8 md:mb-10">
                 Scrivimi.<br />
                 <span className="text-cream/80 font-serif italic">Sono qui.</span>
               </p>
 
               <Link
                 href="/contatti"
-                className="group inline-flex items-center gap-5 bg-white text-navy-dark px-9 py-5 rounded-full text-lg font-semibold shadow-xl shadow-navy-dark/20 hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300"
+                className="group inline-flex items-center gap-4 md:gap-5 bg-white text-navy-dark px-7 md:px-9 py-4 md:py-5 rounded-full text-base md:text-lg font-semibold shadow-xl shadow-navy-dark/20 hover:shadow-2xl hover:-translate-y-0.5 transition-all duration-300"
               >
                 <span>Contattami</span>
-                <span className="w-12 h-12 rounded-full bg-navy-dark flex items-center justify-center group-hover:bg-teal-dark transition-colors duration-300">
-                  <ArrowRight className="w-5 h-5 text-cream group-hover:translate-x-0.5 transition-transform duration-300" />
+                <span className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-navy-dark flex items-center justify-center group-hover:bg-teal-dark transition-colors duration-300">
+                  <ArrowRight className="w-4 h-4 md:w-5 md:h-5 text-cream group-hover:translate-x-0.5 transition-transform duration-300" />
                 </span>
               </Link>
 
-              <p className="mt-10 text-cream/60 text-sm tracking-wide">
+              <p className="mt-8 md:mt-10 text-cream/60 text-sm tracking-wide">
                 Il primo passo verso la tua trasformazione
               </p>
             </div>
           </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+// ============================================
+// IDENTITY HIGHLIGHTS - Carousel Marquee
+// ============================================
+const identityTags = [
+  { text: '7 Rinascite', color: 'bg-teal/10 text-teal border-teal/20' },
+  { text: 'Paracadutista Militare', color: 'bg-navy/5 text-navy/80 border-navy/15' },
+  { text: 'Sopravvissuto al Cancro', color: 'bg-coral/10 text-coral border-coral/20' },
+  { text: 'Scienza & Spiritualità', color: 'bg-teal/10 text-teal-dark border-teal/20' },
+  { text: 'Portatore di Felicità', color: 'bg-coral/10 text-coral border-coral/20' },
+  { text: 'Ricchezza Condivisa', color: 'bg-teal/10 text-teal border-teal/20' },
+  { text: '30+ Anni di Esperienza', color: 'bg-navy/5 text-navy/80 border-navy/15' },
+  { text: 'Docente Universitario', color: 'bg-navy/5 text-navy/80 border-navy/15' },
+  { text: 'Fenice Cimbra', color: 'bg-coral/10 text-coral border-coral/20' },
+  { text: 'Metodo In-Flow', color: 'bg-teal/10 text-teal border-teal/20' },
+]
+
+function IdentityHighlightsSection() {
+  return (
+    <section className="py-16 md:py-20 lg:py-24 bg-gray-50/50 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-10 md:mb-14">
+        <div className="flex items-center justify-center gap-4">
+          <span className="hidden md:block w-16 h-px bg-teal/30" />
+          <p className="text-teal text-xs md:text-sm font-medium uppercase tracking-[0.25em] text-center">
+            Identità in sintesi
+          </p>
+          <span className="hidden md:block w-16 h-px bg-teal/30" />
+        </div>
+      </div>
+
+      {/* Marquee container */}
+      <div className="relative">
+        {/* Fade left */}
+        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-gray-50/80 to-transparent z-10 pointer-events-none" />
+        {/* Fade right */}
+        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-gray-50/80 to-transparent z-10 pointer-events-none" />
+
+        <div
+          className="flex w-max items-center"
+          style={{ animation: 'scroll-left 50s linear infinite' }}
+        >
+          {[...identityTags, ...identityTags].map((tag, i) => (
+            <div key={i} className="flex items-center shrink-0">
+              <span className={`whitespace-nowrap px-5 md:px-7 py-2 md:py-2.5 mx-1.5 md:mx-2.5 rounded-full border text-xs md:text-sm font-semibold tracking-wide ${tag.color}`}>
+                {tag.text}
+              </span>
+            </div>
+          ))}
         </div>
       </div>
     </section>
@@ -1168,12 +1386,15 @@ export default function HomePage() {
     <>
       <HeroSection />
       <OpeningSection />
+      <IdentityHighlightsSection />
       <ChiSonoSection />
       <MissioneSection />
+      <IlVeroProblemaSection />
       <QuantumAcademySection />
       <AlphakomSection />
       <QuoteSection />
       <PercorsiSection />
+      <PartnershipSection />
       <InFlowSection />
       <LibriSection />
       <BlogSection />

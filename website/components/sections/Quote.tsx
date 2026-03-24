@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { TextReveal } from '@/components/animations/TextReveal'
 
 interface QuoteProps {
@@ -13,13 +13,6 @@ interface QuoteProps {
 
 export function Quote({ text, author, className, variant = 'dark' }: QuoteProps) {
   const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ['start end', 'end start'],
-  })
-
-  const opacity = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0, 1, 1, 0])
-  const scale = useTransform(scrollYProgress, [0, 0.3, 0.7, 1], [0.95, 1, 1, 0.95])
 
   const isDark = variant === 'dark'
 
@@ -30,12 +23,15 @@ export function Quote({ text, author, className, variant = 'dark' }: QuoteProps)
     >
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-teal blur-3xl" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full bg-teal blur-3xl" />
       </div>
 
       <motion.div
         className="container-custom relative z-10"
-        style={{ opacity, scale }}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6 }}
       >
         <div className="max-w-4xl mx-auto text-center">
           <motion.span

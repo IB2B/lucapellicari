@@ -62,7 +62,7 @@ export function ChiSonoHero() {
             </motion.p>
 
             <motion.p
-              className="text-lg text-navy/70 leading-relaxed"
+              className="text-lg text-navy/70 leading-relaxed mb-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -70,6 +70,18 @@ export function ChiSonoHero() {
             >
               Io non sono un formatore. Non sono un motivatore. Non sono un guru.
               Sono un uomo che ha attraversato i propri inferi personali e ha scelto di tornare indietro con qualcosa da donare.
+            </motion.p>
+
+            <motion.p
+              className="text-base text-navy/60 leading-relaxed"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: 0.5 }}
+            >
+              Il racconto che non trovi nei libri, né nei corsi. Solo qui, solo tra me e te.
+              E se sei arrivato fin qui, forse significa solo una cosa:
+              che una parte della mia storia parla anche di te.
             </motion.p>
           </div>
 

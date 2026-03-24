@@ -63,7 +63,7 @@ export function FadeIn({
       ref={ref}
       className={cn(className)}
       initial={getInitialPosition(direction)}
-      animate={isInView ? getFinalPosition(direction) : getInitialPosition(direction)}
+      animate={isInView ? getFinalPosition(direction) : undefined}
       transition={{
         duration,
         delay,

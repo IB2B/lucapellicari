@@ -69,11 +69,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="it" className={`${dmSans.variable} ${playfair.variable} ${cormorant.variable}`}>
-      <head>
-        {/* Preload only the first hero image for faster LCP */}
-        <link rel="preload" as="image" href="/images/hero-1.jpg" type="image/jpeg" />
-      </head>
-      <body className="font-sans">
+      <body className="font-sans overflow-x-hidden">
         <SmoothScroll>
           <Header />
           <main id="main-content">{children}</main>

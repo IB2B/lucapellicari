@@ -2,12 +2,11 @@
 
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Linkedin, Instagram, Facebook, Youtube, ArrowUpRight } from 'lucide-react'
+import { Linkedin, Facebook, Youtube, ArrowUpRight } from 'lucide-react'
 import { NAV_LINKS, SITE_CONFIG } from '@/lib/constants'
 
 const socialLinks = [
   { icon: Linkedin, href: SITE_CONFIG.links.linkedin, label: 'LinkedIn' },
-  { icon: Instagram, href: SITE_CONFIG.links.instagram, label: 'Instagram' },
   { icon: Facebook, href: SITE_CONFIG.links.facebook, label: 'Facebook' },
   { icon: Youtube, href: SITE_CONFIG.links.youtube, label: 'YouTube' },
 ]
@@ -49,13 +48,13 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Navigation Links - Column 1 */}
           <div>
             <h4 className="font-display text-lg font-semibold text-white mb-6">
               Navigazione
             </h4>
             <ul className="space-y-3">
-              {NAV_LINKS.slice(0, 6).map((link) => (
+              {NAV_LINKS.slice(0, 7).map((link) => (
                 <li key={link.href}>
                   <Link
                     href={link.href}
@@ -72,54 +71,27 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Projects & Contact */}
+          {/* Navigation Links - Column 2 */}
           <div>
-            <h4 className="font-display text-lg font-semibold text-white mb-6">
-              Progetti
+            <h4 className="font-display text-lg font-semibold text-white mb-6 opacity-0 pointer-events-none">
+              &nbsp;
             </h4>
-            <ul className="space-y-3 mb-8">
-              <li>
-                <Link
-                  href="/quantum-academy"
-                  className="text-teal-50 hover:text-teal-light transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
-                >
-                  Quantum Academy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/alphakom"
-                  className="text-teal-50 hover:text-teal-light transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
-                >
-                  Alphakom
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/metodo-in-flow"
-                  className="text-teal-50 hover:text-teal-light transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
-                >
-                  Metodo In-Flow
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/libri"
-                  className="text-teal-50 hover:text-teal-light transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
-                >
-                  I Miei Libri
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/blog"
-                  className="text-teal-50 hover:text-teal-light transition-colors duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
-                >
-                  Blog
-                </Link>
-              </li>
+            <ul className="space-y-3">
+              {NAV_LINKS.slice(7).map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-teal-50 hover:text-teal-light transition-colors duration-300 inline-flex items-center gap-1 group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
+                  >
+                    {link.label}
+                    <ArrowUpRight
+                      size={14}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity"
+                    />
+                  </Link>
+                </li>
+              ))}
             </ul>
-
           </div>
         </div>
       </div>

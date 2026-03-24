@@ -5,12 +5,12 @@ import { SectionHeading } from '@/components/ui/SectionHeading'
 import { Button } from '@/components/ui/Button'
 import { CTA } from '@/components/sections/CTA'
 import { Quote } from '@/components/sections/Quote'
-import { Shield, Target, Compass, Zap, Users, Crown } from 'lucide-react'
+import { Shield, Target, Compass, Zap, Users, Crown, CheckCircle, RefreshCw, TrendingUp } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Alphakom - La Scuola degli Alpha Leaders',
+  title: 'AlphaKom - Il Metodo che Trasforma la Leadership',
   description:
-    'Alphakom: essere Alpha significa avere il coraggio di restare coerente alla propria visione, assumendosi la responsabilità di guidare gli altri non con la forza, ma con il valore.',
+    'AlphaKom: Advanced Leadership Program for High Achievement. Un metodo personale che trasforma la leadership in valori aziendali che producono risultati coerenti, stabili e replicabili.',
 }
 
 const principles = [
@@ -49,15 +49,27 @@ const principles = [
 const versions = [
   {
     title: 'Versione Epica',
-    quote: 'Essere Alpha significa levare il proprio spirito oltre la paura, restare coerenti alla visione che ci guida.',
+    quote: 'Essere Alpha significa levare il proprio spirito oltre la paura, restare coerenti alla visione che ci guida, assumere la responsabilità di condurre altri nel cammino.',
   },
   {
-    title: 'Versione Spirituale',
-    quote: 'Essere Alpha significa allineare la propria frequenza alla visione più alta di sé.',
+    title: 'Versione Minimalista',
+    quote: 'Coraggio nella visione. Coerenza nelle scelte. Responsabilità nella guida. Valore che si vede. Valore che si sente.',
   },
   {
     title: 'Versione Intima',
-    quote: 'Essere Alpha è quando finalmente smetti di fuggire da chi sei.',
+    quote: 'Essere Alpha è il momento in cui decidi di restare fedele a ciò che senti, anche quando il mondo spinge dall\'altra parte.',
+  },
+  {
+    title: 'Versione Corporate',
+    quote: 'Esercitare una leadership fondata su coraggio, coerenza e responsabilità: una visione chiara, mantenuta salda nelle decisioni, che genera fiducia e direzione condivisa.',
+  },
+  {
+    title: 'Versione Quantistica',
+    quote: 'Allineare la propria frequenza alla visione più alta di sé, restare coerenti a quella vibrazione e irradiarla agli altri.',
+  },
+  {
+    title: 'Versione Cinematografica',
+    quote: 'C\'è un istante in cui smetti di essere ciò che il mondo vuole… e diventi ciò che sei. È lì che nasce l\'Alpha.',
   },
 ]
 
@@ -74,13 +86,23 @@ export default function AlphakomPage() {
           <div className="max-w-4xl">
             <FadeIn>
               <span className="inline-block text-teal text-sm font-medium uppercase tracking-[0.3em] mb-6">
-                La Scuola degli Alpha Leaders
+                Il Metodo che Trasforma la Leadership
               </span>
             </FadeIn>
 
-            <TextReveal className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-navy mb-8">
+            <TextReveal className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold text-navy mb-6">
               ALPHAKOM
             </TextReveal>
+
+            <FadeIn delay={0.3}>
+              <p className="text-sm text-navy/50 font-medium tracking-[0.15em] uppercase mb-8">
+                <span className="text-teal font-semibold">A</span>dvanced{' '}
+                <span className="text-teal font-semibold">L</span>eadership{' '}
+                <span className="text-teal font-semibold">P</span>rogram for{' '}
+                <span className="text-teal font-semibold">H</span>igh{' '}
+                <span className="text-teal font-semibold">A</span>chievement
+              </p>
+            </FadeIn>
 
             <FadeIn delay={0.4}>
               <p className="text-2xl md:text-3xl text-teal font-serif italic mb-8">
@@ -91,9 +113,10 @@ export default function AlphakomPage() {
 
             <FadeIn delay={0.5}>
               <p className="text-xl text-navy/80 leading-relaxed mb-12">
+                AlphaKom non è un semplice nome. È un <strong className="text-teal">metodo personale che trasforma</strong>.
                 Qui impari a guidare, non a seguire. A vedere, non a reagire.
-                A influenzare in modo consapevole. A creare ricchezza — economica,
-                relazionale, spirituale. A entrare nel tuo stato naturale: <strong className="text-teal">In-Flow</strong>.
+                A creare ricchezza — economica, relazionale, spirituale.
+                A entrare nel tuo stato naturale: <strong className="text-teal">In-Flow</strong>.
               </p>
             </FadeIn>
 
@@ -102,6 +125,78 @@ export default function AlphakomPage() {
                 Diventa un Alpha Leader
               </Button>
             </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* Method Section — The Core Problem */}
+      <section className="py-24 lg:py-32 bg-gray-50">
+        <div className="container-custom">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div>
+                <FadeIn>
+                  <span className="text-teal text-sm font-medium uppercase tracking-[0.3em] mb-4 block">
+                    Il Cuore del Metodo
+                  </span>
+                  <h2 className="font-serif text-3xl md:text-4xl text-navy font-bold mb-8 leading-tight">
+                    Il problema non è ottenere risultati.
+                    <span className="text-teal"> È mantenerli.</span>
+                  </h2>
+                </FadeIn>
+
+                <FadeIn delay={0.2}>
+                  <div className="space-y-5 text-navy/70 text-lg leading-relaxed">
+                    <p>
+                      Quando si lavora bene, i risultati arrivano. Ma il vero problema è un altro:
+                      renderli <strong className="text-navy">coerenti, stabili e replicabili</strong>.
+                    </p>
+                    <p>
+                      AlphaKom lavora sulla <strong className="text-navy">struttura</strong> — perché è la struttura
+                      che genera risultati che durano. Non vendiamo motivazione. Non vendiamo tecniche.
+                      Trasformiamo la leadership personale in valori aziendali che producono risultati
+                      condivisibili, che premiano tutta la filiera e fanno del proprio brand
+                      una bandiera che tutti sarebbero orgogliosi di sollevare.
+                    </p>
+                  </div>
+                </FadeIn>
+              </div>
+
+              <FadeIn delay={0.3}>
+                <div className="space-y-4">
+                  {[
+                    {
+                      icon: CheckCircle,
+                      title: 'Risultati Coerenti',
+                      desc: 'Allineati con ciò che l\'impresa rappresenta realmente — la sua identità.',
+                    },
+                    {
+                      icon: RefreshCw,
+                      title: 'Risultati Stabili',
+                      desc: 'Non dipendono dall\'entusiasmo del momento, ma da una struttura solida.',
+                    },
+                    {
+                      icon: TrendingUp,
+                      title: 'Risultati Replicabili',
+                      desc: 'Premiano tutta la filiera — dall\'addetto alle pulizie al top-manager.',
+                    },
+                  ].map((item) => (
+                    <div
+                      key={item.title}
+                      className="flex gap-5 p-5 bg-white rounded-xl border border-navy/5 hover:border-teal/20 hover:shadow-lg transition-all duration-300"
+                    >
+                      <div className="w-11 h-11 rounded-lg bg-teal/10 flex items-center justify-center flex-shrink-0">
+                        <item.icon className="w-5 h-5 text-teal" />
+                      </div>
+                      <div>
+                        <h3 className="font-serif text-lg text-navy font-semibold mb-1">{item.title}</h3>
+                        <p className="text-navy/60 text-sm leading-relaxed">{item.desc}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </FadeIn>
+            </div>
           </div>
         </div>
       </section>
@@ -128,14 +223,14 @@ export default function AlphakomPage() {
               </p>
             </FadeIn>
 
-            <div className="grid md:grid-cols-3 gap-8 mt-16">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mt-16">
               {versions.map((version, index) => (
-                <FadeIn key={version.title} delay={0.3 + index * 0.1}>
-                  <div className="bg-dark rounded-xl p-8 border border-dark-lighter">
-                    <span className="text-gold text-sm font-medium mb-4 block">
+                <FadeIn key={version.title} delay={0.3 + index * 0.08}>
+                  <div className="bg-dark rounded-xl p-6 md:p-8 border border-dark-lighter h-full">
+                    <span className="text-gold text-xs md:text-sm font-medium mb-3 md:mb-4 block">
                       {version.title}
                     </span>
-                    <p className="font-serif text-lg text-light-surface italic">
+                    <p className="font-serif text-base md:text-lg text-light-surface italic leading-relaxed">
                       &ldquo;{version.quote}&rdquo;
                     </p>
                   </div>
@@ -148,7 +243,7 @@ export default function AlphakomPage() {
 
       <Quote
         text="Alpha: il coraggio di essere coerente. Lead by being."
-        author="Metodo Alpha"
+        author="Metodo AlphaKom"
       />
 
       {/* Principles Section */}

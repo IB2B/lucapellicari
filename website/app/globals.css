@@ -4,43 +4,46 @@
 
 @layer base {
   :root {
-    --navy: #1E3A5F;
-    --navy-dark: #0F2439;
-    --teal: #4A9B9B;
-    --teal-50: #E8F4F4;
-    --coral: #E07A5F;
+    --navy: #3D5A73;
+    --navy-dark: #2C4356;
+    --teal: #6B9BAE;
+    --teal-50: #F0F6F8;
+    --coral: #C4956A;
   }
 
   html {
     scroll-behavior: smooth;
+    overflow-x: hidden;
   }
 
   body {
     @apply bg-white text-navy-dark antialiased;
     font-feature-settings: 'rlig' 1, 'calt' 1;
+    overflow-x: hidden;
+    max-width: 100vw;
   }
 
   ::selection {
-    background: rgba(74, 155, 155, 0.2);
-    color: #0F2439;
+    background: rgba(107, 155, 174, 0.2);
+    color: #2C4356;
   }
 
-  /* Calm Therapy Scrollbar */
+  /* Scrollbar */
   ::-webkit-scrollbar {
     width: 8px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #E8F4F4;
+    background: #F0F6F8;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #4A9B9B;
+    background: #6B9BAE;
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: #1E3A5F;
+    background: #3D5A73;
   }
 }
 
@@ -142,5 +145,10 @@
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
   }
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 

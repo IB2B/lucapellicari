@@ -5,7 +5,7 @@ import { FadeIn } from '@/components/animations/FadeIn'
 import { SectionHeading } from '@/components/ui/SectionHeading'
 import { CTA } from '@/components/sections/CTA'
 import { Quote } from '@/components/sections/Quote'
-import { Rocket, Heart, Users, Lightbulb, Target, Sparkles } from 'lucide-react'
+import { Rocket, Heart, Users, Lightbulb, Target, Sparkles, CheckCircle, RefreshCw, TrendingUp } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Missione',
@@ -81,9 +81,9 @@ export default function MissionePage() {
       {/* Mission Statement */}
       <section className="py-24 lg:py-32 bg-navy-dark">
         <div className="container-custom">
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-stretch">
             <FadeIn direction="left">
-              <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
+              <div className="relative min-h-[500px] lg:min-h-[600px] h-full rounded-lg overflow-hidden">
                 <Image
                   src="/images/luca-speaking.jpg"
                   alt="Luca Pellicari speaking"
@@ -116,9 +116,17 @@ export default function MissionePage() {
                     dalla paura al coraggio, dalla sopravvivenza alla piena identità.
                   </p>
                   <p>
-                    La mia missione è insegnare ciò che so perché l'ho vissuto. Perché la
+                    La mia missione è insegnare ciò che so perché l&apos;ho vissuto. Perché la
                     sofferenza mi ha forgiato, i fallimenti mi hanno educato, la malattia
                     mi ha svegliato e la rinascita mi ha consacrato.
+                  </p>
+                  <p>
+                    Lo faccio attraverso: <strong className="text-gold">percorsi di consapevolezza imprenditoriale</strong>,
+                    dove il business è la porta d&apos;ingresso e la trasformazione personale è l&apos;uscita.
+                    Modelli formativi unici (<strong className="text-gold">3V, 3R, In-Flow</strong>),
+                    che fondono neuroscienze, comportamenti, identità, visione e verità.
+                    Un linguaggio diretto e sincero, che arriva dove le parole patinate non arrivano: al cuore.
+                    Un ecosistema di anime affini, che credono nella bellezza, nella crescita e nella ricchezza condivisa.
                   </p>
                 </div>
               </FadeIn>
@@ -158,6 +166,79 @@ export default function MissionePage() {
               </FadeIn>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* Il Vero Problema — Risultati Section */}
+      <section className="py-16 md:py-24 lg:py-32 bg-navy-dark relative overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-teal/5 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-gold/5 rounded-full blur-3xl" />
+        </div>
+
+        <div className="container-custom relative z-10">
+          <div className="max-w-4xl mx-auto text-center mb-12 md:mb-16">
+            <FadeIn>
+              <span className="inline-block text-gold text-sm font-medium uppercase tracking-[0.3em] mb-4 md:mb-6">
+                Il Vero Problema
+              </span>
+            </FadeIn>
+
+            <TextReveal className="font-serif text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 md:mb-8 leading-tight">
+              Il problema non è ottenere risultati. È mantenerli.
+            </TextReveal>
+
+            <FadeIn delay={0.3}>
+              <p className="text-base md:text-xl text-white/60 leading-relaxed max-w-2xl mx-auto">
+                Quando si lavora bene, i risultati arrivano. Ma il vero problema è un altro:
+                è renderli coerenti, stabili e replicabili. Io lavoro sulla struttura,
+                perché è la struttura che genera risultati che durano.
+              </p>
+            </FadeIn>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 max-w-5xl mx-auto">
+            {[
+              {
+                icon: CheckCircle,
+                title: 'Coerenti',
+                description: 'Allineati con ciò che l\'impresa rappresenta realmente — la sua identità.',
+              },
+              {
+                icon: RefreshCw,
+                title: 'Stabili',
+                description: 'Non dipendono dall\'entusiasmo del momento, ma da una struttura solida.',
+              },
+              {
+                icon: TrendingUp,
+                title: 'Replicabili',
+                description: 'Premiano tutta la filiera, dall\'addetto alle pulizie al top-manager.',
+              },
+            ].map((item, index) => (
+              <FadeIn key={item.title} delay={0.1 * index}>
+                <div className="bg-white/5 border border-white/10 rounded-2xl p-6 md:p-8 hover:bg-white/10 hover:border-teal/30 transition-all duration-300 h-full">
+                  <div className="w-12 md:w-14 h-12 md:h-14 rounded-xl bg-teal/10 flex items-center justify-center mb-4 md:mb-6 text-teal">
+                    <item.icon size={24} className="md:w-7 md:h-7" />
+                  </div>
+                  <h3 className="font-serif text-xl md:text-2xl text-white font-semibold mb-2 md:mb-3">
+                    Risultati {item.title}
+                  </h3>
+                  <p className="text-white/60 text-sm md:text-base leading-relaxed">
+                    {item.description}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          <FadeIn delay={0.4}>
+            <div className="text-center mt-10 md:mt-14">
+              <p className="text-white/40 text-sm md:text-base italic font-serif">
+                &ldquo;Non vendo contenuti. Non vendo motivazione. Non vendo tecniche.
+                Lavoro su una cosa molto più profonda: <span className="text-gold">la struttura</span>.&rdquo;
+              </p>
+            </div>
+          </FadeIn>
         </div>
       </section>
 

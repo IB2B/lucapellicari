@@ -20,6 +20,7 @@ const config: Config = {
           light: '#8FB8C7',
           50: '#F0F6F8',
         },
+        // coral is an alias for gold (same color)
         coral: {
           DEFAULT: '#C4956A',
           dark: '#A87D55',

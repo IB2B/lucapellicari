@@ -5,10 +5,9 @@ export const SITE_CONFIG = {
   url: 'https://lucapellicari.com',
   ogImage: '/images/og-image.jpg',
   links: {
-    linkedin: '#',
-    instagram: '#',
-    facebook: '#',
-    youtube: '#',
+    linkedin: 'https://it.linkedin.com/in/luca-pellicari',
+    facebook: 'https://www.facebook.com/lucapellicari.it/',
+    youtube: 'https://www.youtube.com/@lucapellicari4951',
   },
 }
 
@@ -20,6 +19,8 @@ export const NAV_LINKS = [
   { href: '/metodo-in-flow', label: 'Metodo In-Flow' },
   { href: '/quantum-academy', label: 'Quantum Academy' },
   { href: '/alphakom', label: 'Alphakom' },
+  { href: '/percorsi', label: 'Percorsi' },
+  { href: '/3v', label: '3V' },
   { href: '/libri', label: 'Libri' },
   { href: '/media', label: 'Media' },
   { href: '/blog', label: 'Blog' },

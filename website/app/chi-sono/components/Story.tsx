@@ -5,40 +5,52 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 
 const storyChapters = [
   {
+    title: 'Le Origini',
+    subtitle: 'L\'Infanzia e la Scuola',
+    year: '1963',
+    content: `Sono figlio unico, cresciuto in un bozzolo di amore e vulnerabilità. Ero sempre malato, non ho mai fatto l'asilo. Mio padre tornava ogni giorno con un piccolo regalo — un gesto che ancora oggi porto nel cuore. A cinque anni due interventi chirurgici cambiarono la mia salute. La scuola fu il primo grande salto: una suora meravigliosa, una calligrafia costruita a pennino e inchiostro, e un mondo che cominciava ad aprirsi.`,
+  },
+  {
+    title: 'Il Liceo e la Frattura',
+    subtitle: 'La Prima Rinascita',
+    year: '1979',
+    content: `A 16 anni mi si spezza l'anca. Quarantasei giorni immobile, otto materie non classificate, tutto sembrava perduto. E invece quello è stato il mio primo vero salto identitario: mi sono rialzato con determinazione, ho recuperato l'anno e ho scoperto che avevo molta più forza di quanto credessi. La vita ti spezza solo fino a quando non le dimostri che sei più forte.`,
+  },
+  {
     title: 'Il Paracadutista',
-    subtitle: 'Primo Salto Quantico',
+    subtitle: 'Secondo Salto Quantico',
     year: '1983',
-    content: `Il 3 marzo 1983 divento paracadutista militare. Non lo so ancora, ma quel salto nel vuoto segnerà per sempre il mio modo di vivere. La disciplina. Il coraggio di lanciarsi quando tutto dentro di te urla "fermati". La capacità di mantenere la calma mentre precipiti. E soprattutto: la visione che si apre solo quando sei in caduta libera.`,
+    content: `Il 3 marzo 1983 — 3/3/83 — numerologicamente un portale. Divento paracadutista militare. Ho imparato la disciplina, la libertà dentro le regole, la forza del team, la bellezza del sacrificio. Sono quasi morto due volte: un colpo di vela che quasi mi strappa un orecchio e un malfunzionamento del paracadute al quarto lancio. Non ho mai avuto paura della morte. Perché la morte, per me, è solo una tuta in pelle che si lascia in un armadio.`,
   },
   {
     title: 'La Morte e la Rinascita',
-    subtitle: 'Secondo Salto Quantico',
-    year: '1993',
-    content: `Linfoma non Hodgkin. Sei mesi di vita. Avevo trent'anni. La medicina mi dava poche speranze, ma io ho scelto di vivere. Ho scoperto la meditazione trascendentale. Ho imparato che il corpo segue la mente, e la mente segue l'anima. Sono guarito. E da quel giorno, non ho più avuto paura di nulla.`,
-  },
-  {
-    title: 'La Scoperta del Talento',
     subtitle: 'Terzo Salto Quantico',
-    year: '2002',
-    content: `Incontro Davide Possi. Poi Filomena e Rita Cossu. Entro in Pyramis. E scopro qualcosa che non sapevo di avere: un talento naturale per la gestione delle relazioni. In 12 anni arrivo a gestire 1.100 collaboratori. 100 milioni di euro di fatturato. Ma soprattutto, scopro cosa significa costruire qualcosa che funziona perché le persone ci credono.`,
+    year: '1993',
+    content: `Linfoma non Hodgkin. Sei mesi di vita. Avevo trent'anni. Io non ho avuto paura. Mai. La paura collassa l'onda dell'evento temuto. E io ho sempre scelto la vita. Ho scoperto la meditazione trascendentale, ho incontrato medici ayurvedici straordinari, ho imparato ad ascoltare il mio corpo, a lasciar andare il controllo, a negoziare con il destino. Trentadue anni dopo, sono ancora qui.`,
   },
   {
-    title: "L'Incontro che Cambia Tutto",
+    title: "L'Errore d'Oro",
     subtitle: 'Quarto Salto Quantico',
-    year: '2010',
-    content: `Lucia Facchinetti entra nella mia vita. Non lo so ancora, ma insieme fonderemo Quantum Academy. Lei vede in me quello che io non riesco ancora a vedere. Mi spinge a formalizzare il mio metodo. A trasformare l'istinto in sistema. L'esperienza in trasmissione.`,
+    year: '1996',
+    content: `Dopo la guarigione faccio la cosa più folle: apro un'azienda che produce scatole di cartone — quando sono allergico alla carta. Sette anni di sacrifici, debiti, lacrime, notti senza dormire. Ma ho pagato tutto fino all'ultima lira. Per rispetto del mio nome e della mia famiglia. È stato l'errore più grande della mia vita. Ed è stato anche uno dei più grandi insegnamenti.`,
   },
   {
-    title: 'Quantum Academy',
+    title: 'La Famiglia che Ho Scelto',
     subtitle: 'Quinto Salto Quantico',
-    year: '2015',
-    content: `Nasce Quantum Academy. Con Lucia e Alberto Lori. È il sogno che non sapevo di sognare. Un luogo dove le persone imparano a riconoscersi. Dove l'identità diventa il punto di partenza, non il punto di arrivo. Dove il cambiamento non è un evento, ma un processo consapevole.`,
+    year: '2002',
+    content: `Incontro Davide Possi, Filomena e Rita Cossu. Entro in Pyramis in 27 mq. Oggi l'azienda ha superato i 1.100 collaboratori e sfiora i 100 milioni di fatturato. Non ero un bravo venditore. Eppure ho scoperto la mia vera skill: la gestione delle relazioni. Oggi l'80% del fatturato Vodafone Italia, all'interno di Pyramis, nasce dalla gestione dei clienti. Il mio talento: non perdere le persone.`,
   },
   {
-    title: 'Alphakom',
+    title: "L'Entanglement Sacro",
     subtitle: 'Sesto Salto Quantico',
-    year: '2020',
-    content: `Lancio la Scuola degli Alpha Leaders. La leadership, la comunicazione, l'identità professionale: tutto converge in un unico percorso. Per imprenditori, manager, professionisti che vogliono smettere di recitare un ruolo e iniziare a essere chi sono davvero.`,
+    year: '2010',
+    content: `Lucia Facchinetti entra nella mia vita. Anima, sorella, madre, figlia, compagna di destino. Insieme fondiamo Quantum Academy. Poi arriva Alberto Lori, narratore RAI, voce storica dell'Italia, il mio fratello maggiore. Io, Lucia e Alberto abbiamo un legame quantistico. Pensiamo le stesse cose a chilometri di distanza. Siamo un trio. Un'unità. Una missione.`,
+  },
+  {
+    title: 'Quantum Academy e Alphakom',
+    subtitle: 'Settimo Salto Quantico',
+    year: '2015',
+    content: `Quantum Academy nasce come contenitore per altri formatori. Ma dopo dieci anni capisco la verità: non era nata per loro. Era nata per me, Lucia e Alberto. Era nata per diventare una Scuola di Identità e Consapevolezza. E poi lancio Alphakom — la Scuola degli Alpha Leaders. La leadership, la comunicazione, l'identità professionale: tutto converge nel Metodo In-Flow.`,
   },
 ]
 
@@ -92,7 +104,7 @@ export function Story() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             Ogni caduta è stata un salto verso chi sono oggi.
-            Questa è la storia di sei trasformazioni che mi hanno reso l'uomo che sono.
+            Questa è la storia di sette trasformazioni che mi hanno reso l'uomo che sono.
           </motion.p>
         </div>
 
@@ -200,18 +212,36 @@ export function Story() {
           </motion.div>
         </div>
 
-        {/* Bottom quote */}
+        {/* Chi Sono Oggi - Closing */}
         <motion.div
-          className="text-center mt-20"
+          className="mt-20 max-w-3xl mx-auto"
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
         >
-          <p className="font-serif text-xl lg:text-2xl text-white/80 italic max-w-3xl mx-auto">
-            "Il viaggio continua. E il settimo salto? È quello che farò domani."
-          </p>
-          <p className="text-teal mt-4 font-medium">— Luca Pellicari</p>
+          <div className="text-center mb-10">
+            <span className="text-teal text-sm font-medium uppercase tracking-[0.3em]">Chi Sono Oggi</span>
+          </div>
+          <div className="space-y-2 text-center">
+            {[
+              'Sono un uomo realizzato e in cammino.',
+              'Sono compagno di viaggio di Lucia e Alberto.',
+              'Sono fondatore di Quantum Academy.',
+              'Sono creatore di Alphakom.',
+              'Sono autore, speaker, narratore, formatore.',
+              'Sono un portatore sano di felicità.',
+              'Sono una fenice cimbra rinata sette volte.',
+            ].map((line, i) => (
+              <p key={i} className="font-serif text-lg md:text-xl text-white/80 leading-relaxed">{line}</p>
+            ))}
+          </div>
+          <div className="text-center mt-8 pt-8 border-t border-white/10">
+            <p className="font-serif text-xl lg:text-2xl text-white/90 italic">
+              &ldquo;Sono ciò che ho vissuto. Sono ciò che dono. Sono ciò che amo.&rdquo;
+            </p>
+            <p className="text-teal mt-4 font-medium">— Luca Pellicari</p>
+          </div>
         </motion.div>
       </div>
     </section>
