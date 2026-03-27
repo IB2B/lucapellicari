@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { MessageCircle } from 'lucide-react'
+import { Mic } from 'lucide-react'
 import { useAliceContext } from './AliceProvider'
 import { AliceOrbVisualizer } from './AliceOrbVisualizer'
 import { ALICE_CONFIG } from '@/lib/alice-config'
@@ -24,23 +24,16 @@ export function AliceFloatingWidget() {
   const animFrameRef = useRef<number>(0)
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsVisible(true), 2000)
-    return () => clearTimeout(timer)
+    const t = setTimeout(() => setIsVisible(true), 2000)
+    return () => clearTimeout(t)
   }, [])
 
   useEffect(() => {
     if (isVisible && !hasInteracted) {
-      const pingTimer = setTimeout(() => setShowPing(true), 500)
-      const tooltipTimer = setTimeout(() => setShowTooltip(true), 800)
-      const hideTooltip = setTimeout(() => {
-        setShowTooltip(false)
-        setShowPing(false)
-      }, 6000)
-      return () => {
-        clearTimeout(pingTimer)
-        clearTimeout(tooltipTimer)
-        clearTimeout(hideTooltip)
-      }
+      const t1 = setTimeout(() => setShowPing(true), 500)
+      const t2 = setTimeout(() => setShowTooltip(true), 900)
+      const t3 = setTimeout(() => { setShowTooltip(false); setShowPing(false) }, 6500)
+      return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
     }
   }, [isVisible, hasInteracted])
 
@@ -60,9 +53,7 @@ export function AliceFloatingWidget() {
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
     if (!buttonRef.current) return
     const rect = buttonRef.current.getBoundingClientRect()
-    const centerX = rect.left + rect.width / 2
-    const centerY = rect.top + rect.height / 2
-    setMousePos({ x: (e.clientX - centerX) * 0.12, y: (e.clientY - centerY) * 0.12 })
+    setMousePos({ x: (e.clientX - (rect.left + rect.width / 2)) * 0.12, y: (e.clientY - (rect.top + rect.height / 2)) * 0.12 })
   }, [])
 
   const handleClick = useCallback(() => {
@@ -87,20 +78,16 @@ export function AliceFloatingWidget() {
           <AnimatePresence>
             {showPing && (
               <>
-                <motion.div
-                  className="absolute inset-[-8px] rounded-full"
-                  style={{ background: 'radial-gradient(circle, rgba(107,155,174,0.35) 0%, rgba(107,155,174,0) 70%)' }}
-                  initial={{ scale: 1, opacity: 0.8 }}
-                  animate={{ scale: 3.5, opacity: 0 }}
-                  transition={{ duration: 1.8, ease: 'easeOut' }}
-                />
-                <motion.div
-                  className="absolute inset-[-8px] rounded-full"
-                  style={{ background: 'radial-gradient(circle, rgba(107,155,174,0.25) 0%, rgba(107,155,174,0) 70%)' }}
-                  initial={{ scale: 1, opacity: 0.6 }}
-                  animate={{ scale: 2.8, opacity: 0 }}
-                  transition={{ duration: 1.8, ease: 'easeOut', delay: 0.3 }}
-                />
+                <motion.div className="absolute inset-[-8px] rounded-full pointer-events-none"
+                  style={{ background: 'radial-gradient(circle,rgba(107,155,174,0.4) 0%,rgba(107,155,174,0) 70%)' }}
+                  initial={{ scale: 1, opacity: 0.9 }}
+                  animate={{ scale: 3.8, opacity: 0 }}
+                  transition={{ duration: 2.2, ease: 'easeOut' }} />
+                <motion.div className="absolute inset-[-8px] rounded-full pointer-events-none"
+                  style={{ background: 'radial-gradient(circle,rgba(107,155,174,0.25) 0%,rgba(107,155,174,0) 70%)' }}
+                  initial={{ scale: 1, opacity: 0.7 }}
+                  animate={{ scale: 3.0, opacity: 0 }}
+                  transition={{ duration: 2.2, ease: 'easeOut', delay: 0.35 }} />
               </>
             )}
           </AnimatePresence>
@@ -108,88 +95,94 @@ export function AliceFloatingWidget() {
           {/* Tooltip */}
           <AnimatePresence>
             {showTooltip && (
-              <motion.div
-                className="absolute bottom-full right-0 mb-5 whitespace-nowrap"
-                initial={{ opacity: 0, y: 10, scale: 0.95 }}
+              <motion.div className="absolute bottom-full right-0 mb-5 whitespace-nowrap"
+                initial={{ opacity: 0, y: 10, scale: 0.93 }}
                 animate={{ opacity: 1, y: 0, scale: 1 }}
-                exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                transition={{ duration: 0.35, ease: [0.25, 0.46, 0.45, 0.94] }}
-              >
-                <div className="relative bg-white rounded-2xl px-5 py-3.5 shadow-lg border border-navy/5">
-                  <p className="text-sm font-medium text-navy-dark leading-snug">
+                exit={{ opacity: 0, y: 10, scale: 0.93 }}
+                transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}>
+                <div className="relative rounded-2xl px-5 py-3.5 shadow-xl"
+                  style={{
+                    background: 'rgba(12,28,44,0.92)',
+                    border: '1px solid rgba(107,155,174,0.15)',
+                    backdropFilter: 'blur(16px)',
+                  }}>
+                  <p className="text-sm font-medium leading-snug" style={{ color: 'rgba(250,247,242,0.9)' }}>
                     {ALICE_CONFIG.greeting}
                   </p>
-                  <p className="text-[11px] text-navy/40 mt-0.5">Assistente AI vocale</p>
-                  <div className="absolute -bottom-1.5 right-7 w-3 h-3 bg-white border-r border-b border-navy/5 rotate-45" />
+                  <p className="text-[11px] mt-0.5" style={{ color: 'rgba(107,155,174,0.7)' }}>Assistente AI vocale</p>
+                  {/* Caret */}
+                  <div className="absolute -bottom-1.5 right-7 w-3 h-3 rotate-45"
+                    style={{ background: 'rgba(12,28,44,0.92)', border: '1px solid rgba(107,155,174,0.15)', borderTop: 'none', borderLeft: 'none' }} />
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
 
-          {/* Orb button */}
+          {/* Main orb button */}
           <motion.button
             ref={buttonRef}
             onClick={handleClick}
             onMouseMove={handleMouseMove}
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => { setMousePos({ x: 0, y: 0 }); setIsHovered(false) }}
-            className="relative w-[72px] h-[72px] rounded-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+            className="relative w-[74px] h-[74px] rounded-full cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-[#6B9BAE] focus-visible:ring-offset-2"
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1, x: mousePos.x, y: mousePos.y }}
             exit={{ scale: 0, opacity: 0 }}
             transition={{
-              scale: { type: 'spring', stiffness: 400, damping: 15 },
+              scale: { type: 'spring', stiffness: 380, damping: 16 },
               opacity: { duration: 0.3 },
-              x: { type: 'spring', stiffness: 150, damping: 15 },
-              y: { type: 'spring', stiffness: 150, damping: 15 },
+              x: { type: 'spring', stiffness: 140, damping: 15 },
+              y: { type: 'spring', stiffness: 140, damping: 15 },
             }}
-            whileHover={{ scale: 1.08 }}
+            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.93 }}
             aria-label="Parla con Alice, assistente vocale AI"
           >
-            {/* Outer glow ring */}
-            <div className="absolute inset-[-4px] rounded-full bg-gradient-to-br from-teal/25 via-teal/10 to-coral/15 blur-[2px]" />
-            <div className="absolute inset-[-2px] rounded-full bg-gradient-to-br from-white/30 to-white/5 backdrop-blur-sm" />
+            {/* Outer glow aura */}
+            <motion.div
+              className="absolute inset-[-6px] rounded-full pointer-events-none"
+              style={{ background: 'radial-gradient(circle,rgba(107,155,174,0.35) 0%,transparent 70%)' }}
+              animate={{ scale: [1, 1.15, 1], opacity: [0.7, 0.4, 0.7] }}
+              transition={{ duration: 2.8, repeat: Infinity, ease: 'easeInOut' }} />
 
-            {/* Canvas orb */}
+            {/* Glass rim */}
+            <div className="absolute inset-[-2px] rounded-full pointer-events-none"
+              style={{ background: 'linear-gradient(135deg,rgba(255,255,255,0.25),rgba(255,255,255,0.05))', backdropFilter: 'blur(2px)' }} />
+
+            {/* Orb canvas */}
             <div className="absolute inset-0 flex items-center justify-center rounded-full overflow-hidden">
-              <AliceOrbVisualizer
-                size={72}
-                audioLevel={audioLevel}
-                status={mappedStatus}
-                isSpeaking={isSpeaking}
-              />
+              <AliceOrbVisualizer size={74} audioLevel={audioLevel} status={mappedStatus} isSpeaking={isSpeaking} />
             </div>
 
-            {/* Center icon */}
+            {/* Mic icon when idle */}
             {status !== 'connected' && (
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <MessageCircle size={26} className="text-white/80 drop-shadow-sm" strokeWidth={1.8} />
+                <Mic size={26} style={{ color: 'rgba(255,255,255,0.82)' }} strokeWidth={1.7} />
               </div>
             )}
 
-            {/* Connected indicator */}
+            {/* Connected green dot */}
             {status === 'connected' && (
               <motion.div
-                className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full bg-emerald-400 border-[2.5px] border-white shadow-sm"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ type: 'spring', stiffness: 500, damping: 20 }}
-              />
+                className="absolute -top-0.5 -right-0.5 w-4 h-4 rounded-full border-[2.5px] border-white shadow-sm"
+                style={{ background: '#34d399' }}
+                initial={{ scale: 0 }} animate={{ scale: 1 }}
+                transition={{ type: 'spring', stiffness: 500, damping: 20 }} />
             )}
           </motion.button>
 
           {/* Hover label */}
           <AnimatePresence>
             {isHovered && !showTooltip && (
-              <motion.div
-                className="absolute bottom-full right-0 mb-3 whitespace-nowrap pointer-events-none"
-                initial={{ opacity: 0, y: 4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 4 }}
-                transition={{ duration: 0.15 }}
-              >
-                <span className="text-xs font-semibold text-navy-dark bg-white rounded-full px-4 py-2 shadow-md border border-navy/5">
+              <motion.div className="absolute bottom-full right-0 mb-3 whitespace-nowrap pointer-events-none"
+                initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 4 }}
+                transition={{ duration: 0.15 }}>
+                <span className="text-xs font-semibold px-4 py-2 rounded-full shadow-lg"
+                  style={{
+                    background: 'rgba(12,28,44,0.9)', backdropFilter: 'blur(12px)',
+                    border: '1px solid rgba(107,155,174,0.15)', color: 'rgba(250,247,242,0.9)',
+                  }}>
                   Parla con Alice
                 </span>
               </motion.div>

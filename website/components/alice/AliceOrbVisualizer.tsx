@@ -9,6 +9,7 @@ interface Particle {
   size: number
   opacity: number
   baseDistance: number
+  hue: number
 }
 
 interface AliceOrbVisualizerProps {
@@ -20,22 +21,25 @@ interface AliceOrbVisualizerProps {
 }
 
 const COLORS = {
-  teal: { r: 107, g: 155, b: 174 },
-  tealLight: { r: 143, g: 184, b: 199 },
-  coral: { r: 196, g: 149, b: 106 },
-  navy: { r: 61, g: 90, b: 115 },
-  navyDark: { r: 44, g: 67, b: 86 },
-  cream: { r: 250, g: 247, b: 242 },
+  teal:     { r: 107, g: 155, b: 174 },
+  tealLight:{ r: 143, g: 184, b: 199 },
+  coral:    { r: 196, g: 149, b: 106 },
+  coralLight:{ r: 240, g: 190, b: 150 },
+  navy:     { r: 61,  g: 90,  b: 115 },
+  navyDark: { r: 44,  g: 67,  b: 86  },
+  cream:    { r: 250, g: 247, b: 242 },
+  sky:      { r: 99,  g: 197, b: 255 },
 }
 
 function createParticles(count: number, baseRadius: number): Particle[] {
   return Array.from({ length: count }, () => ({
     angle: Math.random() * Math.PI * 2,
-    distance: baseRadius * (0.9 + Math.random() * 0.4),
-    speed: 0.003 + Math.random() * 0.008,
-    size: 1 + Math.random() * 2,
-    opacity: 0.3 + Math.random() * 0.5,
-    baseDistance: baseRadius * (0.9 + Math.random() * 0.4),
+    distance: baseRadius * (0.88 + Math.random() * 0.45),
+    speed: 0.002 + Math.random() * 0.007,
+    size: 0.8 + Math.random() * 2.5,
+    opacity: 0.25 + Math.random() * 0.6,
+    baseDistance: baseRadius * (0.88 + Math.random() * 0.45),
+    hue: Math.random(),
   }))
 }
 
@@ -82,17 +86,16 @@ export function AliceOrbVisualizer({ size, audioLevel, status, isSpeaking, class
       const currentAudioLevel = audioLevelRef.current
       const currentStatus = statusRef.current
       const currentIsSpeaking = isSpeakingRef.current
-
       const { w, h } = canvasSizeRef.current
       if (w === 0 || h === 0) return
 
       const cx = w / 2
       const cy = h / 2
-      const baseRadius = w * 0.3
+      const baseRadius = w * 0.32
       const time = timeRef.current
 
       const isMobile = currentSize < 80
-      const particleCount = isMobile ? 8 : 16
+      const particleCount = isMobile ? 10 : 22
       if (particlesRef.current.length !== particleCount) {
         particlesRef.current = createParticles(particleCount, baseRadius)
       }
@@ -116,15 +119,21 @@ export function AliceOrbVisualizer({ size, audioLevel, status, isSpeaking, class
         return
       }
 
-      const breathe = Math.sin(time * 1.5) * 0.04
-      const audioDistortion = currentAudioLevel * 0.15
+      // Breathing + audio reactivity
+      const breathe = Math.sin(time * 1.4) * 0.035
+      const audioDistortion = currentAudioLevel * 0.18
       const currentRadius = baseRadius * (1 + breathe + audioDistortion)
 
-      const glowColor = currentIsSpeaking ? COLORS.coral : COLORS.teal
-      for (let i = 3; i > 0; i--) {
-        const glowRadius = currentRadius * (1 + i * 0.25 + currentAudioLevel * 0.1)
-        const glowGrad = ctx.createRadialGradient(cx, cy, currentRadius * 0.8, cx, cy, glowRadius)
-        glowGrad.addColorStop(0, `rgba(${glowColor.r}, ${glowColor.g}, ${glowColor.b}, ${0.08 + currentAudioLevel * 0.06})`)
+      // Choose color theme
+      const glowColor = currentIsSpeaking ? COLORS.coralLight : COLORS.tealLight
+      const baseColor = currentIsSpeaking ? COLORS.coral : COLORS.teal
+
+      // ── Outer multi-ring glow ──
+      for (let i = 4; i > 0; i--) {
+        const glowRadius = currentRadius * (1 + i * 0.22 + currentAudioLevel * 0.12)
+        const glowGrad = ctx.createRadialGradient(cx, cy, currentRadius * 0.75, cx, cy, glowRadius)
+        const alpha = (0.06 + currentAudioLevel * 0.08) / i
+        glowGrad.addColorStop(0, `rgba(${glowColor.r}, ${glowColor.g}, ${glowColor.b}, ${alpha})`)
         glowGrad.addColorStop(1, `rgba(${glowColor.r}, ${glowColor.g}, ${glowColor.b}, 0)`)
         ctx.beginPath()
         ctx.arc(cx, cy, glowRadius, 0, Math.PI * 2)
@@ -132,35 +141,55 @@ export function AliceOrbVisualizer({ size, audioLevel, status, isSpeaking, class
         ctx.fill()
       }
 
+      // ── Neon ring border ──
+      const ringOpacity = 0.25 + currentAudioLevel * 0.4
+      const ringGrad = ctx.createRadialGradient(cx, cy, currentRadius * 0.9, cx, cy, currentRadius * 1.05)
+      ringGrad.addColorStop(0, `rgba(${glowColor.r}, ${glowColor.g}, ${glowColor.b}, ${ringOpacity})`)
+      ringGrad.addColorStop(0.6, `rgba(${glowColor.r}, ${glowColor.g}, ${glowColor.b}, ${ringOpacity * 0.3})`)
+      ringGrad.addColorStop(1, `rgba(${glowColor.r}, ${glowColor.g}, ${glowColor.b}, 0)`)
+      ctx.beginPath()
+      ctx.arc(cx, cy, currentRadius * 1.02, 0, Math.PI * 2)
+      ctx.strokeStyle = `rgba(${glowColor.r}, ${glowColor.g}, ${glowColor.b}, ${ringOpacity})`
+      ctx.lineWidth = 1.5 * (window.devicePixelRatio || 1)
+      ctx.stroke()
+
+      // ── Sphere body ──
       const sphereGrad = ctx.createRadialGradient(
-        cx - currentRadius * 0.2, cy - currentRadius * 0.2, 0, cx, cy, currentRadius
+        cx - currentRadius * 0.22, cy - currentRadius * 0.22, 0, cx, cy, currentRadius
       )
 
       if (currentIsSpeaking) {
-        sphereGrad.addColorStop(0, `rgba(${COLORS.coral.r}, ${COLORS.coral.g}, ${COLORS.coral.b}, 0.95)`)
-        sphereGrad.addColorStop(0.5, `rgba(${COLORS.teal.r}, ${COLORS.teal.g}, ${COLORS.teal.b}, 0.7)`)
-        sphereGrad.addColorStop(1, `rgba(${COLORS.navyDark.r}, ${COLORS.navyDark.g}, ${COLORS.navyDark.b}, 0.85)`)
+        sphereGrad.addColorStop(0, `rgba(${COLORS.coralLight.r}, ${COLORS.coralLight.g}, ${COLORS.coralLight.b}, 0.98)`)
+        sphereGrad.addColorStop(0.4, `rgba(${COLORS.coral.r}, ${COLORS.coral.g}, ${COLORS.coral.b}, 0.82)`)
+        sphereGrad.addColorStop(0.75, `rgba(${COLORS.teal.r}, ${COLORS.teal.g}, ${COLORS.teal.b}, 0.55)`)
+        sphereGrad.addColorStop(1, `rgba(${COLORS.navyDark.r}, ${COLORS.navyDark.g}, ${COLORS.navyDark.b}, 0.9)`)
       } else if (currentStatus === 'connected') {
-        sphereGrad.addColorStop(0, `rgba(${COLORS.tealLight.r}, ${COLORS.tealLight.g}, ${COLORS.tealLight.b}, 0.95)`)
-        sphereGrad.addColorStop(0.6, `rgba(${COLORS.teal.r}, ${COLORS.teal.g}, ${COLORS.teal.b}, 0.8)`)
-        sphereGrad.addColorStop(1, `rgba(${COLORS.navyDark.r}, ${COLORS.navyDark.g}, ${COLORS.navyDark.b}, 0.85)`)
+        sphereGrad.addColorStop(0, `rgba(${COLORS.tealLight.r}, ${COLORS.tealLight.g}, ${COLORS.tealLight.b}, 0.98)`)
+        sphereGrad.addColorStop(0.45, `rgba(${COLORS.teal.r}, ${COLORS.teal.g}, ${COLORS.teal.b}, 0.82)`)
+        sphereGrad.addColorStop(0.8, `rgba(${COLORS.navy.r}, ${COLORS.navy.g}, ${COLORS.navy.b}, 0.6)`)
+        sphereGrad.addColorStop(1, `rgba(${COLORS.navyDark.r}, ${COLORS.navyDark.g}, ${COLORS.navyDark.b}, 0.9)`)
       } else if (currentStatus === 'connecting') {
-        const pulse = Math.sin(time * 6) * 0.3 + 0.7
-        sphereGrad.addColorStop(0, `rgba(${COLORS.teal.r}, ${COLORS.teal.g}, ${COLORS.teal.b}, ${pulse})`)
-        sphereGrad.addColorStop(1, `rgba(${COLORS.navyDark.r}, ${COLORS.navyDark.g}, ${COLORS.navyDark.b}, 0.8)`)
+        const pulse = Math.sin(time * 6) * 0.25 + 0.75
+        sphereGrad.addColorStop(0, `rgba(${COLORS.tealLight.r}, ${COLORS.tealLight.g}, ${COLORS.tealLight.b}, ${pulse})`)
+        sphereGrad.addColorStop(0.7, `rgba(${COLORS.navy.r}, ${COLORS.navy.g}, ${COLORS.navy.b}, 0.6)`)
+        sphereGrad.addColorStop(1, `rgba(${COLORS.navyDark.r}, ${COLORS.navyDark.g}, ${COLORS.navyDark.b}, 0.85)`)
       } else {
-        sphereGrad.addColorStop(0, `rgba(${COLORS.teal.r}, ${COLORS.teal.g}, ${COLORS.teal.b}, 0.85)`)
-        sphereGrad.addColorStop(0.7, `rgba(${COLORS.navy.r}, ${COLORS.navy.g}, ${COLORS.navy.b}, 0.7)`)
-        sphereGrad.addColorStop(1, `rgba(${COLORS.navyDark.r}, ${COLORS.navyDark.g}, ${COLORS.navyDark.b}, 0.8)`)
+        // idle — subtle shimmer
+        const shimmer = Math.sin(time * 0.8) * 0.05 + 0.82
+        sphereGrad.addColorStop(0, `rgba(${COLORS.teal.r}, ${COLORS.teal.g}, ${COLORS.teal.b}, ${shimmer})`)
+        sphereGrad.addColorStop(0.6, `rgba(${COLORS.navy.r}, ${COLORS.navy.g}, ${COLORS.navy.b}, 0.65)`)
+        sphereGrad.addColorStop(1, `rgba(${COLORS.navyDark.r}, ${COLORS.navyDark.g}, ${COLORS.navyDark.b}, 0.85)`)
       }
 
+      // Morphing blob when speaking and audio active
       ctx.beginPath()
-      if (currentIsSpeaking && currentAudioLevel > 0.05) {
-        const points = 64
+      if (currentIsSpeaking && currentAudioLevel > 0.04) {
+        const points = 80
         for (let i = 0; i <= points; i++) {
           const a = (i / points) * Math.PI * 2
-          const distort = Math.sin(a * 4 + time * 3) * currentAudioLevel * baseRadius * 0.12
-          const r = currentRadius + distort
+          const d1 = Math.sin(a * 4 + time * 3.5) * currentAudioLevel * baseRadius * 0.10
+          const d2 = Math.sin(a * 7 - time * 2.1) * currentAudioLevel * baseRadius * 0.05
+          const r = currentRadius + d1 + d2
           const x = cx + Math.cos(a) * r
           const y = cy + Math.sin(a) * r
           if (i === 0) ctx.moveTo(x, y)
@@ -173,33 +202,41 @@ export function AliceOrbVisualizer({ size, audioLevel, status, isSpeaking, class
       ctx.fillStyle = sphereGrad
       ctx.fill()
 
+      // ── Inner shimmer highlight ──
       const highlightGrad = ctx.createRadialGradient(
-        cx - currentRadius * 0.3, cy - currentRadius * 0.3, 0,
-        cx - currentRadius * 0.1, cy - currentRadius * 0.1, currentRadius * 0.6
+        cx - currentRadius * 0.28, cy - currentRadius * 0.28, 0,
+        cx - currentRadius * 0.08, cy - currentRadius * 0.08, currentRadius * 0.65
       )
-      highlightGrad.addColorStop(0, `rgba(${COLORS.cream.r}, ${COLORS.cream.g}, ${COLORS.cream.b}, 0.15)`)
+      const hlAlpha = 0.20 + Math.sin(time * 1.8) * 0.06
+      highlightGrad.addColorStop(0, `rgba(${COLORS.cream.r}, ${COLORS.cream.g}, ${COLORS.cream.b}, ${hlAlpha})`)
+      highlightGrad.addColorStop(0.5, `rgba(${COLORS.cream.r}, ${COLORS.cream.g}, ${COLORS.cream.b}, ${hlAlpha * 0.3})`)
       highlightGrad.addColorStop(1, `rgba(${COLORS.cream.r}, ${COLORS.cream.g}, ${COLORS.cream.b}, 0)`)
       ctx.beginPath()
       ctx.arc(cx, cy, currentRadius, 0, Math.PI * 2)
       ctx.fillStyle = highlightGrad
       ctx.fill()
 
+      // ── Orbiting particles ──
       const particles = particlesRef.current
       const dpr = window.devicePixelRatio || 1
-      const spreadFactor = 1 + currentAudioLevel * 0.5
+      const spreadFactor = 1 + currentAudioLevel * 0.65
       for (const p of particles) {
-        p.angle += p.speed * (currentStatus === 'connecting' ? 3 : 1)
-        const dist = p.baseDistance * spreadFactor + Math.sin(time * 2 + p.angle * 3) * baseRadius * 0.05
+        p.angle += p.speed * (currentStatus === 'connecting' ? 3.5 : 1)
+        const dist = p.baseDistance * spreadFactor + Math.sin(time * 1.8 + p.angle * 2.5) * baseRadius * 0.06
         const px = cx + Math.cos(p.angle) * dist
         const py = cy + Math.sin(p.angle) * dist
-        const alpha = p.opacity * (0.6 + currentAudioLevel * 0.4)
+        const alpha = p.opacity * (0.55 + currentAudioLevel * 0.45)
 
-        const pGrad = ctx.createRadialGradient(px, py, 0, px, py, p.size * dpr)
-        const pc = currentIsSpeaking ? COLORS.coral : COLORS.tealLight
+        const pc = currentIsSpeaking
+          ? (p.hue > 0.5 ? COLORS.coralLight : COLORS.coral)
+          : (p.hue > 0.5 ? COLORS.tealLight : COLORS.sky)
+
+        const pSize = p.size * dpr * (1 + currentAudioLevel * 0.5)
+        const pGrad = ctx.createRadialGradient(px, py, 0, px, py, pSize)
         pGrad.addColorStop(0, `rgba(${pc.r}, ${pc.g}, ${pc.b}, ${alpha})`)
         pGrad.addColorStop(1, `rgba(${pc.r}, ${pc.g}, ${pc.b}, 0)`)
         ctx.beginPath()
-        ctx.arc(px, py, p.size * dpr, 0, Math.PI * 2)
+        ctx.arc(px, py, pSize, 0, Math.PI * 2)
         ctx.fillStyle = pGrad
         ctx.fill()
       }
