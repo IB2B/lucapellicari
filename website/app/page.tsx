@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, useScroll, useTransform, useInView } from 'framer-motion'
+import { motion, useScroll, useTransform, useInView, useReducedMotion } from 'framer-motion'
 import { ArrowRight, ChevronRight, ChevronLeft, Target, Eye, Shield, Users, Brain, Star, Compass, Sparkles, Quote, ArrowUpRight, GraduationCap, Building2, Globe, Handshake, CheckCircle, RefreshCw, TrendingUp } from 'lucide-react'
 import { InFlowSection } from '@/components/sections/InFlowSection'
 import { AliceHomepageSection } from '@/components/alice/AliceHomepageSection'
@@ -73,29 +73,26 @@ const heroSlides = [
   },
 ]
 
-// Animated Counter
+// Animated Counter — uses requestAnimationFrame for smooth 60fps
 function AnimatedNumber({ value, suffix = '' }: { value: number; suffix?: string }) {
-  const ref = useRef(null)
+  const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true })
   const [count, setCount] = useState(0)
 
   useEffect(() => {
-    if (isInView) {
-      const duration = 2000
-      const steps = 60
-      const increment = value / steps
-      let current = 0
-      const timer = setInterval(() => {
-        current += increment
-        if (current >= value) {
-          setCount(value)
-          clearInterval(timer)
-        } else {
-          setCount(Math.floor(current))
-        }
-      }, duration / steps)
-      return () => clearInterval(timer)
+    if (!isInView) return
+    const duration = 1800
+    let start: number | null = null
+    let rafId: number
+    const step = (ts: number) => {
+      if (!start) start = ts
+      const progress = Math.min((ts - start) / duration, 1)
+      const eased = 1 - Math.pow(1 - progress, 3) // ease-out cubic
+      setCount(Math.floor(eased * value))
+      if (progress < 1) rafId = requestAnimationFrame(step)
     }
+    rafId = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(rafId)
   }, [isInView, value])
 
   return <span ref={ref}>{count}{suffix}</span>
@@ -109,6 +106,7 @@ function HeroSection() {
   const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const [isPaused, setIsPaused] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
+  const isInView = useInView(containerRef, { amount: 0.2 })
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -119,12 +117,12 @@ function HeroSection() {
   const scale = useTransform(scrollYProgress, [0, 0.5], [1, 1.1])
 
   useEffect(() => {
-    if (!isAutoPlaying || isPaused) return
+    if (!isAutoPlaying || isPaused || !isInView) return
     const interval = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
     }, 6500)
     return () => clearInterval(interval)
-  }, [isAutoPlaying, isPaused])
+  }, [isAutoPlaying, isPaused, isInView])
 
   const nextSlide = useCallback(() => {
     setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
@@ -256,14 +254,14 @@ function HeroSection() {
             <button
               onClick={prevSlide}
               aria-label="Slide precedente"
-              className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-cream/20 flex items-center justify-center text-cream/60 hover:text-cream hover:border-cream/40 hover:bg-white/5 active:bg-white/10 transition-all duration-300"
+              className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-cream/20 flex items-center justify-center text-cream/60 hover:text-cream hover:border-cream/40 hover:bg-white/5 active:bg-white/10 focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-navy-dark transition-all duration-300"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={nextSlide}
               aria-label="Slide successiva"
-              className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-cream/20 flex items-center justify-center text-cream/60 hover:text-cream hover:border-cream/40 hover:bg-white/5 active:bg-white/10 transition-all duration-300"
+              className="w-10 h-10 md:w-12 md:h-12 rounded-full border border-cream/20 flex items-center justify-center text-cream/60 hover:text-cream hover:border-cream/40 hover:bg-white/5 active:bg-white/10 focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-navy-dark transition-all duration-300"
             >
               <ChevronRight className="w-5 h-5" />
             </button>
@@ -277,7 +275,7 @@ function HeroSection() {
       >
         <span className="text-cream/60 text-xs uppercase tracking-widest">Scroll</span>
         <div
-          className="w-5 h-8 rounded-full border border-cream/20 flex items-start justify-center p-1.5 animate-bounce"
+          className="w-5 h-8 rounded-full border border-cream/20 flex items-start justify-center p-1.5 animate-bounce motion-reduce:animate-none"
           style={{ animationDuration: '2s' }}
         >
           <div className="w-1 h-2 rounded-full bg-teal-light" />
@@ -291,15 +289,25 @@ function HeroSection() {
 // OPENING SECTION - Creative Split Layout
 // ============================================
 function OpeningSection() {
+  const openingRef = useRef<HTMLElement>(null)
+  const reducedMotion = useReducedMotion()
+  const { scrollYProgress: openingScroll } = useScroll({ target: openingRef, offset: ['start end', 'end start'] })
+  const watermarkY = useTransform(openingScroll, [0, 1], [40, -40])
+  const leftContentY = useTransform(openingScroll, [0, 1], [30, -15])
+  const rightContentY = useTransform(openingScroll, [0, 1], [20, -25])
+
   return (
-    <section className="relative overflow-hidden">
+    <section ref={openingRef} className="relative overflow-hidden">
       <div className="grid lg:grid-cols-2 min-h-[85vh]">
         {/* Left - Dark Side */}
-        <div className="relative bg-navy-dark py-28 lg:py-40 px-6 md:px-16 lg:px-20 flex items-center overflow-hidden">
+        <div className="relative bg-navy-dark py-28 lg:py-36 px-6 md:px-16 lg:px-20 flex items-center overflow-hidden">
           {/* Floating Number — large watermark */}
-          <div className="absolute top-8 right-6 md:top-10 md:right-10 text-[10rem] md:text-[16rem] font-display text-cream/[0.025] leading-none select-none pointer-events-none">
+          <motion.div
+            className="absolute top-8 right-6 md:top-10 md:right-10 text-[10rem] md:text-[16rem] font-display text-cream/[0.025] leading-none select-none pointer-events-none"
+            style={{ y: reducedMotion ? 0 : watermarkY }}
+          >
             7
-          </div>
+          </motion.div>
 
           {/* Left accent bar */}
           <div className="absolute top-0 left-0 w-[3px] h-full bg-gradient-to-b from-teal via-teal/30 to-transparent" />
@@ -307,12 +315,12 @@ function OpeningSection() {
           {/* Subtle bottom gradient fade */}
           <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#1a2f42] to-transparent pointer-events-none" />
 
+          <motion.div style={{ y: reducedMotion ? 0 : leftContentY }} className="relative z-10 max-w-xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={stagger}
-            className="relative z-10 max-w-xl"
           >
             {/* Label */}
             <motion.div variants={fadeUp} className="flex items-center gap-4 mb-12">
@@ -353,22 +361,23 @@ function OpeningSection() {
               </span>.
             </motion.p>
           </motion.div>
+          </motion.div>
         </div>
 
         {/* Right - Light Side */}
-        <div className="relative bg-white py-28 lg:py-40 px-6 md:px-16 lg:px-20 flex items-center overflow-hidden">
+        <div className="relative bg-white py-28 lg:py-36 px-6 md:px-16 lg:px-20 flex items-center overflow-hidden">
           {/* Decorative circle */}
           <div className="hidden lg:block absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-56 h-56 rounded-full border border-teal/8" />
           <div className="absolute bottom-14 right-14 w-28 h-28 rounded-full bg-gradient-to-br from-teal/5 to-teal/0" />
           {/* Right accent bar */}
           <div className="hidden lg:block absolute top-0 right-0 w-[3px] h-full bg-gradient-to-b from-transparent via-teal/10 to-transparent" />
 
+          <motion.div style={{ y: reducedMotion ? 0 : rightContentY }} className="relative z-10 max-w-lg">
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={stagger}
-            className="relative z-10 max-w-lg"
           >
             {/* Opening statement */}
             <motion.p
@@ -423,6 +432,7 @@ function OpeningSection() {
               </p>
             </motion.div>
           </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -433,8 +443,14 @@ function OpeningSection() {
 // CHI SONO SECTION - Editorial Premium Layout
 // ============================================
 function ChiSonoSection() {
+  const chiSonoRef = useRef<HTMLElement>(null)
+  const chiReducedMotion = useReducedMotion()
+  const { scrollYProgress: chiScroll } = useScroll({ target: chiSonoRef, offset: ['start end', 'end start'] })
+  const imageParallaxY = useTransform(chiScroll, [0, 1], [30, -15])
+  const statsParallaxY = useTransform(chiScroll, [0, 1], [-10, 15])
+
   return (
-    <section className="py-28 lg:py-36 bg-white overflow-hidden">
+    <section ref={chiSonoRef} className="py-28 lg:py-36 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-20 items-center">
           {/* Image Column */}
@@ -445,7 +461,7 @@ function ChiSonoSection() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
             className="lg:col-span-5 order-2 lg:order-1"
           >
-            <div className="relative">
+            <motion.div className="relative" style={{ y: chiReducedMotion ? 0 : imageParallaxY }}>
               {/* Background accent shape */}
               <div className="absolute -top-4 -left-4 w-full h-full rounded-3xl bg-gradient-to-br from-teal/8 to-teal/3 -z-10" />
 
@@ -463,24 +479,27 @@ function ChiSonoSection() {
                 <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-navy-dark/30 to-transparent" />
               </div>
 
-              {/* Floating Stats Card — refined */}
-              <div className="absolute -bottom-6 -right-4 md:-bottom-8 md:-right-6 bg-white rounded-2xl p-5 md:p-6 shadow-xl shadow-navy/8 border border-navy/5 hidden md:block">
-                <div className="grid grid-cols-3 gap-6 text-center">
+              {/* Floating Stats Card */}
+              <motion.div
+                className="absolute -bottom-6 -right-4 md:-bottom-8 md:-right-6 bg-white rounded-2xl p-4 md:p-6 shadow-xl shadow-navy/8 border border-navy/5"
+                style={{ y: chiReducedMotion ? 0 : statsParallaxY }}
+              >
+                <div className="grid grid-cols-3 gap-4 md:gap-6 text-center">
                   <div>
-                    <p className="text-[32px] font-display text-teal leading-none mb-1"><AnimatedNumber value={7} /></p>
-                    <p className="text-[11px] text-navy/50 uppercase tracking-[0.15em] font-semibold">Rinascite</p>
+                    <p className="text-[24px] md:text-[32px] font-display text-teal leading-none mb-1"><AnimatedNumber value={7} /></p>
+                    <p className="text-[9px] md:text-[11px] text-navy/50 uppercase tracking-[0.12em] md:tracking-[0.15em] font-semibold">Rinascite</p>
                   </div>
-                  <div className="border-x border-navy/6 px-2">
-                    <p className="text-[32px] font-display text-teal leading-none mb-1"><AnimatedNumber value={30} suffix="+" /></p>
-                    <p className="text-[11px] text-navy/50 uppercase tracking-[0.15em] font-semibold">Anni</p>
+                  <div className="border-x border-navy/6 px-1 md:px-2">
+                    <p className="text-[24px] md:text-[32px] font-display text-teal leading-none mb-1"><AnimatedNumber value={30} suffix="+" /></p>
+                    <p className="text-[9px] md:text-[11px] text-navy/50 uppercase tracking-[0.12em] md:tracking-[0.15em] font-semibold">Anni</p>
                   </div>
                   <div>
-                    <p className="text-[32px] font-display text-navy-dark leading-none mb-1"><AnimatedNumber value={1000} suffix="+" /></p>
-                    <p className="text-[11px] text-navy/50 uppercase tracking-[0.15em] font-semibold">Vite</p>
+                    <p className="text-[24px] md:text-[32px] font-display text-navy-dark leading-none mb-1"><AnimatedNumber value={1000} suffix="+" /></p>
+                    <p className="text-[9px] md:text-[11px] text-navy/50 uppercase tracking-[0.12em] md:tracking-[0.15em] font-semibold">Vite</p>
                   </div>
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </motion.div>
 
           {/* Content Column */}
@@ -619,8 +638,8 @@ function MissioneSection() {
               <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-teal/10 flex items-center justify-center mb-3 md:mb-4 group-hover:bg-teal group-hover:scale-105 transition-all duration-300">
                 <item.icon className="w-4 h-4 md:w-5 md:h-5 text-teal group-hover:text-white transition-colors duration-300" />
               </div>
-              <h3 className="font-semibold text-navy mb-1 text-xs md:text-sm">{item.label}</h3>
-              <p className="text-xs text-navy/60 hidden md:block">{item.desc}</p>
+              <h3 className="font-semibold text-navy mb-0.5 md:mb-1 text-xs md:text-sm">{item.label}</h3>
+              <p className="text-[10px] md:text-xs text-navy/60 leading-snug">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -641,12 +660,26 @@ function MissioneSection() {
 // IL VERO PROBLEMA - Core Message Section
 // ============================================
 function IlVeroProblemaSection() {
+  const problemaRef = useRef<HTMLElement>(null)
+  const problemaReduced = useReducedMotion()
+  const { scrollYProgress: problemaScroll } = useScroll({ target: problemaRef, offset: ['start end', 'end start'] })
+  const blob1Y = useTransform(problemaScroll, [0, 1], [60, -40])
+  const blob1X = useTransform(problemaScroll, [0, 1], [-20, 20])
+  const blob2Y = useTransform(problemaScroll, [0, 1], [-30, 50])
+  const blob2X = useTransform(problemaScroll, [0, 1], [15, -15])
+
   return (
-    <section className="relative py-28 lg:py-36 bg-white overflow-hidden">
-      {/* Background accents - reduced blur for performance */}
+    <section ref={problemaRef} className="relative py-28 lg:py-36 bg-white overflow-hidden">
+      {/* Background accents - parallax blobs */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-teal/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-navy/5 rounded-full blur-3xl" />
+        <motion.div
+          className="absolute top-1/2 left-0 -translate-y-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-teal/5 rounded-full blur-2xl"
+          style={{ y: problemaReduced ? 0 : blob1Y, x: problemaReduced ? 0 : blob1X }}
+        />
+        <motion.div
+          className="absolute top-1/2 right-0 -translate-y-1/2 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-navy/5 rounded-full blur-2xl"
+          style={{ y: problemaReduced ? 0 : blob2Y, x: problemaReduced ? 0 : blob2X }}
+        />
       </div>
 
       <div className="container-custom relative z-10">
@@ -732,7 +765,7 @@ function IlVeroProblemaSection() {
           className="text-center mt-10 md:mt-16"
         >
           <div className="inline-flex items-center gap-3 md:gap-4 bg-navy text-white rounded-full px-5 md:px-8 py-3 md:py-4 shadow-lg shadow-navy/10">
-            <span className="w-2 h-2 rounded-full bg-teal-light animate-pulse flex-shrink-0" />
+            <span className="w-2 h-2 rounded-full bg-teal-light animate-pulse motion-reduce:animate-none flex-shrink-0" />
             <p className="font-medium text-sm md:text-base">
               Io non vendo contenuti. Non vendo motivazione. Lavoro sulla <span className="text-teal-light">struttura</span>.
             </p>
@@ -747,12 +780,25 @@ function IlVeroProblemaSection() {
 // QUANTUM ACADEMY - Immersive Dark Section
 // ============================================
 function QuantumAcademySection() {
+  const quantumRef = useRef<HTMLElement>(null)
+  const quantumReduced = useReducedMotion()
+  const { scrollYProgress: quantumScroll } = useScroll({ target: quantumRef, offset: ['start end', 'end start'] })
+  const qBlob1Y = useTransform(quantumScroll, [0, 1], [50, -30])
+  const qBlob2Y = useTransform(quantumScroll, [0, 1], [-20, 40])
+  const qImageY = useTransform(quantumScroll, [0, 1], [30, -20])
+
   return (
-    <section className="relative py-28 lg:py-36 bg-navy-dark overflow-hidden">
-      {/* Background - reduced blur for performance */}
+    <section ref={quantumRef} className="relative py-28 lg:py-36 bg-navy-dark overflow-hidden">
+      {/* Background - parallax blobs */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
-        <div className="absolute top-0 right-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-teal rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-teal-dark rounded-full blur-3xl" />
+        <motion.div
+          className="absolute top-0 right-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-teal rounded-full blur-2xl"
+          style={{ y: quantumReduced ? 0 : qBlob1Y }}
+        />
+        <motion.div
+          className="absolute bottom-0 left-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-teal-dark rounded-full blur-2xl"
+          style={{ y: quantumReduced ? 0 : qBlob2Y }}
+        />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12">
@@ -806,6 +852,7 @@ function QuantumAcademySection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             className="relative"
+            style={{ y: quantumReduced ? 0 : qImageY }}
           >
             <div className="aspect-square rounded-3xl overflow-hidden border border-white/10 relative">
               <Image
@@ -929,8 +976,14 @@ function AlphakomSection() {
 // QUOTE SECTION - Full Width Statement
 // ============================================
 function QuoteSection() {
+  const quoteRef = useRef<HTMLElement>(null)
+  const quoteReduced = useReducedMotion()
+  const { scrollYProgress: quoteScroll } = useScroll({ target: quoteRef, offset: ['start end', 'end start'] })
+  const quoteScale = useTransform(quoteScroll, [0, 0.5, 1], [0.97, 1, 1.02])
+  const quoteOpacity = useTransform(quoteScroll, [0, 0.3, 0.7, 1], [0.6, 1, 1, 0.6])
+
   return (
-    <section className="py-28 lg:py-36 bg-cream relative overflow-hidden">
+    <section ref={quoteRef} className="py-28 lg:py-36 bg-cream relative overflow-hidden">
       <div className="max-w-4xl mx-auto px-6 md:px-16 text-center relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -938,16 +991,21 @@ function QuoteSection() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
         >
-          <Quote className="w-8 h-8 md:w-10 md:h-10 text-teal/30 mx-auto mb-8 md:mb-10" />
-          <p className="font-display text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-navy leading-[1.3] tracking-tight mb-8 md:mb-10">
-            Non sei quello che ti è successo.<br />
-            <span className="text-teal italic">Sei quello che scegli di diventare.</span>
-          </p>
-          <div className="flex items-center justify-center gap-5">
-            <span className="w-10 h-px bg-teal/40" />
-            <span className="text-teal font-medium text-sm uppercase tracking-widest">Luca Pellicari</span>
-            <span className="w-10 h-px bg-teal/40" />
-          </div>
+          <motion.div style={{
+            scale: quoteReduced ? 1 : quoteScale,
+            opacity: quoteReduced ? 1 : quoteOpacity,
+          }}>
+            <Quote className="w-8 h-8 md:w-10 md:h-10 text-teal/30 mx-auto mb-8 md:mb-10" />
+            <p className="font-display text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-navy leading-[1.3] tracking-tight mb-8 md:mb-10">
+              Non sei quello che ti è successo.<br />
+              <span className="text-teal italic">Sei quello che scegli di diventare.</span>
+            </p>
+            <div className="flex items-center justify-center gap-5">
+              <span className="w-10 h-px bg-teal/40" />
+              <span className="text-teal font-medium text-sm uppercase tracking-widest">Luca Pellicari</span>
+              <span className="w-10 h-px bg-teal/40" />
+            </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>
@@ -1414,7 +1472,7 @@ function IdentityHighlightsSection() {
         <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
         <div
-          className="flex w-max items-center"
+          className="flex w-max items-center motion-reduce:animate-none"
           style={{ animation: 'scroll-left 55s linear infinite' }}
         >
           {[...identityTags, ...identityTags].map((tag, i) => (
