@@ -160,36 +160,26 @@ export function AliceConversationOverlay() {
   const [isStarting, setIsStarting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [callStartTime, setCallStartTime] = useState(0)
-  const [showVolSlider, setShowVolSlider] = useState(false)
-  const animFrameRef = useRef<number>(0)
   const overlayRef = useRef<HTMLDivElement>(null)
-  const volTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  const pollAudio = useCallback(() => {
-    if (!isOverlayOpen) return
-    const iv = getInputVolume(); const ov = getOutputVolume()
-    setInputLevel(iv); setOutputLevel(ov); setAudioLevel(Math.max(iv, ov))
-    animFrameRef.current = requestAnimationFrame(pollAudio)
-  }, [isOverlayOpen, getInputVolume, getOutputVolume])
 
   useEffect(() => {
-    if (isOverlayOpen && status === 'connected') animFrameRef.current = requestAnimationFrame(pollAudio)
-    return () => { if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current) }
-  }, [isOverlayOpen, status, pollAudio])
+    if (!isOverlayOpen || status !== 'connected') return
+    const id = setInterval(() => {
+      const iv = getInputVolume(); const ov = getOutputVolume()
+      setInputLevel(iv); setOutputLevel(ov); setAudioLevel(Math.max(iv, ov))
+    }, 100)
+    return () => clearInterval(id)
+  }, [isOverlayOpen, status, getInputVolume, getOutputVolume])
 
   useEffect(() => {
     if (isOverlayOpen) {
       document.body.style.overflow = 'hidden'
       overlayRef.current?.focus()
-    } else {
-      if (document.body.style.overflow === 'hidden') {
-        document.body.style.overflow = ''
-      }
+    } else if (document.body.style.overflow === 'hidden') {
+      document.body.style.overflow = ''
     }
     return () => {
-      if (document.body.style.overflow === 'hidden') {
-        document.body.style.overflow = ''
-      }
+      if (document.body.style.overflow === 'hidden') document.body.style.overflow = ''
     }
   }, [isOverlayOpen])
 
@@ -199,9 +189,8 @@ export function AliceConversationOverlay() {
     setHasStarted(false); setIsStarting(false)
     setAudioLevel(0); setInputLevel(0); setOutputLevel(0)
     setCallStartTime(0)
-    setShowVolSlider(false)
-    closeAlice()
-  }, [status, stop, closeAlice])
+    resetSession(); closeAlice()
+  }, [status, stop, resetSession, closeAlice])
 
   const handleCloseRef = useRef(handleClose)
   handleCloseRef.current = handleClose
@@ -227,7 +216,6 @@ export function AliceConversationOverlay() {
   }, [setVolume])
 
   const handleToggleMute = useCallback(() => { playSound(micMuted ? 'unmute' : 'mute'); toggleMute() }, [micMuted, toggleMute])
-
   const mappedStatus = !hasStarted || status === 'disconnected' ? 'idle' as const : status as 'idle' | 'connecting' | 'connected'
   const isConnected = hasStarted && status === 'connected'
   const isUserTalking = isConnected && !isSpeaking && !micMuted
@@ -403,179 +391,113 @@ export function AliceConversationOverlay() {
             initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}>
 
             <div
-              className="max-w-lg mx-auto px-4 md:px-6 pb-6 pt-5"
-              style={{ paddingBottom: 'max(1.5rem,env(safe-area-inset-bottom,1.5rem))' }}
+              className="max-w-md mx-auto px-6 pb-8 pt-6"
+              style={{ paddingBottom: 'max(2rem,env(safe-area-inset-bottom,2rem))' }}
             >
-              {/* Mic on/off label */}
-              {isConnected && (
-                <div className="flex justify-center mb-3">
-                  <span className="text-[10px] font-semibold uppercase tracking-[0.2em]"
-                    style={{ color: micMuted ? 'rgba(248,113,113,0.5)' : 'rgba(250,247,242,0.2)' }}>
-                    {micMuted ? 'Microfono disattivato' : 'Microfono attivo'}
-                  </span>
-                </div>
-              )}
+              {/* Main action row */}
+              <div className="flex items-center justify-center gap-3 md:gap-5">
 
-              {/* Controls row */}
-              <div className="flex items-center justify-between">
+                {/* Volume button */}
+                {hasStarted && (
+                  <motion.button
+                    onClick={() => { playSound('click'); const v = volume === 0 ? 1 : 0; setVolume({ volume: v }); setVolumeLocal(v) }}
+                    className="w-12 h-12 rounded-full flex items-center justify-center transition-all"
+                    style={{
+                      background: 'rgba(255,255,255,0.04)',
+                      border: '1.5px solid rgba(255,255,255,0.07)',
+                      color: volume === 0 ? 'rgba(248,113,113,0.7)' : 'rgba(250,247,242,0.35)',
+                    }}
+                    whileHover={{ scale: 1.08, backgroundColor: 'rgba(255,255,255,0.08)' }}
+                    whileTap={{ scale: 0.92 }}
+                    aria-label="Volume"
+                  >
+                    <VolumeIcon size={18} />
+                  </motion.button>
+                )}
 
-                {/* Left — Volume */}
-                <div className="w-[72px] flex justify-start">
-                  {hasStarted && (
-                    <div className="relative"
-                      onMouseEnter={() => { if (volTimeoutRef.current) clearTimeout(volTimeoutRef.current); setShowVolSlider(true) }}
-                      onMouseLeave={() => { volTimeoutRef.current = setTimeout(() => setShowVolSlider(false), 400) }}
-                    >
-                      <AnimatePresence>
-                        {showVolSlider && (
-                          <motion.div
-                            className="absolute bottom-full left-0 mb-3 rounded-2xl overflow-hidden w-[180px]"
-                            style={{
-                              background: 'rgba(12,20,35,0.95)',
-                              border: '1px solid rgba(255,255,255,0.06)',
-                              backdropFilter: 'blur(20px)',
-                              boxShadow: '0 16px 48px rgba(0,0,0,0.5)',
-                            }}
-                            initial={{ opacity: 0, y: 8, scale: 0.95 }}
-                            animate={{ opacity: 1, y: 0, scale: 1 }}
-                            exit={{ opacity: 0, y: 8, scale: 0.95 }}
-                            transition={{ duration: 0.15 }}
-                          >
-                            <div className="p-4 space-y-3">
-                              <div className="flex items-center justify-between">
-                                <span className="text-[10px] font-semibold uppercase tracking-[0.12em]"
-                                  style={{ color: 'rgba(250,247,242,0.3)' }}>Volume</span>
-                                <span className="text-[11px] font-mono tabular-nums"
-                                  style={{ color: volume > 0 ? '#8FB8C7' : 'rgba(248,113,113,0.6)' }}>
-                                  {Math.round(volume * 100)}%
-                                </span>
-                              </div>
-                              <div className="flex items-center gap-2.5">
-                                <button onClick={() => { setVolume({ volume: 0 }); setVolumeLocal(0) }}
-                                  style={{ color: 'rgba(250,247,242,0.25)' }}>
-                                  <VolumeX size={14} />
-                                </button>
-                                <div className="relative flex-1 h-6 flex items-center">
-                                  <div className="absolute left-0 h-[3px] rounded-full w-full"
-                                    style={{ background: 'rgba(255,255,255,0.06)' }} />
-                                  <div className="absolute left-0 h-[3px] rounded-full transition-all duration-100"
-                                    style={{ width: `${volume * 100}%`, background: 'linear-gradient(90deg,#6B9BAE,#8FB8C7)' }} />
-                                  <input
-                                    type="range" min="0" max="1" step="0.02" value={volume}
-                                    onChange={handleVolumeChange}
-                                    className="absolute w-full h-6 appearance-none bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-[14px] [&::-webkit-slider-thumb]:h-[14px] [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:shadow-[0_0_6px_rgba(107,155,174,0.3)] [&::-webkit-slider-thumb]:border-[1.5px] [&::-webkit-slider-thumb]:border-[#6B9BAE] [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-10"
-                                    aria-label="Volume"
-                                  />
-                                </div>
-                                <button onClick={() => { setVolume({ volume: 1 }); setVolumeLocal(1) }}
-                                  style={{ color: 'rgba(250,247,242,0.25)' }}>
-                                  <Volume2 size={14} />
-                                </button>
-                              </div>
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-
-                      <motion.button
-                        onClick={() => { playSound('click'); setShowVolSlider(v => !v) }}
-                        className="w-11 h-11 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all"
+                {/* Mic button */}
+                {isConnected && (
+                  <motion.button onClick={handleToggleMute} className="relative"
+                    whileHover={{ scale: 1.06 }} whileTap={{ scale: 0.92 }}
+                    aria-label={micMuted ? 'Attiva microfono' : 'Disattiva microfono'}>
+                    {!micMuted && (
+                      <motion.div className="absolute inset-[-6px] rounded-full pointer-events-none"
                         style={{
-                          background: showVolSlider ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.03)',
-                          border: `1.5px solid ${showVolSlider ? 'rgba(107,155,174,0.2)' : 'rgba(255,255,255,0.06)'}`,
-                          color: volume === 0 ? 'rgba(248,113,113,0.6)' : 'rgba(250,247,242,0.3)',
+                          background: `conic-gradient(from 0deg,${isUserTalking ? userColor + '40' : 'rgba(255,255,255,0.06)'},transparent 50%,${isUserTalking ? userColor + '40' : 'rgba(255,255,255,0.06)'})`,
                         }}
-                        whileTap={{ scale: 0.9 }}
-                        aria-label="Volume"
-                      >
-                        <VolumeIcon size={16} />
-                      </motion.button>
-                    </div>
-                  )}
-                </div>
-
-                {/* Center — Mic + End */}
-                <div className="flex items-center gap-4 md:gap-5">
-                  {/* Mic button */}
-                  {isConnected && (
-                    <motion.button onClick={handleToggleMute} className="relative"
-                      whileTap={{ scale: 0.92 }}
-                      aria-label={micMuted ? 'Attiva microfono' : 'Disattiva microfono'}>
-                      {!micMuted && (
-                        <motion.div className="absolute inset-[-5px] rounded-full pointer-events-none"
-                          style={{
-                            background: `conic-gradient(from 0deg,${isUserTalking ? userColor + '35' : 'rgba(255,255,255,0.04)'},transparent 50%,${isUserTalking ? userColor + '35' : 'rgba(255,255,255,0.04)'})`,
-                          }}
-                          animate={{ rotate: 360 }}
-                          transition={{ duration: 6, repeat: Infinity, ease: 'linear' }} />
+                        animate={{ rotate: 360, scale: [1, 1 + audioLevel * 0.12, 1] }}
+                        transition={{ rotate: { duration: 5, repeat: Infinity, ease: 'linear' }, scale: { duration: 0.3 } }} />
+                    )}
+                    <div className="relative w-[58px] h-[58px] md:w-[68px] md:h-[68px] rounded-full flex items-center justify-center transition-all duration-300"
+                      style={{
+                        background: micMuted
+                          ? 'linear-gradient(145deg,rgba(239,68,68,0.2),rgba(220,38,38,0.08))'
+                          : isUserTalking && inputLevel > 0.02
+                            ? `linear-gradient(145deg,${userColor}35,${userColor}12)`
+                            : 'linear-gradient(145deg,rgba(255,255,255,0.08),rgba(255,255,255,0.03))',
+                        border: micMuted
+                          ? '2px solid rgba(239,68,68,0.3)'
+                          : isUserTalking && inputLevel > 0.02
+                            ? `2px solid ${userColor}40`
+                            : '2px solid rgba(255,255,255,0.08)',
+                        boxShadow: micMuted
+                          ? '0 0 40px rgba(239,68,68,0.12), inset 0 0 20px rgba(239,68,68,0.05)'
+                          : isUserTalking && inputLevel > 0.02
+                            ? `0 0 40px ${userColor}18, inset 0 0 20px ${userColor}08`
+                            : '0 8px 32px rgba(0,0,0,0.3)',
+                      }}>
+                      {micMuted
+                        ? <MicOff size={22} className="md:!w-[26px] md:!h-[26px]" style={{ color: '#f87171' }} strokeWidth={1.8} />
+                        : <Mic size={22} className="md:!w-[26px] md:!h-[26px]" style={{ color: isUserTalking && inputLevel > 0.02 ? userColor : 'rgba(250,247,242,0.6)' }} strokeWidth={1.8} />
+                      }
+                      {!micMuted && inputLevel > 0.02 && (
+                        <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 68 68">
+                          <circle cx="34" cy="34" r="32" fill="none"
+                            stroke={userColor + '45'} strokeWidth="2"
+                            strokeDasharray={`${Math.min(inputLevel * 201, 201)} 201`} strokeLinecap="round" />
+                        </svg>
                       )}
-                      <div className="relative w-[56px] h-[56px] md:w-[64px] md:h-[64px] rounded-full flex items-center justify-center transition-all duration-300"
-                        style={{
-                          background: micMuted
-                            ? 'rgba(239,68,68,0.15)'
-                            : isUserTalking && inputLevel > 0.02
-                              ? `${userColor}20`
-                              : 'rgba(255,255,255,0.05)',
-                          border: micMuted
-                            ? '2px solid rgba(239,68,68,0.25)'
-                            : isUserTalking && inputLevel > 0.02
-                              ? `2px solid ${userColor}30`
-                              : '2px solid rgba(255,255,255,0.07)',
-                        }}>
-                        {micMuted
-                          ? <MicOff size={22} style={{ color: '#f87171' }} strokeWidth={1.8} />
-                          : <Mic size={22} style={{ color: isUserTalking && inputLevel > 0.02 ? userColor : 'rgba(250,247,242,0.55)' }} strokeWidth={1.8} />
-                        }
-                        {!micMuted && inputLevel > 0.02 && (
-                          <svg className="absolute inset-0 w-full h-full -rotate-90" viewBox="0 0 64 64">
-                            <circle cx="32" cy="32" r="30" fill="none"
-                              stroke={userColor + '40'} strokeWidth="2"
-                              strokeDasharray={`${Math.min(inputLevel * 188, 188)} 188`} strokeLinecap="round" />
-                          </svg>
-                        )}
-                      </div>
-                    </motion.button>
-                  )}
-
-                  {/* End call */}
-                  {hasStarted && (
-                    <motion.button onClick={handleClose}
-                      className="w-11 h-11 md:w-12 md:h-12 flex items-center justify-center rounded-full transition-all"
-                      style={{
-                        background: 'rgba(239,68,68,0.1)',
-                        border: '1.5px solid rgba(239,68,68,0.15)',
-                        color: 'rgba(248,113,113,0.65)',
-                      }}
-                      whileHover={{ backgroundColor: 'rgba(239,68,68,0.2)', color: '#f87171' }}
-                      whileTap={{ scale: 0.9 }} aria-label="Termina">
-                      <PhoneOff size={18} strokeWidth={1.8} />
-                    </motion.button>
-                  )}
-
-                  {/* Start CTA */}
-                  {!hasStarted && !isStarting && (
-                    <motion.button onClick={handleStart}
-                      className="flex items-center gap-2.5 px-7 py-3.5 md:px-9 md:py-4 rounded-full text-white text-[14px] md:text-[15px] font-semibold font-sans"
-                      style={{
-                        background: 'linear-gradient(135deg,#6B9BAE,#8FB8C7)',
-                        boxShadow: '0 8px 32px rgba(107,155,174,0.3)',
-                      }}
-                      whileTap={{ scale: 0.97 }}>
-                      <Phone size={18} strokeWidth={1.8} /><span>Chiama Alice</span>
-                    </motion.button>
-                  )}
-
-                  {/* Connecting */}
-                  {isStarting && !hasStarted && (
-                    <div className="flex items-center gap-2.5 px-7 py-3.5 md:px-9 md:py-4 rounded-full text-[14px] md:text-[15px] font-semibold font-sans"
-                      style={{ background: 'rgba(107,155,174,0.2)', color: 'rgba(255,255,255,0.45)' }}>
-                      <Loader2 size={18} strokeWidth={1.8} className="animate-spin" /><span>Connessione...</span>
                     </div>
-                  )}
-                </div>
+                  </motion.button>
+                )}
 
-                {/* Right — spacer for symmetry */}
-                <div className="w-[72px]" />
+                {/* End call */}
+                {hasStarted && (
+                  <motion.button onClick={handleClose}
+                    className="w-12 h-12 flex items-center justify-center rounded-full transition-all"
+                    style={{
+                      background: 'rgba(239,68,68,0.1)',
+                      border: '1.5px solid rgba(239,68,68,0.18)',
+                      color: 'rgba(248,113,113,0.7)',
+                    }}
+                    whileHover={{ scale: 1.08, backgroundColor: 'rgba(239,68,68,0.2)', color: '#f87171' }}
+                    whileTap={{ scale: 0.92 }} aria-label="Termina">
+                    <PhoneOff size={20} strokeWidth={1.8} />
+                  </motion.button>
+                )}
+
+                {/* Start CTA */}
+                {!hasStarted && !isStarting && (
+                  <motion.button onClick={handleStart}
+                    className="flex items-center gap-2.5 px-7 py-3.5 md:px-10 md:py-4 rounded-full text-white text-[14px] md:text-[15px] font-semibold font-sans"
+                    style={{
+                      background: 'linear-gradient(135deg,#6B9BAE,#8FB8C7)',
+                      boxShadow: '0 8px 40px rgba(107,155,174,0.3), inset 0 1px 0 rgba(255,255,255,0.15)',
+                    }}
+                    whileHover={{ scale: 1.04, boxShadow: '0 12px 48px rgba(107,155,174,0.45), inset 0 1px 0 rgba(255,255,255,0.2)' }}
+                    whileTap={{ scale: 0.97 }}>
+                    <Phone size={19} strokeWidth={1.8} /><span>Chiama Alice</span>
+                  </motion.button>
+                )}
+
+                {/* Connecting */}
+                {isStarting && !hasStarted && (
+                  <div className="flex items-center gap-2.5 px-7 py-3.5 md:px-10 md:py-4 rounded-full text-[14px] md:text-[15px] font-semibold font-sans"
+                    style={{ background: 'rgba(107,155,174,0.25)', color: 'rgba(255,255,255,0.5)', border: '1px solid rgba(107,155,174,0.15)' }}>
+                    <Loader2 size={19} strokeWidth={1.8} className="animate-spin" /><span>Connessione...</span>
+                  </div>
+                )}
+
               </div>
             </div>
           </motion.div>

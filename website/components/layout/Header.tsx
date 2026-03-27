@@ -315,129 +315,81 @@ export function Header() {
               aria-label={isMobileMenuOpen ? 'Chiudi menu' : 'Apri menu'}
               aria-expanded={isMobileMenuOpen}
             >
-              <AnimatePresence mode="wait">
-                {isMobileMenuOpen ? (
-                  <motion.div
-                    key="close"
-                    initial={{ opacity: 0, rotate: -90 }}
-                    animate={{ opacity: 1, rotate: 0 }}
-                    exit={{ opacity: 0, rotate: 90 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <X size={20} />
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="menu"
-                    initial={{ opacity: 0, rotate: 90 }}
-                    animate={{ opacity: 1, rotate: 0 }}
-                    exit={{ opacity: 0, rotate: -90 }}
-                    transition={{ duration: 0.15 }}
-                  >
-                    <Menu size={20} />
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {isMobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </nav>
         </div>
       </header>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu — no per-item animations for speed */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.15 }}
             className="fixed inset-0 z-40 lg:hidden"
           >
             <div className="absolute inset-0 bg-navy-dark" />
 
-            <motion.nav
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: 0.05 }}
+            <nav
               className="relative h-full flex flex-col pt-[72px] overflow-y-auto"
               aria-label="Menu mobile"
             >
               {/* Primary */}
               <div className="px-6 pt-6 pb-3">
-                {NAV_GROUPS.primary.map((link, i) => (
-                  <motion.div
+                {NAV_GROUPS.primary.map((link) => (
+                  <Link
                     key={link.href}
-                    initial={{ opacity: 0, x: -16 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: 0.1 + i * 0.04 }}
+                    href={link.href}
+                    className={cn(
+                      'flex items-center justify-between py-3 px-4 -mx-1 rounded-xl transition-colors',
+                      pathname === link.href ? 'text-white bg-white/8' : 'text-white/65'
+                    )}
                   >
-                    <Link
-                      href={link.href}
-                      className={cn(
-                        'flex items-center justify-between py-3 px-4 -mx-1 rounded-xl transition-colors',
-                        pathname === link.href ? 'text-white bg-white/8' : 'text-white/65'
-                      )}
-                    >
-                      <span className="text-[17px] font-display font-medium">{link.label}</span>
-                      {pathname === link.href && (
-                        <span className="w-1.5 h-1.5 rounded-full bg-teal-light" />
-                      )}
-                    </Link>
-                  </motion.div>
+                    <span className="text-[17px] font-display font-medium">{link.label}</span>
+                    {pathname === link.href && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-teal-light" />
+                    )}
+                  </Link>
                 ))}
               </div>
 
               {/* Groups */}
-              {dropdownKeys.map((key, gi) => {
+              {dropdownKeys.map((key) => {
                 const group = NAV_GROUPS[key]
                 const Icon = group.icon
                 return (
-                  <motion.div
-                    key={key}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.18 + gi * 0.06 }}
-                    className="px-6 py-3 border-t border-white/[0.06]"
-                  >
+                  <div key={key} className="px-6 py-3 border-t border-white/[0.06]">
                     <div className="flex items-center gap-2 px-3 mb-2">
                       <Icon size={13} className="text-teal-light/70" />
                       <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-teal-light/50">{group.label}</span>
                     </div>
-                    {group.links.map((link, i) => (
-                      <motion.div
+                    {group.links.map((link) => (
+                      <Link
                         key={link.href}
-                        initial={{ opacity: 0, x: -12 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.22 + gi * 0.06 + i * 0.03 }}
+                        href={link.href}
+                        className={cn(
+                          'flex items-center justify-between py-2.5 px-4 -mx-1 rounded-xl transition-colors',
+                          pathname === link.href ? 'text-white bg-white/8' : 'text-white/65'
+                        )}
                       >
-                        <Link
-                          href={link.href}
-                          className={cn(
-                            'flex items-center justify-between py-2.5 px-4 -mx-1 rounded-xl transition-colors',
-                            pathname === link.href ? 'text-white bg-white/8' : 'text-white/65'
-                          )}
-                        >
-                          <div>
-                            <span className="text-[15px] font-display font-medium block">{link.label}</span>
-                            <span className="text-[11px] text-white/50 leading-tight">{link.desc}</span>
-                          </div>
-                          {pathname === link.href && (
-                            <span className="w-1.5 h-1.5 rounded-full bg-teal-light flex-shrink-0" />
-                          )}
-                        </Link>
-                      </motion.div>
+                        <div>
+                          <span className="text-[15px] font-display font-medium block">{link.label}</span>
+                          <span className="text-[11px] text-white/50 leading-tight">{link.desc}</span>
+                        </div>
+                        {pathname === link.href && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-teal-light flex-shrink-0" />
+                        )}
+                      </Link>
                     ))}
-                  </motion.div>
+                  </div>
                 )
               })}
 
               {/* CTA */}
-              <motion.div
-                initial={{ opacity: 0, y: 8 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4 }}
-                className="px-6 pt-4 pb-2"
-              >
+              <div className="px-6 pt-4 pb-2">
                 <Link
                   href="/contatti"
                   className="flex items-center justify-center gap-2.5 w-full py-3.5 bg-teal text-white text-[15px] font-semibold rounded-xl active:bg-teal-dark transition-colors"
@@ -446,15 +398,10 @@ export function Header() {
                   <Mail size={16} />
                   Contattami
                 </Link>
-              </motion.div>
+              </div>
 
               {/* Bottom */}
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.45 }}
-                className="mt-auto px-6 py-5 border-t border-white/[0.06]"
-              >
+              <div className="mt-auto px-6 py-5 border-t border-white/[0.06]">
                 <div className="flex items-center justify-between">
                   <div className="flex gap-1.5">
                     {[
@@ -478,8 +425,8 @@ export function Header() {
                     &copy; {new Date().getFullYear()}
                   </span>
                 </div>
-              </motion.div>
-            </motion.nav>
+              </div>
+            </nav>
           </motion.div>
         )}
       </AnimatePresence>

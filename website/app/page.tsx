@@ -1178,7 +1178,7 @@ function LibriSection() {
           className="mt-12 text-center"
         >
           <div className="inline-flex items-center gap-3 px-6 py-3 bg-navy/5 rounded-full">
-            <span className="w-2 h-2 rounded-full bg-teal animate-pulse" />
+            <span className="w-2 h-2 rounded-full bg-teal animate-pulse motion-reduce:animate-none" />
             <span className="text-navy/70 font-medium text-sm">Altri progetti in arrivo…</span>
           </div>
         </motion.div>

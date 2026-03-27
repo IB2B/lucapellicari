@@ -21,7 +21,7 @@ export function AliceFloatingWidget() {
   const [isHovered, setIsHovered] = useState(false)
   const [audioLevel, setAudioLevel] = useState(0)
   const buttonRef = useRef<HTMLButtonElement>(null)
-  const animFrameRef = useRef<number>(0)
+
 
   useEffect(() => {
     const t = setTimeout(() => setIsVisible(true), 2000)
@@ -39,12 +39,10 @@ export function AliceFloatingWidget() {
 
   useEffect(() => {
     if (status === 'connected' && !isOverlayOpen) {
-      const poll = () => {
+      const id = setInterval(() => {
         setAudioLevel(Math.max(getInputVolume(), getOutputVolume()))
-        animFrameRef.current = requestAnimationFrame(poll)
-      }
-      animFrameRef.current = requestAnimationFrame(poll)
-      return () => { if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current) }
+      }, 150)
+      return () => clearInterval(id)
     } else {
       setAudioLevel(0)
     }
