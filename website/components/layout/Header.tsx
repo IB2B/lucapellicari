@@ -20,6 +20,7 @@ const NAV_GROUPS = {
       { href: '/missione', label: 'Missione', desc: 'Il mio scopo e la mia direzione' },
       { href: '/visione', label: 'Visione', desc: 'Come vedo il futuro' },
       { href: '/3v', label: 'Le Tre V', desc: 'Valori, Visione, Verità' },
+      { href: '/3r', label: 'Le Tre R', desc: 'Identità relazionale' },
       { href: '/percorsi', label: 'Percorsi', desc: 'I cammini di trasformazione' },
     ],
   },
@@ -30,6 +31,9 @@ const NAV_GROUPS = {
       { href: '/metodo-in-flow', label: 'Metodo In-Flow', desc: 'Il metodo di trasformazione' },
       { href: '/quantum-academy', label: 'Quantum Academy', desc: 'Scuola di identità e consapevolezza' },
       { href: '/alphakom', label: 'Alphakom', desc: 'Leadership e comunicazione' },
+      { href: '/metaquantistica', label: 'Metaquantistica', desc: 'La coscienza applicata alla vita' },
+      { href: '/analisi-comportamento', label: 'Analisi del Comportamento', desc: 'Psicologia e neuroscienze' },
+      { href: '/negoziazione', label: 'NegoziAzione', desc: 'Negoziare con identità' },
     ],
   },
   risorse: {
@@ -149,8 +153,8 @@ export function Header() {
                   className={cn(
                     'px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200',
                     pathname === link.href
-                      ? (hasDarkBg ? 'text-white' : 'text-teal')
-                      : (hasDarkBg ? 'text-white/70 hover:text-white' : 'text-navy/55 hover:text-navy')
+                      ? (hasDarkBg ? 'text-white bg-white/10' : 'text-teal bg-teal/[0.06]')
+                      : (hasDarkBg ? 'text-white/70 hover:text-white hover:bg-white/[0.06]' : 'text-navy/55 hover:text-navy hover:bg-navy/[0.03]')
                   )}
                   aria-current={pathname === link.href ? 'page' : undefined}
                 >
@@ -181,8 +185,8 @@ export function Header() {
                         isActive
                           ? (hasDarkBg ? 'text-white' : 'text-teal')
                           : isOpen
-                            ? (hasDarkBg ? 'text-white' : 'text-navy')
-                            : (hasDarkBg ? 'text-white/70 hover:text-white' : 'text-navy/55 hover:text-navy')
+                            ? (hasDarkBg ? 'text-white bg-white/10' : 'text-navy bg-navy/[0.04]')
+                            : (hasDarkBg ? 'text-white/70 hover:text-white hover:bg-white/[0.06]' : 'text-navy/55 hover:text-navy hover:bg-navy/[0.03]')
                       )}
                       aria-expanded={isOpen}
                     >
@@ -199,17 +203,19 @@ export function Header() {
                     <AnimatePresence>
                       {isOpen && (
                         <motion.div
-                          initial={{ opacity: 0, y: 8 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: 8 }}
-                          transition={{ duration: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
-                          className="absolute top-full left-1/2 -translate-x-1/2 pt-3"
+                          initial={{ opacity: 0, y: 6, scale: 0.98 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 6, scale: 0.98 }}
+                          transition={{ duration: 0.18, ease: [0.25, 0.1, 0.25, 1] }}
+                          className="absolute top-full left-1/2 -translate-x-1/2 pt-2.5"
                         >
-                          <div className="w-[280px] bg-white rounded-xl shadow-[0_12px_40px_rgba(0,0,0,0.08)] border border-black/[0.06] p-1.5">
+                          <div className="w-[300px] bg-white rounded-2xl shadow-[0_20px_60px_rgba(0,0,0,0.10),0_1px_3px_rgba(0,0,0,0.04)] border border-black/[0.05] p-2 backdrop-blur-xl">
                             {/* Group header */}
-                            <div className="flex items-center gap-2 px-3.5 pt-2 pb-2.5">
-                              <Icon size={13} className="text-teal" />
-                              <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-navy/35">{group.label}</span>
+                            <div className="flex items-center gap-2 px-3.5 pt-2 pb-2.5 mb-0.5">
+                              <div className="w-6 h-6 rounded-md bg-teal/8 flex items-center justify-center">
+                                <Icon size={12} className="text-teal" />
+                              </div>
+                              <span className="text-[10px] font-semibold uppercase tracking-[0.14em] text-navy/30">{group.label}</span>
                             </div>
 
                             {group.links.map((link) => (
@@ -217,24 +223,37 @@ export function Header() {
                                 key={link.href}
                                 href={link.href}
                                 className={cn(
-                                  'flex flex-col gap-0.5 px-3.5 py-2.5 rounded-lg transition-all duration-150 group/item',
+                                  'group/item flex items-center gap-3 px-3.5 py-3 rounded-xl transition-all duration-150',
                                   pathname === link.href
-                                    ? 'bg-teal/6'
-                                    : 'hover:bg-gray-50'
+                                    ? 'bg-teal/[0.06]'
+                                    : 'hover:bg-gray-50/80'
                                 )}
                               >
-                                <span className={cn(
-                                  "text-[13px] font-semibold",
-                                  pathname === link.href ? 'text-teal' : 'text-navy group-hover/item:text-navy'
-                                )}>
-                                  {link.label}
-                                </span>
-                                <span className={cn(
-                                  "text-[11px] leading-snug",
-                                  pathname === link.href ? 'text-teal/70' : 'text-navy/50'
-                                )}>
-                                  {link.desc}
-                                </span>
+                                <div className={cn(
+                                  "w-1.5 h-1.5 rounded-full flex-shrink-0 transition-all duration-200",
+                                  pathname === link.href
+                                    ? 'bg-teal scale-125'
+                                    : 'bg-navy/10 group-hover/item:bg-teal/50 group-hover/item:scale-110'
+                                )} />
+                                <div className="flex flex-col gap-0.5 min-w-0">
+                                  <span className={cn(
+                                    "text-[13px] font-semibold transition-colors duration-150",
+                                    pathname === link.href ? 'text-teal' : 'text-navy/80 group-hover/item:text-navy'
+                                  )}>
+                                    {link.label}
+                                  </span>
+                                  <span className={cn(
+                                    "text-[11px] leading-snug transition-colors duration-150",
+                                    pathname === link.href ? 'text-teal/60' : 'text-navy/40 group-hover/item:text-navy/55'
+                                  )}>
+                                    {link.desc}
+                                  </span>
+                                </div>
+                                <ArrowRight size={12} className={cn(
+                                  "ml-auto flex-shrink-0 transition-all duration-200 opacity-0 -translate-x-1",
+                                  "group-hover/item:opacity-40 group-hover/item:translate-x-0",
+                                  pathname === link.href && "opacity-30 translate-x-0"
+                                )} />
                               </Link>
                             ))}
                           </div>

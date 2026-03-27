@@ -1395,7 +1395,7 @@ const identityTags = [
 
 function IdentityHighlightsSection() {
   return (
-    <section className="py-14 md:py-18 lg:py-20 bg-cream overflow-hidden">
+    <section className="py-14 md:py-18 lg:py-20 bg-white overflow-hidden">
       {/* Top separator */}
       <div className="max-w-7xl mx-auto px-6 md:px-12 mb-10 md:mb-12">
         <div className="flex items-center justify-center gap-5">
@@ -1410,8 +1410,8 @@ function IdentityHighlightsSection() {
       {/* Marquee container */}
       <div className="relative">
         {/* Fade edges */}
-        <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-cream to-transparent z-10 pointer-events-none" />
-        <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-cream to-transparent z-10 pointer-events-none" />
+        <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
         <div
           className="flex w-max items-center"
