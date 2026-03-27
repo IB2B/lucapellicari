@@ -61,7 +61,15 @@ export function Header() {
   const hasDarkBg = isHomePage && !isScrolled
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50)
+    let ticking = false
+    const handleScroll = () => {
+      if (ticking) return
+      ticking = true
+      requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 50)
+        ticking = false
+      })
+    }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])

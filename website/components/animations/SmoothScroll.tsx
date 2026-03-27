@@ -1,18 +1,15 @@
 'use client'
 
-import { useEffect, ReactNode } from 'react'
+import { useEffect, useLayoutEffect, ReactNode } from 'react'
 import { usePathname } from 'next/navigation'
 
-interface SmoothScrollProps {
-  children: ReactNode
-}
+const useIsomorphicLayout = typeof window !== 'undefined' ? useLayoutEffect : useEffect
 
-export function SmoothScroll({ children }: SmoothScrollProps) {
+export function SmoothScroll({ children }: { children: ReactNode }) {
   const pathname = usePathname()
 
-  // Scroll to top on route change
-  useEffect(() => {
-    window.scrollTo(0, 0)
+  useIsomorphicLayout(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' as ScrollBehavior })
   }, [pathname])
 
   return <>{children}</>

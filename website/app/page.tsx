@@ -3,7 +3,7 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { motion, useScroll, useTransform, useInView, useReducedMotion } from 'framer-motion'
+import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import { ArrowRight, ChevronRight, ChevronLeft, Target, Eye, Shield, Users, Brain, Star, Compass, Sparkles, Quote, ArrowUpRight, GraduationCap, Building2, Globe, Handshake, CheckCircle, RefreshCw, TrendingUp } from 'lucide-react'
 import { InFlowSection } from '@/components/sections/InFlowSection'
 import { AliceHomepageSection } from '@/components/alice/AliceHomepageSection'
@@ -289,25 +289,15 @@ function HeroSection() {
 // OPENING SECTION - Creative Split Layout
 // ============================================
 function OpeningSection() {
-  const openingRef = useRef<HTMLElement>(null)
-  const reducedMotion = useReducedMotion()
-  const { scrollYProgress: openingScroll } = useScroll({ target: openingRef, offset: ['start end', 'end start'] })
-  const watermarkY = useTransform(openingScroll, [0, 1], [40, -40])
-  const leftContentY = useTransform(openingScroll, [0, 1], [30, -15])
-  const rightContentY = useTransform(openingScroll, [0, 1], [20, -25])
-
   return (
-    <section ref={openingRef} className="relative overflow-hidden">
+    <section className="relative overflow-hidden">
       <div className="grid lg:grid-cols-2 min-h-[85vh]">
         {/* Left - Dark Side */}
         <div className="relative bg-navy-dark py-28 lg:py-36 px-6 md:px-16 lg:px-20 flex items-center overflow-hidden">
           {/* Floating Number — large watermark */}
-          <motion.div
-            className="absolute top-8 right-6 md:top-10 md:right-10 text-[10rem] md:text-[16rem] font-display text-cream/[0.025] leading-none select-none pointer-events-none"
-            style={{ y: reducedMotion ? 0 : watermarkY }}
-          >
+          <div className="absolute top-8 right-6 md:top-10 md:right-10 text-[10rem] md:text-[16rem] font-display text-cream/[0.025] leading-none select-none pointer-events-none">
             7
-          </motion.div>
+          </div>
 
           {/* Left accent bar */}
           <div className="absolute top-0 left-0 w-[3px] h-full bg-gradient-to-b from-teal via-teal/30 to-transparent" />
@@ -315,7 +305,6 @@ function OpeningSection() {
           {/* Subtle bottom gradient fade */}
           <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#1a2f42] to-transparent pointer-events-none" />
 
-          <motion.div style={{ y: reducedMotion ? 0 : leftContentY }} className="relative z-10 max-w-xl">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -361,7 +350,6 @@ function OpeningSection() {
               </span>.
             </motion.p>
           </motion.div>
-          </motion.div>
         </div>
 
         {/* Right - Light Side */}
@@ -372,7 +360,6 @@ function OpeningSection() {
           {/* Right accent bar */}
           <div className="hidden lg:block absolute top-0 right-0 w-[3px] h-full bg-gradient-to-b from-transparent via-teal/10 to-transparent" />
 
-          <motion.div style={{ y: reducedMotion ? 0 : rightContentY }} className="relative z-10 max-w-lg">
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -432,7 +419,6 @@ function OpeningSection() {
               </p>
             </motion.div>
           </motion.div>
-          </motion.div>
         </div>
       </div>
     </section>
@@ -443,14 +429,8 @@ function OpeningSection() {
 // CHI SONO SECTION - Editorial Premium Layout
 // ============================================
 function ChiSonoSection() {
-  const chiSonoRef = useRef<HTMLElement>(null)
-  const chiReducedMotion = useReducedMotion()
-  const { scrollYProgress: chiScroll } = useScroll({ target: chiSonoRef, offset: ['start end', 'end start'] })
-  const imageParallaxY = useTransform(chiScroll, [0, 1], [30, -15])
-  const statsParallaxY = useTransform(chiScroll, [0, 1], [-10, 15])
-
   return (
-    <section ref={chiSonoRef} className="py-28 lg:py-36 bg-white overflow-hidden">
+    <section className="py-28 lg:py-36 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid lg:grid-cols-12 gap-10 lg:gap-20 items-center">
           {/* Image Column */}
@@ -461,7 +441,7 @@ function ChiSonoSection() {
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
             className="lg:col-span-5 order-2 lg:order-1"
           >
-            <motion.div className="relative" style={{ y: chiReducedMotion ? 0 : imageParallaxY }}>
+            <div className="relative">
               {/* Background accent shape */}
               <div className="absolute -top-4 -left-4 w-full h-full rounded-3xl bg-gradient-to-br from-teal/8 to-teal/3 -z-10" />
 
@@ -480,10 +460,7 @@ function ChiSonoSection() {
               </div>
 
               {/* Floating Stats Card */}
-              <motion.div
-                className="absolute -bottom-6 -right-4 md:-bottom-8 md:-right-6 bg-white rounded-2xl p-4 md:p-6 shadow-xl shadow-navy/8 border border-navy/5"
-                style={{ y: chiReducedMotion ? 0 : statsParallaxY }}
-              >
+              <div className="absolute -bottom-6 -right-4 md:-bottom-8 md:-right-6 bg-white rounded-2xl p-4 md:p-6 shadow-xl shadow-navy/8 border border-navy/5">
                 <div className="grid grid-cols-3 gap-4 md:gap-6 text-center">
                   <div>
                     <p className="text-[24px] md:text-[32px] font-display text-teal leading-none mb-1"><AnimatedNumber value={7} /></p>
@@ -498,8 +475,8 @@ function ChiSonoSection() {
                     <p className="text-[9px] md:text-[11px] text-navy/50 uppercase tracking-[0.12em] md:tracking-[0.15em] font-semibold">Vite</p>
                   </div>
                 </div>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </motion.div>
 
           {/* Content Column */}
@@ -660,26 +637,12 @@ function MissioneSection() {
 // IL VERO PROBLEMA - Core Message Section
 // ============================================
 function IlVeroProblemaSection() {
-  const problemaRef = useRef<HTMLElement>(null)
-  const problemaReduced = useReducedMotion()
-  const { scrollYProgress: problemaScroll } = useScroll({ target: problemaRef, offset: ['start end', 'end start'] })
-  const blob1Y = useTransform(problemaScroll, [0, 1], [60, -40])
-  const blob1X = useTransform(problemaScroll, [0, 1], [-20, 20])
-  const blob2Y = useTransform(problemaScroll, [0, 1], [-30, 50])
-  const blob2X = useTransform(problemaScroll, [0, 1], [15, -15])
-
   return (
-    <section ref={problemaRef} className="relative py-28 lg:py-36 bg-white overflow-hidden">
-      {/* Background accents - parallax blobs */}
+    <section className="relative py-28 lg:py-36 bg-white overflow-hidden">
+      {/* Background accents */}
       <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          className="absolute top-1/2 left-0 -translate-y-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-teal/5 rounded-full blur-2xl"
-          style={{ y: problemaReduced ? 0 : blob1Y, x: problemaReduced ? 0 : blob1X }}
-        />
-        <motion.div
-          className="absolute top-1/2 right-0 -translate-y-1/2 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-navy/5 rounded-full blur-2xl"
-          style={{ y: problemaReduced ? 0 : blob2Y, x: problemaReduced ? 0 : blob2X }}
-        />
+        <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-teal/5 rounded-full blur-2xl" />
+        <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-navy/5 rounded-full blur-2xl" />
       </div>
 
       <div className="container-custom relative z-10">
@@ -780,25 +743,12 @@ function IlVeroProblemaSection() {
 // QUANTUM ACADEMY - Immersive Dark Section
 // ============================================
 function QuantumAcademySection() {
-  const quantumRef = useRef<HTMLElement>(null)
-  const quantumReduced = useReducedMotion()
-  const { scrollYProgress: quantumScroll } = useScroll({ target: quantumRef, offset: ['start end', 'end start'] })
-  const qBlob1Y = useTransform(quantumScroll, [0, 1], [50, -30])
-  const qBlob2Y = useTransform(quantumScroll, [0, 1], [-20, 40])
-  const qImageY = useTransform(quantumScroll, [0, 1], [30, -20])
-
   return (
-    <section ref={quantumRef} className="relative py-28 lg:py-36 bg-navy-dark overflow-hidden">
-      {/* Background - parallax blobs */}
+    <section className="relative py-28 lg:py-36 bg-navy-dark overflow-hidden">
+      {/* Background */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
-        <motion.div
-          className="absolute top-0 right-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-teal rounded-full blur-2xl"
-          style={{ y: quantumReduced ? 0 : qBlob1Y }}
-        />
-        <motion.div
-          className="absolute bottom-0 left-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-teal-dark rounded-full blur-2xl"
-          style={{ y: quantumReduced ? 0 : qBlob2Y }}
-        />
+        <div className="absolute top-0 right-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-teal rounded-full blur-2xl" />
+        <div className="absolute bottom-0 left-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-teal-dark rounded-full blur-2xl" />
       </div>
 
       <div className="relative max-w-7xl mx-auto px-6 md:px-12">
@@ -852,7 +802,6 @@ function QuantumAcademySection() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             className="relative"
-            style={{ y: quantumReduced ? 0 : qImageY }}
           >
             <div className="aspect-square rounded-3xl overflow-hidden border border-white/10 relative">
               <Image
@@ -976,14 +925,8 @@ function AlphakomSection() {
 // QUOTE SECTION - Full Width Statement
 // ============================================
 function QuoteSection() {
-  const quoteRef = useRef<HTMLElement>(null)
-  const quoteReduced = useReducedMotion()
-  const { scrollYProgress: quoteScroll } = useScroll({ target: quoteRef, offset: ['start end', 'end start'] })
-  const quoteScale = useTransform(quoteScroll, [0, 0.5, 1], [0.97, 1, 1.02])
-  const quoteOpacity = useTransform(quoteScroll, [0, 0.3, 0.7, 1], [0.6, 1, 1, 0.6])
-
   return (
-    <section ref={quoteRef} className="py-28 lg:py-36 bg-cream relative overflow-hidden">
+    <section className="py-28 lg:py-36 bg-cream relative overflow-hidden">
       <div className="max-w-4xl mx-auto px-6 md:px-16 text-center relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -991,21 +934,16 @@ function QuoteSection() {
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.5 }}
         >
-          <motion.div style={{
-            scale: quoteReduced ? 1 : quoteScale,
-            opacity: quoteReduced ? 1 : quoteOpacity,
-          }}>
-            <Quote className="w-8 h-8 md:w-10 md:h-10 text-teal/30 mx-auto mb-8 md:mb-10" />
-            <p className="font-display text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-navy leading-[1.3] tracking-tight mb-8 md:mb-10">
-              Non sei quello che ti è successo.<br />
-              <span className="text-teal italic">Sei quello che scegli di diventare.</span>
-            </p>
-            <div className="flex items-center justify-center gap-5">
-              <span className="w-10 h-px bg-teal/40" />
-              <span className="text-teal font-medium text-sm uppercase tracking-widest">Luca Pellicari</span>
-              <span className="w-10 h-px bg-teal/40" />
-            </div>
-          </motion.div>
+          <Quote className="w-8 h-8 md:w-10 md:h-10 text-teal/30 mx-auto mb-8 md:mb-10" />
+          <p className="font-display text-2xl md:text-3xl lg:text-4xl xl:text-5xl text-navy leading-[1.3] tracking-tight mb-8 md:mb-10">
+            Non sei quello che ti è successo.<br />
+            <span className="text-teal italic">Sei quello che scegli di diventare.</span>
+          </p>
+          <div className="flex items-center justify-center gap-5">
+            <span className="w-10 h-px bg-teal/40" />
+            <span className="text-teal font-medium text-sm uppercase tracking-widest">Luca Pellicari</span>
+            <span className="w-10 h-px bg-teal/40" />
+          </div>
         </motion.div>
       </div>
     </section>

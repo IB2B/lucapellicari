@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState, useCallback, useEffect, useRef, type ReactNode } from 'react'
+import { createContext, useContext, useState, useCallback, useEffect, useRef, useMemo, type ReactNode } from 'react'
 import { useConversation } from '@elevenlabs/react'
 import { ALICE_CONFIG } from '@/lib/alice-config'
 import type { TranscriptEntry } from '@/hooks/useAlice'
@@ -167,21 +167,29 @@ export function AliceProvider({ children }: { children: ReactNode }) {
   const getInputFrequencyData = useCallback(() => { try { return conversation.getInputByteFrequencyData() } catch { return undefined } }, [conversation])
   const getOutputFrequencyData = useCallback(() => { try { return conversation.getOutputByteFrequencyData() } catch { return undefined } }, [conversation])
 
+  const contextValue = useMemo(() => ({
+    isOverlayOpen, hasInteracted, openAlice, closeAlice, markInteracted,
+    status: conversation.status,
+    isSpeaking: conversation.isSpeaking,
+    micMuted,
+    isListening: conversation.status === 'connected' && !conversation.isSpeaking,
+    transcript, currentAliceText, currentUserText,
+    canSendFeedback: conversation.canSendFeedback,
+    start, stop, resetSession,
+    setVolume: conversation.setVolume,
+    safeSendFeedback,
+    toggleMute,
+    getInputVolume, getOutputVolume, getInputFrequencyData, getOutputFrequencyData,
+  }), [
+    isOverlayOpen, hasInteracted, openAlice, closeAlice, markInteracted,
+    conversation.status, conversation.isSpeaking, conversation.canSendFeedback, conversation.setVolume,
+    micMuted, transcript, currentAliceText, currentUserText,
+    start, stop, resetSession, safeSendFeedback, toggleMute,
+    getInputVolume, getOutputVolume, getInputFrequencyData, getOutputFrequencyData,
+  ])
+
   return (
-    <AliceContext.Provider value={{
-      isOverlayOpen, hasInteracted, openAlice, closeAlice, markInteracted,
-      status: conversation.status,
-      isSpeaking: conversation.isSpeaking,
-      micMuted,
-      isListening: conversation.status === 'connected' && !conversation.isSpeaking,
-      transcript, currentAliceText, currentUserText,
-      canSendFeedback: conversation.canSendFeedback,
-      start, stop, resetSession,
-      setVolume: conversation.setVolume,
-      safeSendFeedback,
-      toggleMute,
-      getInputVolume, getOutputVolume, getInputFrequencyData, getOutputFrequencyData,
-    }}>
+    <AliceContext.Provider value={contextValue}>
       {children}
     </AliceContext.Provider>
   )
