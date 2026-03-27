@@ -160,27 +160,27 @@ export function AliceConversationOverlay() {
   const [isStarting, setIsStarting] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [callStartTime, setCallStartTime] = useState(0)
+  const [showVol, setShowVol] = useState(false)
+  const animFrameRef = useRef<number>(0)
   const overlayRef = useRef<HTMLDivElement>(null)
+  const volTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  const pollAudio = useCallback(() => {
+    if (!isOverlayOpen) return
+    const iv = getInputVolume(); const ov = getOutputVolume()
+    setInputLevel(iv); setOutputLevel(ov); setAudioLevel(Math.max(iv, ov))
+    animFrameRef.current = requestAnimationFrame(pollAudio)
+  }, [isOverlayOpen, getInputVolume, getOutputVolume])
 
   useEffect(() => {
-    if (!isOverlayOpen || status !== 'connected') return
-    const id = setInterval(() => {
-      const iv = getInputVolume(); const ov = getOutputVolume()
-      setInputLevel(iv); setOutputLevel(ov); setAudioLevel(Math.max(iv, ov))
-    }, 100)
-    return () => clearInterval(id)
-  }, [isOverlayOpen, status, getInputVolume, getOutputVolume])
+    if (isOverlayOpen && status === 'connected') animFrameRef.current = requestAnimationFrame(pollAudio)
+    return () => { if (animFrameRef.current) cancelAnimationFrame(animFrameRef.current) }
+  }, [isOverlayOpen, status, pollAudio])
 
   useEffect(() => {
-    if (isOverlayOpen) {
-      document.body.style.overflow = 'hidden'
-      overlayRef.current?.focus()
-    } else if (document.body.style.overflow === 'hidden') {
-      document.body.style.overflow = ''
-    }
-    return () => {
-      if (document.body.style.overflow === 'hidden') document.body.style.overflow = ''
-    }
+    if (isOverlayOpen) { document.body.style.overflow = 'hidden'; overlayRef.current?.focus() }
+    else document.body.style.overflow = ''
+    return () => { document.body.style.overflow = '' }
   }, [isOverlayOpen])
 
   const handleClose = useCallback(async () => {
@@ -216,6 +216,7 @@ export function AliceConversationOverlay() {
   }, [setVolume])
 
   const handleToggleMute = useCallback(() => { playSound(micMuted ? 'unmute' : 'mute'); toggleMute() }, [micMuted, toggleMute])
+
   const mappedStatus = !hasStarted || status === 'disconnected' ? 'idle' as const : status as 'idle' | 'connecting' | 'connected'
   const isConnected = hasStarted && status === 'connected'
   const isUserTalking = isConnected && !isSpeaking && !micMuted
@@ -397,22 +398,48 @@ export function AliceConversationOverlay() {
               {/* Main action row */}
               <div className="flex items-center justify-center gap-3 md:gap-5">
 
-                {/* Volume button */}
+                {/* Volume with slider */}
                 {hasStarted && (
-                  <motion.button
-                    onClick={() => { playSound('click'); const v = volume === 0 ? 1 : 0; setVolume({ volume: v }); setVolumeLocal(v) }}
-                    className="w-12 h-12 rounded-full flex items-center justify-center transition-all"
-                    style={{
-                      background: 'rgba(255,255,255,0.04)',
-                      border: '1.5px solid rgba(255,255,255,0.07)',
-                      color: volume === 0 ? 'rgba(248,113,113,0.7)' : 'rgba(250,247,242,0.35)',
-                    }}
-                    whileHover={{ scale: 1.08, backgroundColor: 'rgba(255,255,255,0.08)' }}
-                    whileTap={{ scale: 0.92 }}
-                    aria-label="Volume"
+                  <div className="relative"
+                    onMouseEnter={() => { if (volTimer.current) clearTimeout(volTimer.current); setShowVol(true) }}
+                    onMouseLeave={() => { volTimer.current = setTimeout(() => setShowVol(false), 400) }}
                   >
-                    <VolumeIcon size={18} />
-                  </motion.button>
+                    <AnimatePresence>
+                      {showVol && (
+                        <motion.div
+                          className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-[160px] rounded-2xl p-3"
+                          style={{ background: 'rgba(12,20,35,0.95)', border: '1px solid rgba(255,255,255,0.06)', boxShadow: '0 12px 40px rgba(0,0,0,0.5)' }}
+                          initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 6 }}
+                          transition={{ duration: 0.15 }}
+                        >
+                          <div className="flex items-center justify-between mb-2">
+                            <span className="text-[9px] font-semibold uppercase tracking-[0.12em]" style={{ color: 'rgba(250,247,242,0.3)' }}>Volume</span>
+                            <span className="text-[10px] font-mono" style={{ color: volume > 0 ? '#8FB8C7' : 'rgba(248,113,113,0.6)' }}>{Math.round(volume * 100)}%</span>
+                          </div>
+                          <div className="relative h-5 flex items-center">
+                            <div className="absolute left-0 h-[3px] rounded-full w-full" style={{ background: 'rgba(255,255,255,0.06)' }} />
+                            <div className="absolute left-0 h-[3px] rounded-full" style={{ width: `${volume * 100}%`, background: '#6B9BAE' }} />
+                            <input type="range" min="0" max="1" step="0.05" value={volume} onChange={handleVolumeChange}
+                              className="absolute w-full h-5 appearance-none bg-transparent cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3.5 [&::-webkit-slider-thumb]:h-3.5 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-white [&::-webkit-slider-thumb]:border-[1.5px] [&::-webkit-slider-thumb]:border-[#6B9BAE] [&::-webkit-slider-thumb]:relative [&::-webkit-slider-thumb]:z-10"
+                              aria-label="Volume" />
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                    <motion.button
+                      onClick={() => setShowVol(v => !v)}
+                      className="w-12 h-12 rounded-full flex items-center justify-center transition-all"
+                      style={{
+                        background: showVol ? 'rgba(255,255,255,0.08)' : 'rgba(255,255,255,0.04)',
+                        border: `1.5px solid ${showVol ? 'rgba(107,155,174,0.2)' : 'rgba(255,255,255,0.07)'}`,
+                        color: volume === 0 ? 'rgba(248,113,113,0.7)' : 'rgba(250,247,242,0.35)',
+                      }}
+                      whileTap={{ scale: 0.92 }}
+                      aria-label="Volume"
+                    >
+                      <VolumeIcon size={18} />
+                    </motion.button>
+                  </div>
                 )}
 
                 {/* Mic button */}
@@ -499,6 +526,7 @@ export function AliceConversationOverlay() {
                 )}
 
               </div>
+
             </div>
           </motion.div>
         </motion.div>

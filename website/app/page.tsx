@@ -83,16 +83,16 @@ function AnimatedNumber({ value, suffix = '' }: { value: number; suffix?: string
     if (!isInView) return
     const duration = 1800
     let start: number | null = null
-    let rafId: number
+    let rafId: number | null = null
     const step = (ts: number) => {
       if (!start) start = ts
       const progress = Math.min((ts - start) / duration, 1)
-      const eased = 1 - Math.pow(1 - progress, 3) // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3)
       setCount(Math.floor(eased * value))
       if (progress < 1) rafId = requestAnimationFrame(step)
     }
     rafId = requestAnimationFrame(step)
-    return () => cancelAnimationFrame(rafId)
+    return () => { if (rafId) cancelAnimationFrame(rafId) }
   }, [isInView, value])
 
   return <span ref={ref}>{count}{suffix}</span>
