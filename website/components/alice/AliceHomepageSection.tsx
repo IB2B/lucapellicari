@@ -132,14 +132,6 @@ export function AliceHomepageSection() {
             </div>
           </motion.div>
 
-          {/* OR divider (mobile) */}
-          <div className="flex items-center justify-center lg:hidden -my-1">
-            <div className="w-14 h-14 rounded-full flex items-center justify-center"
-              style={{ border: '2px solid rgba(250,247,242,0.1)', background: 'rgba(255,255,255,0.04)', backdropFilter: 'blur(8px)' }}>
-              <span className="text-[10px] font-bold uppercase tracking-wider" style={{ color: 'rgba(250,247,242,0.4)' }}>o</span>
-            </div>
-          </div>
-
           {/* Card 2 — Talk to Alice */}
           <motion.div className="group relative" variants={fadeUp}>
             {/* Outer glow */}

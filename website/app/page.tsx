@@ -1472,10 +1472,10 @@ function IdentityHighlightsSection() {
         <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
 
         <div
-          className="flex w-max items-center motion-reduce:animate-none"
+          className="flex w-max items-center"
           style={{ animation: 'scroll-left 55s linear infinite' }}
         >
-          {[...identityTags, ...identityTags].map((tag, i) => (
+          {[...identityTags, ...identityTags, ...identityTags].map((tag, i) => (
             <div key={i} className="flex items-center shrink-0">
               <span className={`whitespace-nowrap px-6 md:px-8 py-2.5 md:py-3 mx-2 md:mx-3 rounded-full border text-[12px] md:text-[14px] font-semibold tracking-wide ${tag.color}`}>
                 {tag.text}

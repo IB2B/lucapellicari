@@ -67,7 +67,12 @@ export function AliceProvider({ children }: { children: ReactNode }) {
       if (isUser) {
         // user_transcript fires AFTER onModeChange('speaking') —
         // so we commit directly to transcript, not to currentUserText
-        setTranscript(t => [...t, { role: 'user', text, timestamp: Date.now(), id: genId() }])
+        setTranscript(t => {
+          const last = t[t.length - 1]
+          // Dedup: skip if same text from same role within 5s
+          if (last && last.role === 'user' && last.text === text && Date.now() - last.timestamp < 5000) return t
+          return [...t, { role: 'user', text, timestamp: Date.now(), id: genId() }]
+        })
         setCurrentUserText('')
       } else if (isAgent) {
         // agent_response streams in chunks — accumulate

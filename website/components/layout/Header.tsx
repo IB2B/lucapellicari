@@ -72,8 +72,19 @@ export function Header() {
   }, [pathname])
 
   useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      // Only restore if we were the ones who set it
+      if (document.body.style.overflow === 'hidden') {
+        document.body.style.overflow = ''
+      }
+    }
+    return () => {
+      if (document.body.style.overflow === 'hidden') {
+        document.body.style.overflow = ''
+      }
+    }
   }, [isMobileMenuOpen])
 
   const handleMouseEnter = (key: DropdownKey) => {
