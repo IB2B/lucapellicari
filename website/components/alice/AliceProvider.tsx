@@ -51,6 +51,7 @@ export function AliceProvider({ children }: { children: ReactNode }) {
   const [micMuted, setMicMuted] = useState(false)
   const sessionStartedRef = useRef(false)
   const mediaStreamRef = useRef<MediaStream | null>(null)
+  const lastCommittedRef = useRef<{ role: string; text: string; time: number }>({ role: '', text: '', time: 0 })
 
   useEffect(() => {
     const stored = localStorage.getItem('alice-interacted')
@@ -65,34 +66,28 @@ export function AliceProvider({ children }: { children: ReactNode }) {
       if (!text) return
 
       if (isUser) {
-        // user_transcript fires AFTER onModeChange('speaking') —
-        // so we commit directly to transcript, not to currentUserText
-        setTranscript(t => {
-          const last = t[t.length - 1]
-          // Dedup: skip if same text from same role within 5s
-          if (last && last.role === 'user' && last.text === text && Date.now() - last.timestamp < 5000) return t
-          return [...t, { role: 'user', text, timestamp: Date.now(), id: genId() }]
-        })
+        // Dedup: skip if same user text committed recently
+        const lc = lastCommittedRef.current
+        if (lc.role === 'user' && lc.text === text && Date.now() - lc.time < 8000) return
+        lastCommittedRef.current = { role: 'user', text, time: Date.now() }
+        setTranscript(t => [...t, { role: 'user', text, timestamp: Date.now(), id: genId() }])
         setCurrentUserText('')
       } else if (isAgent) {
-        // agent_response streams in chunks — accumulate
         setCurrentAliceText(prev => prev + text)
       }
     },
     onModeChange: (mode: any) => {
       if (mode.mode === 'speaking') {
-        // Alice starts speaking — user_transcript hasn't fired yet,
-        // so don't try to read user text here. Just clear live preview.
         setCurrentUserText('')
       } else if (mode.mode === 'listening') {
-        // Alice finished speaking — commit accumulated Alice text to transcript
         setCurrentAliceText(prev => {
-          if (prev.trim()) {
-            setTranscript(t => {
-              const last = t[t.length - 1]
-              if (last && last.role === 'alice' && last.text === prev.trim()) return t
-              return [...t, { role: 'alice', text: prev.trim(), timestamp: Date.now(), id: genId() }]
-            })
+          const trimmed = prev.trim()
+          if (trimmed) {
+            // Dedup: skip if same alice text committed recently
+            const lc = lastCommittedRef.current
+            if (lc.role === 'alice' && lc.text === trimmed && Date.now() - lc.time < 8000) return ''
+            lastCommittedRef.current = { role: 'alice', text: trimmed, time: Date.now() }
+            setTranscript(t => [...t, { role: 'alice', text: trimmed, timestamp: Date.now(), id: genId() }])
           }
           return ''
         })
@@ -148,6 +143,7 @@ export function AliceProvider({ children }: { children: ReactNode }) {
     setCurrentAliceText('')
     setCurrentUserText('')
     setMicMuted(false)
+    lastCommittedRef.current = { role: '', text: '', time: 0 }
   }, [])
 
   const toggleMute = useCallback(() => {
