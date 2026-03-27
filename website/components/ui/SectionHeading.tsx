@@ -35,7 +35,7 @@ export function SectionHeading({
           <span
             className={cn(
               'inline-block text-sm font-medium uppercase tracking-widest mb-4',
-              light ? 'text-gold' : 'text-gold'
+              light ? 'text-teal' : 'text-gold'
             )}
           >
             {subtitle}

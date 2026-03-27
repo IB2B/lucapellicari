@@ -132,7 +132,7 @@ export default function TreVPage() {
                   <h3 className="font-serif text-base md:text-lg text-white font-semibold mb-2">
                     {item.title}
                   </h3>
-                  <p className="text-white/50 text-xs md:text-sm leading-relaxed">
+                  <p className="text-white/60 text-xs md:text-sm leading-relaxed">
                     {item.description}
                   </p>
                 </div>
@@ -289,9 +289,10 @@ export default function TreVPage() {
       <Quote
         text="La coerenza è una forma di eleganza. Il coraggio è una forma di disciplina. La responsabilità è una forma d'amore. La verità è una forma di libertà."
         author="Luca Pellicari"
+        variant="light"
       />
 
-      <CTA />
+      <CTA variant="light" />
     </>
   )
 }

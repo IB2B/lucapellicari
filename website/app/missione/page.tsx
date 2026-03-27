@@ -138,6 +138,7 @@ export default function MissionePage() {
       <Quote
         text="Se sono vivo è per un motivo: trasmettere ciò che la vita mi ha insegnato a caro prezzo."
         author="Luca Pellicari"
+        variant="light"
       />
 
       {/* Mission Points */}
@@ -233,7 +234,7 @@ export default function MissionePage() {
 
           <FadeIn delay={0.4}>
             <div className="text-center mt-10 md:mt-14">
-              <p className="text-white/40 text-sm md:text-base italic font-serif">
+              <p className="text-white/60 text-sm md:text-base italic font-serif">
                 &ldquo;Non vendo contenuti. Non vendo motivazione. Non vendo tecniche.
                 Lavoro su una cosa molto più profonda: <span className="text-gold">la struttura</span>.&rdquo;
               </p>

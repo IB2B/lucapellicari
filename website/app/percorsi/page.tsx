@@ -256,7 +256,7 @@ export default function PercorsiPage() {
                       }`}>
                         {percorso.title}
                       </h3>
-                      <p className={`text-sm ${isEven ? 'text-navy/50' : 'text-white/50'}`}>
+                      <p className={`text-sm ${isEven ? 'text-navy/60' : 'text-white/60'}`}>
                         {percorso.subtitle}
                       </p>
                       {/* Decorative number */}
@@ -277,6 +277,7 @@ export default function PercorsiPage() {
       <Quote
         text="Quando tu diventi vero, tutto ciò che ti circonda cambia frequenza."
         author="Luca Pellicari"
+        variant="light"
       />
 
       <CTA />

@@ -253,7 +253,7 @@ export default function LibriPage() {
       />
 
       {/* CTA */}
-      <CTA />
+      <CTA variant="light" />
     </>
   )
 }

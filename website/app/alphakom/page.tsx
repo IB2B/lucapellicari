@@ -130,7 +130,7 @@ export default function AlphakomPage() {
       </section>
 
       {/* Method Section — The Core Problem */}
-      <section className="py-24 lg:py-32 bg-gray-50">
+      <section className="py-24 lg:py-32 bg-white">
         <div className="container-custom">
           <div className="max-w-5xl mx-auto">
             <div className="grid lg:grid-cols-2 gap-16 items-center">
@@ -244,6 +244,7 @@ export default function AlphakomPage() {
       <Quote
         text="Alpha: il coraggio di essere coerente. Lead by being."
         author="Metodo AlphaKom"
+        variant="light"
       />
 
       {/* Principles Section */}
@@ -293,7 +294,7 @@ export default function AlphakomPage() {
             </FadeIn>
 
             <FadeIn delay={0.2}>
-              <div className="bg-dark-surface rounded-xl p-12 border border-gold/20">
+              <div className="bg-navy rounded-xl p-12 border border-gold/20">
                 <p className="font-serif text-xl text-light-surface leading-relaxed italic">
                   &ldquo;Giuro di restare fedele alla mia visione,<br />
                   di onorare i miei valori e la mia verità,<br />

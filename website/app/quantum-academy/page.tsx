@@ -309,7 +309,7 @@ export default function QuantumAcademyPage() {
         </div>
       </section>
 
-      <CTA />
+      <CTA variant="light" />
     </>
   )
 }

@@ -196,6 +196,7 @@ export default function VisionePage() {
       <Quote
         text="Vedo un futuro in cui migliaia di persone entrano nei nostri percorsi pensando di imparare una tecnica… e invece imparano sé stesse."
         author="Luca Pellicari"
+        variant="light"
       />
 
       {/* Vision Pillars */}

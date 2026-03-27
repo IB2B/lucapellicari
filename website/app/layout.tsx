@@ -4,6 +4,7 @@ import './globals.css'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
 import { SmoothScroll } from '@/components/animations/SmoothScroll'
+import { AliceWrapper } from '@/components/alice/AliceWrapper'
 import { SITE_CONFIG } from '@/lib/constants'
 
 const dmSans = DM_Sans({
@@ -21,7 +22,7 @@ const playfair = Playfair_Display({
 const cormorant = Cormorant_Garamond({
   subsets: ['latin'],
   variable: '--font-serif',
-  weight: ['400', '600'],
+  weight: ['400', '600', '700'],
   display: 'swap',
 })
 
@@ -69,12 +70,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="it" className={`${dmSans.variable} ${playfair.variable} ${cormorant.variable}`}>
-      <body className="font-sans overflow-x-hidden">
-        <SmoothScroll>
-          <Header />
-          <main id="main-content">{children}</main>
-          <Footer />
-        </SmoothScroll>
+      <body className="font-sans">
+        <AliceWrapper>
+          <SmoothScroll>
+            <Header />
+            <main id="main-content">{children}</main>
+            <Footer />
+          </SmoothScroll>
+        </AliceWrapper>
       </body>
     </html>
   )

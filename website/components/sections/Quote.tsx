@@ -19,7 +19,7 @@ export function Quote({ text, author, className, variant = 'dark' }: QuoteProps)
   return (
     <section
       ref={ref}
-      className={`py-24 lg:py-40 ${isDark ? 'bg-navy-dark' : 'bg-white'} relative overflow-hidden ${className}`}
+      className={`py-20 lg:py-28 ${isDark ? 'bg-navy-dark' : 'bg-white'} relative overflow-hidden ${className}`}
     >
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5">
@@ -37,7 +37,7 @@ export function Quote({ text, author, className, variant = 'dark' }: QuoteProps)
           <motion.span
             className="text-teal text-8xl font-serif leading-none block mb-8"
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 0.3, y: 0 }}
+            whileInView={{ opacity: 0.2, y: 0 }}
             viewport={{ once: true }}
           >
             &ldquo;

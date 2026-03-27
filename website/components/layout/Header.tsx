@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ArrowRight, ChevronDown, Linkedin, Facebook, Youtube, User, Compass, BookOpen, Mic2, Mail } from 'lucide-react'
+import { Menu, X, ArrowRight, ChevronDown, Linkedin, Facebook, Youtube, Compass, Layers, BookOpen, Mail } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { SITE_CONFIG } from '@/lib/constants'
 
@@ -25,7 +25,7 @@ const NAV_GROUPS = {
   },
   progetti: {
     label: 'Progetti',
-    icon: User,
+    icon: Layers,
     links: [
       { href: '/metodo-in-flow', label: 'Metodo In-Flow', desc: 'Il metodo di trasformazione' },
       { href: '/quantum-academy', label: 'Quantum Academy', desc: 'Scuola di identità e consapevolezza' },
@@ -41,18 +41,10 @@ const NAV_GROUPS = {
       { href: '/blog', label: 'Blog', desc: 'Articoli e riflessioni' },
     ],
   },
-  cta: { href: '/contatti', label: 'Contatti' },
 }
 
-const ALL_NAV_LINKS = [
-  ...NAV_GROUPS.primary,
-  ...NAV_GROUPS.percorso.links,
-  ...NAV_GROUPS.progetti.links,
-  ...NAV_GROUPS.risorse.links,
-  NAV_GROUPS.cta,
-]
-
 type DropdownKey = 'percorso' | 'progetti' | 'risorse'
+const dropdownKeys: DropdownKey[] = ['percorso', 'progetti', 'risorse']
 
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -62,7 +54,7 @@ export function Header() {
   const pathname = usePathname()
 
   const isHomePage = pathname === '/'
-  const hasDarkBackground = isHomePage && !isScrolled
+  const hasDarkBg = isHomePage && !isScrolled
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 50)
@@ -76,11 +68,7 @@ export function Header() {
   }, [pathname])
 
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = ''
-    }
+    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : ''
     return () => { document.body.style.overflow = '' }
   }, [isMobileMenuOpen])
 
@@ -90,10 +78,8 @@ export function Header() {
   }
 
   const handleMouseLeave = () => {
-    closeTimeout.current = setTimeout(() => setOpenDropdown(null), 150)
+    closeTimeout.current = setTimeout(() => setOpenDropdown(null), 120)
   }
-
-  const dropdownKeys: DropdownKey[] = ['percorso', 'progetti', 'risorse']
 
   return (
     <>
@@ -108,55 +94,63 @@ export function Header() {
         className={cn(
           'fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out',
           isMobileMenuOpen
-            ? 'bg-transparent py-3 border-b border-transparent shadow-none'
+            ? 'bg-transparent py-3'
             : isScrolled || !isHomePage
-              ? 'bg-white/95 backdrop-blur-xl py-3 shadow-[0_1px_3px_rgba(0,0,0,0.06)] border-b border-gray-100'
-              : 'bg-transparent py-5'
+              ? 'bg-white/95 backdrop-blur-xl py-2.5 shadow-[0_1px_0_rgba(0,0,0,0.04)] border-b border-black/[0.04]'
+              : 'bg-transparent py-4'
         )}
       >
         <div className="max-w-7xl mx-auto px-5 md:px-8 lg:px-12">
           <nav className="flex items-center justify-between" aria-label="Navigazione principale">
+
             {/* Logo */}
             <Link
               href="/"
-              className="relative z-10 group flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 rounded-sm"
+              className="relative z-10 group flex-shrink-0 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal rounded-sm"
             >
-              <div className="flex items-center gap-2.5">
-                <motion.div
+              <div className="flex items-center gap-3">
+                <div
                   className={cn(
-                    "w-9 h-9 rounded-lg flex items-center justify-center font-display text-sm font-bold transition-all duration-300",
-                    hasDarkBackground || isMobileMenuOpen
-                      ? "bg-white/10 text-white border border-white/20"
+                    "w-9 h-9 rounded-lg flex items-center justify-center font-display text-[13px] font-bold tracking-tight transition-all duration-300",
+                    hasDarkBg || isMobileMenuOpen
+                      ? "bg-white/15 text-white backdrop-blur-sm border border-white/10"
                       : "bg-navy text-white group-hover:bg-teal"
                   )}
-                  whileTap={{ scale: 0.95 }}
                 >
                   LP
-                </motion.div>
-                <span
-                  className={cn(
-                    "hidden sm:block font-display text-lg font-semibold tracking-tight transition-colors duration-300",
-                    hasDarkBackground || isMobileMenuOpen ? "text-white" : "text-navy"
-                  )}
-                >
-                  Luca Pellicari
-                </span>
+                </div>
+                <div className="hidden sm:flex flex-col">
+                  <span
+                    className={cn(
+                      "font-display text-[15px] font-semibold leading-tight tracking-tight transition-colors duration-300",
+                      hasDarkBg || isMobileMenuOpen ? "text-white" : "text-navy"
+                    )}
+                  >
+                    Luca Pellicari
+                  </span>
+                  <span
+                    className={cn(
+                      "text-[10px] font-medium uppercase tracking-[0.12em] transition-colors duration-300",
+                      hasDarkBg || isMobileMenuOpen ? "text-white/60" : "text-navy/50"
+                    )}
+                  >
+                    Identity Coach
+                  </span>
+                </div>
               </div>
             </Link>
 
-            {/* Desktop Navigation */}
-            <div className="hidden lg:flex items-center gap-1">
-              {/* Primary links */}
+            {/* Desktop Nav */}
+            <div className="hidden lg:flex items-center gap-1.5">
               {NAV_GROUPS.primary.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
                   className={cn(
-                    'px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200',
-                    'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal',
+                    'px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200',
                     pathname === link.href
-                      ? (hasDarkBackground ? 'text-white bg-white/15' : 'text-teal')
-                      : (hasDarkBackground ? 'text-white/75 hover:text-white' : 'text-navy/65 hover:text-navy')
+                      ? (hasDarkBg ? 'text-white' : 'text-teal')
+                      : (hasDarkBg ? 'text-white/70 hover:text-white' : 'text-navy/55 hover:text-navy')
                   )}
                   aria-current={pathname === link.href ? 'page' : undefined}
                 >
@@ -164,11 +158,15 @@ export function Header() {
                 </Link>
               ))}
 
+              {/* Thin separator */}
+              <div className={cn("w-px h-4 mx-1", hasDarkBg ? "bg-white/15" : "bg-navy/10")} />
+
               {/* Dropdown groups */}
               {dropdownKeys.map((key) => {
                 const group = NAV_GROUPS[key]
                 const isActive = group.links.some(l => l.href === pathname)
                 const isOpen = openDropdown === key
+                const Icon = group.icon
 
                 return (
                   <div
@@ -179,22 +177,21 @@ export function Header() {
                   >
                     <button
                       className={cn(
-                        'flex items-center gap-1 px-3.5 py-2 text-sm font-medium rounded-lg transition-all duration-200',
-                        'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal',
+                        'flex items-center gap-1.5 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200',
                         isActive
-                          ? (hasDarkBackground ? 'text-white bg-white/15' : 'text-teal')
+                          ? (hasDarkBg ? 'text-white' : 'text-teal')
                           : isOpen
-                            ? (hasDarkBackground ? 'text-white bg-white/10' : 'text-navy bg-gray-50')
-                            : (hasDarkBackground ? 'text-white/75 hover:text-white' : 'text-navy/65 hover:text-navy')
+                            ? (hasDarkBg ? 'text-white' : 'text-navy')
+                            : (hasDarkBg ? 'text-white/70 hover:text-white' : 'text-navy/55 hover:text-navy')
                       )}
                       aria-expanded={isOpen}
                     >
                       {group.label}
                       <ChevronDown
-                        size={13}
+                        size={12}
                         className={cn(
-                          'transition-transform duration-200',
-                          isOpen && 'rotate-180'
+                          'transition-transform duration-200 opacity-50',
+                          isOpen && 'rotate-180 opacity-100'
                         )}
                       />
                     </button>
@@ -202,32 +199,45 @@ export function Header() {
                     <AnimatePresence>
                       {isOpen && (
                         <motion.div
-                          initial={{ opacity: 0, y: 6, scale: 0.97 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 6, scale: 0.97 }}
-                          transition={{ duration: 0.15, ease: 'easeOut' }}
-                          className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-72 bg-white rounded-2xl shadow-xl shadow-black/8 border border-gray-100 p-2 z-50"
+                          initial={{ opacity: 0, y: 8 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: 8 }}
+                          transition={{ duration: 0.15, ease: [0.25, 0.1, 0.25, 1] }}
+                          className="absolute top-full left-1/2 -translate-x-1/2 pt-3"
                         >
-                          {group.links.map((link) => (
-                            <Link
-                              key={link.href}
-                              href={link.href}
-                              className={cn(
-                                'flex flex-col gap-0.5 px-4 py-3 rounded-xl transition-all duration-150',
-                                pathname === link.href
-                                  ? 'bg-teal/8 text-teal'
-                                  : 'hover:bg-gray-50 text-navy'
-                              )}
-                            >
-                              <span className="text-sm font-semibold">{link.label}</span>
-                              <span className={cn(
-                                "text-xs",
-                                pathname === link.href ? 'text-teal/70' : 'text-navy/45'
-                              )}>
-                                {link.desc}
-                              </span>
-                            </Link>
-                          ))}
+                          <div className="w-[280px] bg-white rounded-xl shadow-[0_12px_40px_rgba(0,0,0,0.08)] border border-black/[0.06] p-1.5">
+                            {/* Group header */}
+                            <div className="flex items-center gap-2 px-3.5 pt-2 pb-2.5">
+                              <Icon size={13} className="text-teal" />
+                              <span className="text-[10px] font-semibold uppercase tracking-[0.12em] text-navy/35">{group.label}</span>
+                            </div>
+
+                            {group.links.map((link) => (
+                              <Link
+                                key={link.href}
+                                href={link.href}
+                                className={cn(
+                                  'flex flex-col gap-0.5 px-3.5 py-2.5 rounded-lg transition-all duration-150 group/item',
+                                  pathname === link.href
+                                    ? 'bg-teal/6'
+                                    : 'hover:bg-gray-50'
+                                )}
+                              >
+                                <span className={cn(
+                                  "text-[13px] font-semibold",
+                                  pathname === link.href ? 'text-teal' : 'text-navy group-hover/item:text-navy'
+                                )}>
+                                  {link.label}
+                                </span>
+                                <span className={cn(
+                                  "text-[11px] leading-snug",
+                                  pathname === link.href ? 'text-teal/70' : 'text-navy/50'
+                                )}>
+                                  {link.desc}
+                                </span>
+                              </Link>
+                            ))}
+                          </div>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -235,43 +245,37 @@ export function Header() {
                 )
               })}
 
-              {/* Divider */}
-              <div className={cn(
-                "w-px h-5 mx-2 transition-colors duration-300",
-                hasDarkBackground ? "bg-white/20" : "bg-gray-200"
-              )} />
+              {/* Separator before CTA */}
+              <div className={cn("w-px h-4 mx-2", hasDarkBg ? "bg-white/15" : "bg-navy/10")} />
 
               {/* CTA */}
               <Link
                 href="/contatti"
                 className={cn(
-                  "group inline-flex items-center gap-1.5 px-5 py-2 text-sm font-semibold rounded-full transition-all duration-300",
-                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2",
-                  hasDarkBackground
-                    ? "bg-white text-navy hover:bg-teal hover:text-white"
-                    : "bg-navy text-white hover:bg-teal"
+                  "group relative inline-flex items-center gap-1.5 px-5 py-2 text-[13px] font-semibold rounded-full overflow-hidden transition-all duration-300",
+                  hasDarkBg
+                    ? "bg-white text-navy hover:bg-teal hover:text-white shadow-lg shadow-black/10"
+                    : "bg-teal text-white hover:bg-teal-dark shadow-lg shadow-teal/20 hover:shadow-xl hover:shadow-teal/30"
                 )}
               >
-                Contatti
-                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                <span>Contattami</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform duration-300" />
               </Link>
             </div>
 
-            {/* Mobile Menu Button */}
-            <motion.button
+            {/* Mobile toggle */}
+            <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className={cn(
-                "lg:hidden relative z-10 w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-teal",
+                "lg:hidden relative z-10 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-200",
                 isMobileMenuOpen
-                  ? "text-white bg-white/10"
-                  : hasDarkBackground
-                    ? "text-white bg-white/10"
-                    : "text-navy bg-gray-100"
+                  ? "text-white"
+                  : hasDarkBg
+                    ? "text-white/80"
+                    : "text-navy/70"
               )}
               aria-label={isMobileMenuOpen ? 'Chiudi menu' : 'Apri menu'}
               aria-expanded={isMobileMenuOpen}
-              whileTap={{ scale: 0.95 }}
             >
               <AnimatePresence mode="wait">
                 {isMobileMenuOpen ? (
@@ -280,9 +284,9 @@ export function Header() {
                     initial={{ opacity: 0, rotate: -90 }}
                     animate={{ opacity: 1, rotate: 0 }}
                     exit={{ opacity: 0, rotate: 90 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.15 }}
                   >
-                    <X size={18} />
+                    <X size={20} />
                   </motion.div>
                 ) : (
                   <motion.div
@@ -290,13 +294,13 @@ export function Header() {
                     initial={{ opacity: 0, rotate: 90 }}
                     animate={{ opacity: 1, rotate: 0 }}
                     exit={{ opacity: 0, rotate: -90 }}
-                    transition={{ duration: 0.2 }}
+                    transition={{ duration: 0.15 }}
                   >
-                    <Menu size={18} />
+                    <Menu size={20} />
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.button>
+            </button>
           </nav>
         </div>
       </header>
@@ -308,44 +312,45 @@ export function Header() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
             className="fixed inset-0 z-40 lg:hidden"
           >
             <div className="absolute inset-0 bg-navy-dark" />
 
             <motion.nav
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.25 }}
-              className="relative h-full flex flex-col pt-20 overflow-y-auto"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3, delay: 0.05 }}
+              className="relative h-full flex flex-col pt-[72px] overflow-y-auto"
               aria-label="Menu mobile"
             >
-              {/* Primary Links */}
-              <div className="px-6 pb-4">
+              {/* Primary */}
+              <div className="px-6 pt-6 pb-3">
                 {NAV_GROUPS.primary.map((link, i) => (
                   <motion.div
                     key={link.href}
-                    initial={{ opacity: 0, x: -12 }}
+                    initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: i * 0.04, duration: 0.2 }}
+                    transition={{ delay: 0.1 + i * 0.04 }}
                   >
                     <Link
                       href={link.href}
                       className={cn(
-                        'flex items-center justify-between py-3.5 px-4 -mx-4 rounded-xl transition-all duration-200',
-                        pathname === link.href ? 'text-white bg-teal/20' : 'text-white/70'
+                        'flex items-center justify-between py-3 px-4 -mx-1 rounded-xl transition-colors',
+                        pathname === link.href ? 'text-white bg-white/8' : 'text-white/65'
                       )}
                     >
-                      <span className="text-lg font-display font-medium">{link.label}</span>
-                      {pathname === link.href && <span className="w-1.5 h-1.5 rounded-full bg-teal-light" />}
+                      <span className="text-[17px] font-display font-medium">{link.label}</span>
+                      {pathname === link.href && (
+                        <span className="w-1.5 h-1.5 rounded-full bg-teal-light" />
+                      )}
                     </Link>
                   </motion.div>
                 ))}
               </div>
 
-              {/* Grouped Sections */}
-              {dropdownKeys.map((key, groupIdx) => {
+              {/* Groups */}
+              {dropdownKeys.map((key, gi) => {
                 const group = NAV_GROUPS[key]
                 const Icon = group.icon
                 return (
@@ -353,32 +358,34 @@ export function Header() {
                     key={key}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ delay: 0.1 + groupIdx * 0.08 }}
-                    className="px-6 py-4 border-t border-white/8"
+                    transition={{ delay: 0.18 + gi * 0.06 }}
+                    className="px-6 py-3 border-t border-white/[0.06]"
                   >
-                    <div className="flex items-center gap-2 mb-3">
-                      <Icon size={14} className="text-teal-light" />
-                      <span className="text-teal-light text-xs uppercase tracking-[0.15em] font-semibold">{group.label}</span>
+                    <div className="flex items-center gap-2 px-3 mb-2">
+                      <Icon size={13} className="text-teal-light/70" />
+                      <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-teal-light/50">{group.label}</span>
                     </div>
                     {group.links.map((link, i) => (
                       <motion.div
                         key={link.href}
                         initial={{ opacity: 0, x: -12 }}
                         animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.15 + groupIdx * 0.08 + i * 0.03, duration: 0.2 }}
+                        transition={{ delay: 0.22 + gi * 0.06 + i * 0.03 }}
                       >
                         <Link
                           href={link.href}
                           className={cn(
-                            'flex items-center justify-between py-3 px-4 -mx-4 rounded-xl transition-all duration-200',
-                            pathname === link.href ? 'text-white bg-teal/20' : 'text-white/70'
+                            'flex items-center justify-between py-2.5 px-4 -mx-1 rounded-xl transition-colors',
+                            pathname === link.href ? 'text-white bg-white/8' : 'text-white/65'
                           )}
                         >
                           <div>
-                            <span className="text-base font-display font-medium block">{link.label}</span>
-                            <span className="text-xs text-white/40">{link.desc}</span>
+                            <span className="text-[15px] font-display font-medium block">{link.label}</span>
+                            <span className="text-[11px] text-white/50 leading-tight">{link.desc}</span>
                           </div>
-                          {pathname === link.href && <span className="w-1.5 h-1.5 rounded-full bg-teal-light flex-shrink-0" />}
+                          {pathname === link.href && (
+                            <span className="w-1.5 h-1.5 rounded-full bg-teal-light flex-shrink-0" />
+                          )}
                         </Link>
                       </motion.div>
                     ))}
@@ -388,19 +395,18 @@ export function Header() {
 
               {/* CTA */}
               <motion.div
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 8 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.25 }}
-                className="px-6 py-4"
+                transition={{ delay: 0.4 }}
+                className="px-6 pt-4 pb-2"
               >
                 <Link
                   href="/contatti"
-                  className="flex items-center justify-center gap-3 w-full py-4 bg-teal text-white text-base font-semibold rounded-2xl active:bg-teal-dark transition-colors"
+                  className="flex items-center justify-center gap-2.5 w-full py-3.5 bg-teal text-white text-[15px] font-semibold rounded-xl active:bg-teal-dark transition-colors"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
-                  <Mail size={18} />
-                  <span>Contattami</span>
-                  <ArrowRight className="w-4 h-4" />
+                  <Mail size={16} />
+                  Contattami
                 </Link>
               </motion.div>
 
@@ -408,31 +414,31 @@ export function Header() {
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                transition={{ delay: 0.45, duration: 0.25 }}
-                className="mt-auto px-6 py-5 border-t border-white/8"
+                transition={{ delay: 0.45 }}
+                className="mt-auto px-6 py-5 border-t border-white/[0.06]"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex gap-2">
+                  <div className="flex gap-1.5">
                     {[
                       { href: SITE_CONFIG.links.linkedin, label: 'LinkedIn', icon: Linkedin },
                       { href: SITE_CONFIG.links.facebook, label: 'Facebook', icon: Facebook },
                       { href: SITE_CONFIG.links.youtube, label: 'YouTube', icon: Youtube },
-                    ].map((social) => (
+                    ].map((s) => (
                       <a
-                        key={social.label}
-                        href={social.href}
+                        key={s.label}
+                        href={s.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-9 h-9 rounded-lg bg-white/5 flex items-center justify-center text-white/40 active:bg-white/10 transition-all"
-                        aria-label={social.label}
+                        className="w-9 h-9 rounded-lg flex items-center justify-center text-white/50 hover:text-white/70 transition-colors"
+                        aria-label={s.label}
                       >
-                        <social.icon size={16} />
+                        <s.icon size={16} />
                       </a>
                     ))}
                   </div>
-                  <p className="text-xs text-white/20">
-                    &copy; {new Date().getFullYear()} Luca Pellicari
-                  </p>
+                  <span className="text-[10px] text-white/15 tracking-wide">
+                    &copy; {new Date().getFullYear()}
+                  </span>
                 </div>
               </motion.div>
             </motion.nav>

@@ -121,7 +121,7 @@ export default function BlogPage() {
                     <span className="text-gold text-sm font-medium uppercase">
                       {posts[0].category}
                     </span>
-                    <span className="text-light-surface/50 text-sm flex items-center gap-2">
+                    <span className="text-light-surface/60 text-sm flex items-center gap-2">
                       <Calendar size={14} />
                       {formatDate(posts[0].date)}
                     </span>
@@ -163,7 +163,7 @@ export default function BlogPage() {
                         <span className="text-gold text-xs font-medium uppercase">
                           {post.category}
                         </span>
-                        <span className="text-light-surface/50 text-xs">
+                        <span className="text-light-surface/60 text-xs">
                           {formatDate(post.date)}
                         </span>
                       </div>

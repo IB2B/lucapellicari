@@ -101,7 +101,7 @@ export default function ContattiPage() {
                       <div className="mt-auto">
                         <p className="text-teal-50/80 text-sm font-medium">{card.line1}</p>
                         {card.line2 && (
-                          <p className="text-teal-50/50 text-xs mt-1.5">{card.line2}</p>
+                          <p className="text-teal-50/65 text-xs mt-1.5">{card.line2}</p>
                         )}
                       </div>
                       {card.href && (
@@ -283,7 +283,7 @@ export default function ContattiPage() {
                     <p>
                       Via Cappelletta, 4<br />
                       37121 Verona VR, Italia<br />
-                      <span className="text-light-surface/50 text-sm mt-1 block">
+                      <span className="text-light-surface/60 text-sm mt-1 block">
                         Disponibile per eventi e formazione in tutta Italia e all&apos;estero
                       </span>
                     </p>

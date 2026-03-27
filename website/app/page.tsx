@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { motion, useScroll, useTransform, useInView } from 'framer-motion'
 import { ArrowRight, ChevronRight, ChevronLeft, Target, Eye, Shield, Users, Brain, Star, Compass, Sparkles, Quote, ArrowUpRight, GraduationCap, Building2, Globe, Handshake, CheckCircle, RefreshCw, TrendingUp } from 'lucide-react'
 import { InFlowSection } from '@/components/sections/InFlowSection'
+import { AliceHomepageSection } from '@/components/alice/AliceHomepageSection'
 
 // Animation variants - optimized for performance
 const fadeUp = {
@@ -294,54 +295,73 @@ function OpeningSection() {
     <section className="relative overflow-hidden">
       <div className="grid lg:grid-cols-2 min-h-[85vh]">
         {/* Left - Dark Side */}
-        <div className="relative bg-navy-dark py-24 lg:py-36 px-6 md:px-16 lg:px-20 flex items-center overflow-hidden">
-          {/* Floating Number */}
-          <div className="absolute top-10 right-10 text-[8rem] md:text-[14rem] font-display text-cream/[0.03] leading-none select-none">
+        <div className="relative bg-navy-dark py-28 lg:py-40 px-6 md:px-16 lg:px-20 flex items-center overflow-hidden">
+          {/* Floating Number — large watermark */}
+          <div className="absolute top-8 right-6 md:top-10 md:right-10 text-[10rem] md:text-[16rem] font-display text-cream/[0.025] leading-none select-none pointer-events-none">
             7
           </div>
 
-          {/* Subtle gradient accent */}
-          <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-teal/50 via-teal/20 to-transparent" />
+          {/* Left accent bar */}
+          <div className="absolute top-0 left-0 w-[3px] h-full bg-gradient-to-b from-teal via-teal/30 to-transparent" />
+
+          {/* Subtle bottom gradient fade */}
+          <div className="absolute bottom-0 inset-x-0 h-32 bg-gradient-to-t from-[#1a2f42] to-transparent pointer-events-none" />
 
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
             variants={stagger}
-            className="relative z-10 max-w-lg"
+            className="relative z-10 max-w-xl"
           >
-            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-10">
-              <span className="w-8 h-px bg-white/30" />
-              <span className="text-cream/50 text-xs uppercase tracking-[0.25em] font-medium">
+            {/* Label */}
+            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-12">
+              <span className="w-10 h-[2px] bg-gradient-to-r from-teal-light to-teal-light/0" />
+              <span className="text-teal-light/70 text-[13px] uppercase tracking-[0.25em] font-semibold">
                 Una verità semplice
               </span>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="space-y-3 mb-14">
-              {['Io non sono un formatore.', 'Non sono un motivatore.', 'Non sono un guru.'].map((text, i) => (
-                <p key={i} className="font-display text-2xl md:text-3xl text-cream/30 tracking-tight">
-                  {text}
+            {/* Negation lines — progressive fade */}
+            <motion.div variants={fadeUp} className="space-y-4 mb-16">
+              {[
+                { text: 'Io non sono un formatore.', opacity: 'text-cream/25' },
+                { text: 'Non sono un motivatore.', opacity: 'text-cream/20' },
+                { text: 'Non sono un guru.', opacity: 'text-cream/15' },
+              ].map((item, i) => (
+                <p key={i} className={`font-display text-[26px] md:text-[32px] ${item.opacity} tracking-tight leading-snug`}>
+                  {item.text}
                 </p>
               ))}
             </motion.div>
 
-            <motion.div variants={fadeUp} className="h-px w-16 bg-gradient-to-r from-teal-light to-transparent mb-10" />
+            {/* Divider */}
+            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-12">
+              <div className="h-[2px] w-12 bg-gradient-to-r from-teal-light to-transparent" />
+              <div className="h-[2px] w-4 bg-teal-light/30" />
+            </motion.div>
 
+            {/* Main statement */}
             <motion.p
               variants={fadeUp}
-              className="font-display text-2xl md:text-3xl lg:text-4xl text-cream leading-snug tracking-tight"
+              className="font-display text-[28px] md:text-[34px] lg:text-[40px] text-cream leading-[1.2] tracking-tight"
             >
               Sono un uomo che ha vissuto{' '}
-              <span className="text-teal-light">sette rinascite</span>.
+              <span className="relative text-teal-light">
+                sette rinascite
+                <span className="absolute -bottom-1 left-0 right-0 h-[2px] bg-gradient-to-r from-teal-light/50 to-transparent" />
+              </span>.
             </motion.p>
           </motion.div>
         </div>
 
         {/* Right - Light Side */}
-        <div className="relative bg-white py-24 lg:py-36 px-6 md:px-16 lg:px-20 flex items-center overflow-hidden">
-          {/* Decorative elements */}
-          <div className="hidden lg:block absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-48 h-48 rounded-full border border-teal/10" />
-          <div className="absolute bottom-16 right-16 w-24 h-24 rounded-full bg-teal/5" />
+        <div className="relative bg-white py-28 lg:py-40 px-6 md:px-16 lg:px-20 flex items-center overflow-hidden">
+          {/* Decorative circle */}
+          <div className="hidden lg:block absolute top-1/2 left-0 -translate-y-1/2 -translate-x-1/2 w-56 h-56 rounded-full border border-teal/8" />
+          <div className="absolute bottom-14 right-14 w-28 h-28 rounded-full bg-gradient-to-br from-teal/5 to-teal/0" />
+          {/* Right accent bar */}
+          <div className="hidden lg:block absolute top-0 right-0 w-[3px] h-full bg-gradient-to-b from-transparent via-teal/10 to-transparent" />
 
           <motion.div
             initial="hidden"
@@ -350,47 +370,55 @@ function OpeningSection() {
             variants={stagger}
             className="relative z-10 max-w-lg"
           >
+            {/* Opening statement */}
             <motion.p
               variants={fadeUp}
-              className="font-serif text-xl md:text-2xl text-navy/70 italic leading-relaxed mb-10"
+              className="font-serif text-[22px] md:text-[26px] text-navy/65 italic leading-[1.6] mb-12"
             >
               E oggi ho scelto di mettere tutta la mia esperienza al servizio delle persone che vogliono finalmente{' '}
-              <span className="text-teal font-semibold not-italic">riconoscersi</span>.
+              <span className="text-teal font-bold not-italic">riconoscersi</span>.
             </motion.p>
 
+            {/* Callout card */}
             <motion.div
               variants={fadeUp}
-              className="bg-teal/5 p-6 rounded-2xl border-l-2 border-teal/40 mb-12"
+              className="relative bg-gradient-to-br from-teal/[0.06] to-teal/[0.02] p-7 md:p-8 rounded-2xl border border-teal/10 mb-14"
             >
-              <p className="text-navy/80 leading-relaxed">
+              {/* Accent bar */}
+              <div className="absolute left-0 top-5 bottom-5 w-[3px] rounded-full bg-gradient-to-b from-teal to-teal/30" />
+              <p className="text-navy/80 text-[17px] leading-[1.75] pl-4">
                 Se sei qui, se sei arrivato fino a questa riga, è perché una parte di te sente che{' '}
-                <span className="text-teal font-semibold">è il momento di andare oltre</span>.
+                <span className="text-teal font-bold">è il momento di andare oltre</span>.
               </p>
             </motion.div>
 
-            <motion.div variants={fadeUp} className="space-y-5">
+            {/* "Oltre" items */}
+            <motion.div variants={fadeUp} className="space-y-0">
               {[
-                { text: 'Oltre la maschera', color: 'bg-teal' },
-                { text: 'Oltre il ruolo', color: 'bg-teal-dark' },
-                { text: 'Per incontrare chi sei', color: 'bg-navy' },
+                { text: 'Oltre la maschera', color: 'bg-teal', hoverColor: 'group-hover:text-teal' },
+                { text: 'Oltre il ruolo', color: 'bg-teal-dark', hoverColor: 'group-hover:text-teal-dark' },
+                { text: 'Per incontrare chi sei', color: 'bg-navy', hoverColor: 'group-hover:text-navy-dark' },
               ].map((item, i) => (
                 <div
                   key={i}
-                  className="flex items-center gap-4 group cursor-default"
+                  className="group flex items-center gap-5 py-4 border-b border-navy/5 last:border-b-0 cursor-default"
                 >
-                  <span className={`w-1.5 h-1.5 rounded-full ${item.color} group-hover:scale-[2] transition-transform duration-300`} />
-                  <span className="text-navy text-lg font-medium group-hover:translate-x-1 transition-transform duration-300">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-lg bg-navy/[0.04] flex items-center justify-center group-hover:bg-navy/[0.08] transition-colors duration-300">
+                    <span className={`w-2 h-2 rounded-full ${item.color} group-hover:scale-125 transition-transform duration-300`} />
+                  </div>
+                  <span className={`text-navy/80 text-[18px] font-semibold tracking-tight group-hover:translate-x-1 ${item.hoverColor} transition-all duration-300`}>
                     {item.text}
                   </span>
                 </div>
               ))}
             </motion.div>
 
+            {/* Closing line */}
             <motion.div
               variants={fadeUp}
-              className="mt-14 pt-6 border-t border-navy/10"
+              className="mt-14 pt-7 border-t border-navy/8"
             >
-              <p className="text-navy/60 text-sm tracking-wide">
+              <p className="text-navy/45 text-[15px] font-sans tracking-wide leading-relaxed">
                 Lascia che ti dica una cosa semplice e vera.
               </p>
             </motion.div>
@@ -402,23 +430,26 @@ function OpeningSection() {
 }
 
 // ============================================
-// CHI SONO SECTION - Asymmetric Modern Layout
+// CHI SONO SECTION - Editorial Premium Layout
 // ============================================
 function ChiSonoSection() {
   return (
-    <section className="py-24 lg:py-32 bg-white overflow-hidden">
+    <section className="py-28 lg:py-36 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
-        <div className="grid lg:grid-cols-12 gap-8 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-12 gap-10 lg:gap-20 items-center">
           {/* Image Column */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
+            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] as const }}
             className="lg:col-span-5 order-2 lg:order-1"
           >
             <div className="relative">
-              <div className="aspect-[4/5] rounded-3xl overflow-hidden">
+              {/* Background accent shape */}
+              <div className="absolute -top-4 -left-4 w-full h-full rounded-3xl bg-gradient-to-br from-teal/8 to-teal/3 -z-10" />
+
+              <div className="aspect-[4/5] rounded-3xl overflow-hidden shadow-xl shadow-navy/10">
                 <Image
                   src="/images/luca-portrait.jpg"
                   alt="Luca Pellicari - Identity Coach"
@@ -428,23 +459,24 @@ function ChiSonoSection() {
                   quality={65}
                   loading="lazy"
                 />
+                {/* Subtle overlay gradient at bottom */}
+                <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-navy-dark/30 to-transparent" />
               </div>
-              {/* Floating Stats Card */}
-              <div
-                className="absolute -bottom-4 -right-4 md:-bottom-8 md:-right-8 bg-white rounded-2xl p-4 md:p-6 shadow-2xl hidden md:block"
-              >
-                <div className="grid grid-cols-3 gap-4 text-center">
+
+              {/* Floating Stats Card — refined */}
+              <div className="absolute -bottom-6 -right-4 md:-bottom-8 md:-right-6 bg-white rounded-2xl p-5 md:p-6 shadow-xl shadow-navy/8 border border-navy/5 hidden md:block">
+                <div className="grid grid-cols-3 gap-6 text-center">
                   <div>
-                    <p className="text-3xl font-display text-teal mb-0.5"><AnimatedNumber value={7} /></p>
-                    <p className="text-xs text-navy/60 uppercase tracking-wider">Rinascite</p>
+                    <p className="text-[32px] font-display text-teal leading-none mb-1"><AnimatedNumber value={7} /></p>
+                    <p className="text-[11px] text-navy/50 uppercase tracking-[0.15em] font-semibold">Rinascite</p>
+                  </div>
+                  <div className="border-x border-navy/6 px-2">
+                    <p className="text-[32px] font-display text-teal leading-none mb-1"><AnimatedNumber value={30} suffix="+" /></p>
+                    <p className="text-[11px] text-navy/50 uppercase tracking-[0.15em] font-semibold">Anni</p>
                   </div>
                   <div>
-                    <p className="text-3xl font-display text-teal mb-0.5"><AnimatedNumber value={20} suffix="+" /></p>
-                    <p className="text-xs text-navy/60 uppercase tracking-wider">Anni</p>
-                  </div>
-                  <div>
-                    <p className="text-3xl font-display text-navy mb-0.5"><AnimatedNumber value={1000} suffix="+" /></p>
-                    <p className="text-xs text-navy/60 uppercase tracking-wider">Vite</p>
+                    <p className="text-[32px] font-display text-navy-dark leading-none mb-1"><AnimatedNumber value={1000} suffix="+" /></p>
+                    <p className="text-[11px] text-navy/50 uppercase tracking-[0.15em] font-semibold">Vite</p>
                   </div>
                 </div>
               </div>
@@ -459,59 +491,79 @@ function ChiSonoSection() {
             variants={stagger}
             className="lg:col-span-7 order-1 lg:order-2"
           >
-            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-6">
-              <span className="w-12 h-px bg-teal" />
-              <span className="text-teal text-sm uppercase tracking-widest font-medium">Chi Sono</span>
+            {/* Label */}
+            <motion.div variants={fadeUp} className="flex items-center gap-4 mb-8">
+              <span className="w-10 h-[2px] bg-gradient-to-r from-teal to-teal/0" />
+              <span className="text-teal text-[13px] uppercase tracking-[0.2em] font-semibold">Chi Sono</span>
             </motion.div>
 
-            <motion.h2 variants={fadeUp} className="font-display text-4xl md:text-5xl lg:text-6xl text-navy mb-4">
+            {/* Name */}
+            <motion.h2 variants={fadeUp} className="font-display text-[40px] md:text-[52px] lg:text-[60px] text-navy-dark mb-5 tracking-tight leading-[1.05]">
               Io sono Luca Pellicari
             </motion.h2>
 
-            <motion.p variants={fadeUp} className="font-serif text-lg text-navy/60 italic mb-6">
-              Identity Coach • Autore • Fondatore di Quantum Academy
+            {/* Role subtitle */}
+            <motion.p variants={fadeUp} className="font-serif text-[19px] md:text-[21px] text-navy/50 italic mb-8 leading-relaxed">
+              Identity Coach &bull; Autore &bull; Fondatore di Quantum Academy
             </motion.p>
 
-            {/* Credential badges */}
-            <motion.div variants={fadeUp} className="flex flex-wrap gap-2 mb-8">
+            {/* Credential badges — refined */}
+            <motion.div variants={fadeUp} className="flex flex-wrap gap-2.5 mb-10">
               {[
-                'Laurea in Scienze Politiche — 110 e Lode',
-                'Docente Universitario',
-                'Ricercatore ResearchGate',
-                'Accreditato Regione Lombardia',
+                { text: 'Laurea in Scienze Politiche — 110 e Lode', accent: true },
+                { text: 'Docente Universitario', accent: false },
+                { text: 'Ricercatore ResearchGate', accent: false },
+                { text: 'Accreditato Regione Lombardia', accent: false },
               ].map((badge) => (
-                <span key={badge} className="inline-flex items-center px-3 py-1 bg-teal/5 border border-teal/15 rounded-full text-xs text-navy/70 font-medium">
-                  {badge}
+                <span
+                  key={badge.text}
+                  className={`inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full text-[12px] font-semibold tracking-wide ${
+                    badge.accent
+                      ? 'bg-teal/8 border border-teal/15 text-teal'
+                      : 'bg-navy/[0.03] border border-navy/8 text-navy/65'
+                  }`}
+                >
+                  {badge.accent && <span className="w-1.5 h-1.5 rounded-full bg-teal/50" />}
+                  {badge.text}
                 </span>
               ))}
             </motion.div>
 
-            <motion.div variants={fadeUp} className="space-y-6 text-navy/70 text-lg mb-10">
-              <p>
+            {/* Body text */}
+            <motion.div variants={fadeUp} className="space-y-5 mb-12">
+              <p className="text-navy/70 text-[18px] leading-[1.8]">
                 Sono un uomo che non ha mai avuto paura di guardare la vita negli occhi.
                 Ho attraversato la malattia, la rinascita, la disciplina del paracadutismo,
                 i fallimenti, la rinascita professionale.
               </p>
-              <p>
-                E ho trasformato tutto in un metodo: <span className="text-teal font-semibold">In-Flow</span>.
+              <p className="text-navy/70 text-[18px] leading-[1.8]">
+                E ho trasformato tutto in un metodo: <span className="text-teal font-bold">In-Flow</span>.
               </p>
             </motion.div>
 
-            <motion.blockquote variants={fadeUp} className="relative pl-8 py-6 mb-10 border-l-2 border-teal">
-              <p className="text-xl md:text-2xl font-serif italic text-navy">
-                Il mio talento non è motivarti.<br />
-                <span className="text-teal">Il mio talento è aiutarti a ricordare chi sei.</span>
+            {/* Quote — editorial style */}
+            <motion.blockquote
+              variants={fadeUp}
+              className="relative pl-7 py-4 mb-12"
+            >
+              <div className="absolute left-0 top-0 bottom-0 w-[3px] rounded-full bg-gradient-to-b from-teal to-teal/20" />
+              <p className="text-[22px] md:text-[26px] font-serif italic text-navy-dark leading-[1.45]">
+                Il mio talento non è motivarti.
+              </p>
+              <p className="text-[22px] md:text-[26px] font-serif italic text-teal leading-[1.45] mt-1">
+                Il mio talento è aiutarti a ricordare chi sei.
               </p>
             </motion.blockquote>
 
+            {/* CTA link */}
             <motion.div variants={fadeUp}>
-              <Link href="/chi-sono" className="group relative inline-flex items-center gap-3 text-navy font-medium">
-                <span className="relative">
+              <Link href="/chi-sono" className="group inline-flex items-center gap-4">
+                <span className="relative text-[16px] font-semibold text-navy-dark">
                   Scopri la mia storia
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-teal group-hover:w-full transition-all duration-300" />
+                  <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-teal group-hover:w-full transition-all duration-400" />
                 </span>
-                <span className="w-10 h-10 rounded-full border-2 border-navy/20 flex items-center justify-center group-hover:border-teal group-hover:bg-teal transition-all duration-300">
-                  <ArrowUpRight className="w-4 h-4 group-hover:text-white transition-colors duration-300" />
+                <span className="w-11 h-11 rounded-full border-2 border-navy/15 flex items-center justify-center group-hover:border-teal group-hover:bg-teal transition-all duration-300">
+                  <ArrowUpRight className="w-[18px] h-[18px] text-navy/60 group-hover:text-white transition-colors duration-300" />
                 </span>
               </Link>
             </motion.div>
@@ -539,16 +591,16 @@ const missionItems = [
 
 function MissioneSection() {
   return (
-    <section className="py-28 lg:py-36 bg-gray-50 overflow-hidden">
-      <div className="max-w-6xl mx-auto px-6 md:px-16">
+    <section className="py-28 lg:py-36 bg-cream overflow-hidden">
+      <div className="container-custom">
         {/* Header */}
         <div className="text-center mb-20">
           <div className="flex items-center justify-center gap-4 mb-8">
-            <span className="w-10 h-px bg-teal/50" />
-            <span className="text-teal text-xs uppercase tracking-[0.2em] font-medium">La Mia Missione</span>
-            <span className="w-10 h-px bg-teal/50" />
+            <span className="w-10 h-[2px] bg-gradient-to-r from-transparent to-teal/40" />
+            <span className="text-teal text-[13px] uppercase tracking-[0.2em] font-semibold">La Mia Missione</span>
+            <span className="w-10 h-[2px] bg-gradient-to-l from-transparent to-teal/40" />
           </div>
-          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-navy mb-6 tracking-tight">
+          <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-navy-dark mb-6 tracking-tight">
             Trasformo le persone aiutandole a riconoscersi.
           </h2>
           <p className="text-base md:text-lg text-navy/60 max-w-xl mx-auto leading-relaxed">
@@ -562,7 +614,7 @@ function MissioneSection() {
           {missionItems.map((item) => (
             <div
               key={item.label}
-              className="group relative bg-gray-50 border border-navy/5 rounded-2xl p-4 md:p-6 hover:bg-white hover:border-teal/20 hover:shadow-lg hover:shadow-teal/5 transition-all duration-300 cursor-pointer"
+              className="group relative bg-white border border-navy/6 rounded-2xl p-4 md:p-6 shadow-sm hover:border-teal/20 hover:shadow-lg hover:shadow-teal/5 transition-all duration-300 cursor-pointer"
             >
               <div className="w-10 h-10 md:w-11 md:h-11 rounded-xl bg-teal/10 flex items-center justify-center mb-3 md:mb-4 group-hover:bg-teal group-hover:scale-105 transition-all duration-300">
                 <item.icon className="w-4 h-4 md:w-5 md:h-5 text-teal group-hover:text-white transition-colors duration-300" />
@@ -590,14 +642,14 @@ function MissioneSection() {
 // ============================================
 function IlVeroProblemaSection() {
   return (
-    <section className="relative py-16 md:py-28 lg:py-36 bg-white overflow-hidden">
+    <section className="relative py-28 lg:py-36 bg-white overflow-hidden">
       {/* Background accents - reduced blur for performance */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-teal/5 rounded-full blur-3xl" />
         <div className="absolute top-1/2 right-0 -translate-y-1/2 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-navy/5 rounded-full blur-3xl" />
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 md:px-16 relative z-10">
+      <div className="container-custom relative z-10">
         {/* Header */}
         <motion.div
           initial="hidden"
@@ -606,10 +658,10 @@ function IlVeroProblemaSection() {
           variants={stagger}
           className="text-center mb-12 md:mb-20"
         >
-          <motion.div variants={fadeUp} className="flex items-center justify-center gap-4 mb-6 md:mb-8">
-            <span className="w-8 md:w-10 h-px bg-teal/50" />
-            <span className="text-teal text-xs uppercase tracking-[0.2em] font-medium">Il Vero Problema</span>
-            <span className="w-8 md:w-10 h-px bg-teal/50" />
+          <motion.div variants={fadeUp} className="flex items-center justify-center gap-4 mb-8">
+            <span className="w-10 h-[2px] bg-gradient-to-r from-transparent to-teal/40" />
+            <span className="text-teal text-[13px] uppercase tracking-[0.2em] font-semibold">Il Vero Problema</span>
+            <span className="w-10 h-[2px] bg-gradient-to-l from-transparent to-teal/40" />
           </motion.div>
 
           <motion.h2 variants={fadeUp} className="font-display text-3xl md:text-5xl lg:text-6xl text-navy mb-6 md:mb-8 tracking-tight leading-tight">
@@ -653,7 +705,7 @@ function IlVeroProblemaSection() {
               variants={fadeUp}
               className="group relative"
             >
-              <div className="relative bg-gray-50 border border-navy/5 rounded-2xl p-6 md:p-8 hover:bg-white hover:border-teal/20 hover:shadow-xl hover:shadow-teal/5 transition-all duration-300 h-full">
+              <div className="relative bg-white border border-navy/8 rounded-2xl p-6 md:p-8 shadow-sm hover:border-teal/20 hover:shadow-xl hover:shadow-teal/5 transition-all duration-300 h-full">
                 <div className="w-12 md:w-14 h-12 md:h-14 rounded-xl bg-teal/10 flex items-center justify-center mb-4 md:mb-6 group-hover:bg-teal group-hover:scale-105 transition-all duration-300">
                   <item.icon className="w-6 md:w-7 h-6 md:h-7 text-teal group-hover:text-white transition-colors duration-300" />
                 </div>
@@ -696,7 +748,7 @@ function IlVeroProblemaSection() {
 // ============================================
 function QuantumAcademySection() {
   return (
-    <section className="relative py-24 md:py-32 lg:py-40 bg-navy-dark overflow-hidden">
+    <section className="relative py-28 lg:py-36 bg-navy-dark overflow-hidden">
       {/* Background - reduced blur for performance */}
       <div className="absolute inset-0 opacity-20 pointer-events-none">
         <div className="absolute top-0 right-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-teal rounded-full blur-3xl" />
@@ -790,7 +842,7 @@ function AlphakomSection() {
   ]
 
   return (
-    <section className="py-24 lg:py-32 bg-white overflow-hidden">
+    <section className="py-28 lg:py-36 bg-cream overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <div className="grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
           <motion.div
@@ -823,15 +875,15 @@ function AlphakomSection() {
             variants={stagger}
           >
             <motion.div variants={fadeUp} className="flex items-center gap-4 mb-6">
-              <span className="w-12 h-px bg-teal" />
-              <span className="text-teal text-sm uppercase tracking-widest font-medium">AlphaKom</span>
+              <span className="w-10 h-[2px] bg-gradient-to-r from-teal to-teal/0" />
+              <span className="text-teal text-[13px] uppercase tracking-[0.2em] font-semibold">AlphaKom</span>
             </motion.div>
 
             <motion.h2 variants={fadeUp} className="font-display text-3xl md:text-4xl lg:text-5xl text-navy mb-3">
               Il Metodo che Trasforma.
             </motion.h2>
 
-            <motion.p variants={fadeUp} className="text-xs text-navy/40 font-medium tracking-[0.12em] uppercase mb-10">
+            <motion.p variants={fadeUp} className="text-xs text-navy/55 font-medium tracking-[0.12em] uppercase mb-10">
               Advanced Leadership Program for High Achievement
             </motion.p>
 
@@ -842,7 +894,7 @@ function AlphakomSection() {
                   className={`flex items-start gap-3 md:gap-4 p-3 md:p-4 rounded-xl border transition-all ${
                     point.highlight
                       ? 'bg-gradient-to-r from-teal/10 to-teal/5 border-teal/30 shadow-md'
-                      : 'bg-white border-gray-100 hover:border-teal/30 hover:shadow-md'
+                      : 'bg-white border-navy/6 hover:border-teal/30 hover:shadow-md'
                   }`}
                 >
                   <div className={`w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5 ${
@@ -878,7 +930,7 @@ function AlphakomSection() {
 // ============================================
 function QuoteSection() {
   return (
-    <section className="py-20 md:py-28 lg:py-36 bg-gray-50 relative overflow-hidden">
+    <section className="py-28 lg:py-36 bg-cream relative overflow-hidden">
       <div className="max-w-4xl mx-auto px-6 md:px-16 text-center relative">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -916,14 +968,14 @@ const percorsiItems = [
 
 function PercorsiSection() {
   return (
-    <section className="py-24 lg:py-32 bg-navy-dark overflow-hidden">
+    <section className="py-28 lg:py-36 bg-navy-dark overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Header */}
         <div className="text-center mb-16">
           <div className="flex items-center justify-center gap-4 mb-6">
-            <span className="w-12 h-px bg-teal-light" />
-            <span className="text-teal-light text-sm uppercase tracking-widest font-medium">Cosa Possiamo Fare</span>
-            <span className="w-12 h-px bg-teal-light" />
+            <span className="w-10 h-[2px] bg-gradient-to-r from-transparent to-teal-light/40" />
+            <span className="text-teal-light text-[13px] uppercase tracking-[0.2em] font-semibold">Cosa Possiamo Fare</span>
+            <span className="w-10 h-[2px] bg-gradient-to-l from-transparent to-teal-light/40" />
           </div>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-white mb-4">
             Percorsi, seminari, corsi, eventi.
@@ -991,14 +1043,14 @@ const partnerCategories = [
 
 function PartnershipSection() {
   return (
-    <section className="py-24 lg:py-32 bg-white overflow-hidden">
+    <section className="py-28 lg:py-36 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         {/* Header */}
         <div className="text-center mb-16 md:mb-20">
           <div className="flex items-center justify-center gap-4 mb-8">
-            <span className="w-10 h-px bg-teal/50" />
-            <span className="text-teal text-xs uppercase tracking-[0.2em] font-medium">Partnership</span>
-            <span className="w-10 h-px bg-teal/50" />
+            <span className="w-10 h-[2px] bg-gradient-to-r from-transparent to-teal/40" />
+            <span className="text-teal text-[13px] uppercase tracking-[0.2em] font-semibold">Partnership</span>
+            <span className="w-10 h-[2px] bg-gradient-to-l from-transparent to-teal/40" />
           </div>
           <h2 className="font-display text-3xl md:text-4xl lg:text-5xl text-navy mb-6 tracking-tight">
             Chi crede in questo progetto.
@@ -1059,7 +1111,7 @@ const libri = [
 
 function LibriSection() {
   return (
-    <section className="py-24 lg:py-32 bg-white overflow-hidden">
+    <section className="py-28 lg:py-36 bg-cream overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <motion.div
           initial="hidden"
@@ -1070,8 +1122,8 @@ function LibriSection() {
         >
           <div>
             <motion.div variants={fadeUp} className="flex items-center gap-4 mb-4">
-              <span className="w-12 h-px bg-teal" />
-              <span className="text-teal text-sm uppercase tracking-widest font-medium">I Miei Libri</span>
+              <span className="w-10 h-[2px] bg-gradient-to-r from-teal to-teal/0" />
+              <span className="text-teal text-[13px] uppercase tracking-[0.2em] font-semibold">I Miei Libri</span>
             </motion.div>
             <motion.h2 variants={fadeUp} className="font-display text-3xl md:text-4xl lg:text-5xl text-navy">
               Storie vere, identità vere.
@@ -1165,7 +1217,7 @@ const blogPosts = [
 
 function BlogSection() {
   return (
-    <section className="py-24 lg:py-32 bg-gray-50 overflow-hidden">
+    <section className="py-28 lg:py-36 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 md:px-12">
         <motion.div
           initial="hidden"
@@ -1177,8 +1229,8 @@ function BlogSection() {
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16">
             <div>
               <motion.div variants={fadeUp} className="flex items-center gap-4 mb-4">
-                <span className="w-12 h-px bg-teal" />
-                <span className="text-teal text-sm uppercase tracking-widest font-medium">Blog</span>
+                <span className="w-10 h-[2px] bg-gradient-to-r from-teal to-teal/0" />
+                <span className="text-teal text-[13px] uppercase tracking-[0.2em] font-semibold">Blog</span>
               </motion.div>
               <motion.h2 variants={fadeUp} className="font-display text-3xl md:text-4xl lg:text-5xl text-navy mb-2">
                 Pensieri liberi.<br />Verità condivise.
@@ -1343,31 +1395,31 @@ const identityTags = [
 
 function IdentityHighlightsSection() {
   return (
-    <section className="py-16 md:py-20 lg:py-24 bg-gray-50/50 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-10 md:mb-14">
-        <div className="flex items-center justify-center gap-4">
-          <span className="hidden md:block w-16 h-px bg-teal/30" />
-          <p className="text-teal text-xs md:text-sm font-medium uppercase tracking-[0.25em] text-center">
+    <section className="py-14 md:py-18 lg:py-20 bg-cream overflow-hidden">
+      {/* Top separator */}
+      <div className="max-w-7xl mx-auto px-6 md:px-12 mb-10 md:mb-12">
+        <div className="flex items-center justify-center gap-5">
+          <span className="hidden md:block w-12 h-[2px] bg-gradient-to-r from-transparent to-teal/25" />
+          <p className="text-teal text-[12px] md:text-[13px] font-semibold uppercase tracking-[0.25em] text-center">
             Identità in sintesi
           </p>
-          <span className="hidden md:block w-16 h-px bg-teal/30" />
+          <span className="hidden md:block w-12 h-[2px] bg-gradient-to-l from-transparent to-teal/25" />
         </div>
       </div>
 
       {/* Marquee container */}
       <div className="relative">
-        {/* Fade left */}
-        <div className="absolute left-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-r from-gray-50/80 to-transparent z-10 pointer-events-none" />
-        {/* Fade right */}
-        <div className="absolute right-0 top-0 bottom-0 w-16 md:w-32 bg-gradient-to-l from-gray-50/80 to-transparent z-10 pointer-events-none" />
+        {/* Fade edges */}
+        <div className="absolute left-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-r from-cream to-transparent z-10 pointer-events-none" />
+        <div className="absolute right-0 top-0 bottom-0 w-20 md:w-40 bg-gradient-to-l from-cream to-transparent z-10 pointer-events-none" />
 
         <div
           className="flex w-max items-center"
-          style={{ animation: 'scroll-left 50s linear infinite' }}
+          style={{ animation: 'scroll-left 55s linear infinite' }}
         >
           {[...identityTags, ...identityTags].map((tag, i) => (
             <div key={i} className="flex items-center shrink-0">
-              <span className={`whitespace-nowrap px-5 md:px-7 py-2 md:py-2.5 mx-1.5 md:mx-2.5 rounded-full border text-xs md:text-sm font-semibold tracking-wide ${tag.color}`}>
+              <span className={`whitespace-nowrap px-6 md:px-8 py-2.5 md:py-3 mx-2 md:mx-3 rounded-full border text-[12px] md:text-[14px] font-semibold tracking-wide ${tag.color}`}>
                 {tag.text}
               </span>
             </div>
@@ -1385,6 +1437,7 @@ export default function HomePage() {
   return (
     <>
       <HeroSection />
+      <AliceHomepageSection />
       <OpeningSection />
       <IdentityHighlightsSection />
       <ChiSonoSection />

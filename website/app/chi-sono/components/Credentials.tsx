@@ -140,7 +140,7 @@ export function Credentials() {
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
         >
-          <p className="text-white/50 text-sm italic">
+          <p className="text-white/60 text-sm italic">
             Affidabilità nasce dall'esperienza. Credibilità nasce dallo studio.
           </p>
         </motion.div>

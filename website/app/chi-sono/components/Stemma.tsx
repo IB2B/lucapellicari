@@ -46,7 +46,7 @@ export function Stemma() {
               >
                 <div className="w-6 md:w-8 h-1 bg-gold/50 rounded mb-2 md:mb-3" />
                 <p className="text-gold font-serif text-lg md:text-xl font-bold tracking-[0.1em] mb-0.5 md:mb-1">ARRMA</p>
-                <p className="text-white/50 text-[10px] md:text-xs">Motto di famiglia</p>
+                <p className="text-white/60 text-[10px] md:text-xs">Motto di famiglia</p>
               </motion.div>
             </div>
           </FadeIn>

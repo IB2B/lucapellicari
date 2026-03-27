@@ -73,7 +73,7 @@ export function Footer() {
 
           {/* Navigation Links - Column 2 */}
           <div>
-            <h4 className="font-display text-lg font-semibold text-white mb-6 opacity-0 pointer-events-none">
+            <h4 className="font-display text-lg font-semibold text-white mb-6 hidden lg:block opacity-0 pointer-events-none">
               &nbsp;
             </h4>
             <ul className="space-y-3">
